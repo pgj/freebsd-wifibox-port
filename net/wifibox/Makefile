@@ -1,5 +1,5 @@
 PORTNAME=	wifibox
-PORTVERSION=	0.2.1
+PORTVERSION=	0.3.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -17,9 +17,9 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
 
-IMAGE_FILE=	freebsd-wifibox-appliance.20210718.img.xz
+IMAGE_FILE=	freebsd-wifibox-appliance.20210808.img.xz
 
-MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/snapshot-20210718/
+MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/snapshot-20210808/
 DISTFILES+=	${IMAGE_FILE}
 
 NO_BUILD=	yes
