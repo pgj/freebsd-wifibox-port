@@ -1,5 +1,5 @@
 PORTNAME=	wifibox
-PORTVERSION=	0.3.1
+PORTVERSION=	0.4.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -9,13 +9,15 @@ LICENSE=	BSD2CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
-EXTRACT_ONLY=	${GH_ACCOUNT}-${GH_PROJECT}-${GH_TAGNAME_EXTRACT}_GH0.tar.gz
+EXTRACT_ONLY=	${GH_ACCOUNT}-${GH_PROJECT}-${PORTVERSION}-${GH_TAGNAME_EXTRACT}_GH0.tar.gz
 
-RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
+RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
+		bhyve+>0:sysutils/bhyve+
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
+GH_TAGNAME=	e6e2ce4046f63ef6cb994acd3c5a9ba6d91bd7eb
 
 IMAGE_FILE=	freebsd-wifibox-appliance.20210808.img.xz
 
@@ -24,6 +26,7 @@ DISTFILES+=	${IMAGE_FILE}
 
 NO_BUILD=	yes
 MAKE_ENV+=	IMGXZ=${DISTDIR}/${IMAGE_FILE} \
-		VERSION=${PORTVERSION}
+		VERSION=${PORTVERSION} \
+		BHYVE=${LOCALBASE}/sbin/bhyve
 
 .include <bsd.port.mk>
