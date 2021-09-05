@@ -19,9 +19,10 @@ GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
 GH_TAGNAME=	a79e2b2e35c6fd849ab6327295669747311fe464
 
-IMAGE_FILE=	freebsd-wifibox-appliance.20210808.img.xz
+IMAGE_VERSION=	snapshot-20210905
+IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
 
-MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/snapshot-20210808/
+MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/${IMAGE_VERSION}/
 DISTFILES+=	${IMAGE_FILE}
 
 NO_BUILD=	yes
