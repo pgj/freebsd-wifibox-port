@@ -9,7 +9,7 @@ LICENSE=	BSD2CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
-EXTRACT_ONLY=	${GH_ACCOUNT}-${GH_PROJECT}-${PORTVERSION}-${GH_TAGNAME_EXTRACT}_GH0.tar.gz
+EXTRACT_ONLY=	${GH_ACCOUNT}-${GH_PROJECT}-${GH_TAGNAME_EXTRACT}_GH0.tar.gz
 
 RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
 		bhyve+>0:sysutils/bhyve+
@@ -17,7 +17,6 @@ RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
-GH_TAGNAME=	a79e2b2e35c6fd849ab6327295669747311fe464
 
 IMAGE_VERSION=	snapshot-20210905
 IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
