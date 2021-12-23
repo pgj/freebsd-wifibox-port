@@ -25,6 +25,10 @@ IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
 MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/${IMAGE_VERSION}/
 DISTFILES+=	${IMAGE_FILE}
 
+# Needed to fake the necessary UID/GID for chrony that runs in the guest
+USERS=		squid quagga
+GROUPS=		squid quagga
+
 NO_BUILD=	yes
 MAKE_ENV+=	IMGXZ=${DISTDIR}/${IMAGE_FILE} \
 		VERSION=${PORTVERSION} \

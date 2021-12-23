@@ -17,13 +17,13 @@ share/wifibox/disk.img
 @dir /var/run/wifibox/appliance/cache
 @dir /var/run/wifibox/appliance/empty
 @dir /var/run/wifibox/appliance/lib/apk
-@dir /var/run/wifibox/appliance/lib/chrony
+@dir(squid,quagga,) /var/run/wifibox/appliance/lib/chrony
 @dir /var/run/wifibox/appliance/lib/iptables
 @dir /var/run/wifibox/appliance/lib/misc
 @dir /var/run/wifibox/appliance/lib/udhcpd
 @dir /var/run/wifibox/appliance/lib
 @dir /var/run/wifibox/appliance/local
-@dir /var/run/wifibox/appliance/log/chrony
+@dir(squid,quagga,) /var/run/wifibox/appliance/log/chrony
 @dir /var/run/wifibox/appliance/log
 @dir /var/run/wifibox/appliance/mail
 @dir /var/run/wifibox/appliance/opt
