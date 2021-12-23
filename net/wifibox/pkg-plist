@@ -5,6 +5,7 @@
 @sample etc/wifibox/wpa_supplicant.conf.sample
 @sample etc/devd/wifibox.conf.sample
 etc/rc.d/wifibox
+man/man5/wifibox-alpine.5.gz
 man/man8/wifibox.8.gz
 sbin/wifibox
 share/wifibox/device.map
