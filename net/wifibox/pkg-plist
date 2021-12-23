@@ -10,6 +10,7 @@ sbin/wifibox
 share/wifibox/device.map
 share/wifibox/grub.cfg
 share/wifibox/disk.img
+@preexec /usr/bin/touch /var/log/wifibox.log
 @preunexec /bin/rm -f /var/log/wifibox.log
 @preunexec /usr/bin/find /var/run/wifibox -type f -delete
 @preunexec /usr/bin/find /var/run/wifibox -type l -exec /bin/rm -f {} \;
