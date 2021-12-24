@@ -17,7 +17,7 @@ RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	6826fddc99cbc15ae9c64047344863e49c15c1a2
+GH_TAGNAME=	3936ec6ea98c19e6232dd1b284bffb0dc63b818f
 GH_TAGNAME+=	${IMAGE_VERSION}:image
 
 IMAGE_VERSION=	snapshot-20211223
