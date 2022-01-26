@@ -5,9 +5,35 @@ This repository hosts the development of the FreeBSD port for the
 proper packaging.  Changes here are upstreamed to the FreeBSD ports
 tree time to time.
 
+*This is the development version of the port, use it only if the
+[`net/wifibox`](https://cgit.freebsd.org/ports/tree/net/wifibox) port
+from the [FreeBSD Ports
+Collection](https://docs.freebsd.org/en/books/handbook/ports/#ports-using)
+does not work for some reason.*
+
+## Preperations
+
+The port depends on
+[sysutils/bhyve+](https://github.com/pgj/freebsd-bhyve-plus-port/),
+which needs to be installed first.  Nowadays that is part of the ports
+tree, therefore it can be installed as a package:
+
+```console
+# pkg install sysutils/bhyve+
+```
+
+In case of older fresh installs, the ports tree may need to be updated
+to its latest version to get the `sysutils/bhyve+` port, for example
+by using `portsnap(8)`:
+
+```console
+# portsnap fetch update
+```
+
 ## Installation
 
-Once cloned, the port can be easily installed in the standard way. 
+Once this repository is cloned and `bhyve+` is present on the system,
+the port can be easily installed in the standard way.
 
 ```console
 # cd net/wifibox
