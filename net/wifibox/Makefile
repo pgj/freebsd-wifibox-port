@@ -11,8 +11,19 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 ONLY_FOR_ARCHS=	amd64
 EXTRACT_ONLY=	${_DISTFILES:N*.img.xz}
 
-RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
-		bhyve+>0:sysutils/bhyve+
+RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
+
+OPTIONS_DEFINE=			BHYVE_PLUS
+OPTIONS_EXCLUDE_FreeBSD_12=	BHYVE_PLUS
+
+BHYVE_PLUS_DESC=		Use bhyve+ (experimental)
+
+.include <bsd.port.options.mk>
+
+.if ${PORT_OPTIONS:MBHYVE_PLUS} || (${OSVERSION} < 1300000)
+RUN_DEPENDS+=	bhyve+>0:sysutils/bhyve+
+_BHYVE_PLUS=	yes
+.endif
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
@@ -34,9 +45,11 @@ GROUPS=		squid quagga
 NO_BUILD=	yes
 MAKE_ENV+=	IMGXZ=${DISTDIR}/${IMAGE_FILE} \
 		IMGMAN=${WRKSRC_image}/man/${IMAGE_MAN} \
-		VERSION=${PORTVERSION} \
-		BHYVE=${LOCALBASE}/sbin/bhyve \
+		VERSION=${PORTVERSION}
+.if defined(_BHYVE_PLUS)
+MAKE_ENV+=	BHYVE=${LOCALBASE}/sbin/bhyve \
 		BHYVECTL=${LOCALBASE}/sbin/bhyvectl \
 		VMM_KO=${KMODDIR}/vmm.ko
+.endif
 
 .include <bsd.port.mk>
