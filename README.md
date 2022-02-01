@@ -13,10 +13,11 @@ does not work for some reason.*
 
 ## Preperations
 
-The port depends on
+Depending on the major version of FreeBSD and the configuration
+options, the port may depend on
 [sysutils/bhyve+](https://github.com/pgj/freebsd-bhyve-plus-port/),
-which needs to be installed first.  Nowadays that is part of the ports
-tree, therefore it can be installed as a package:
+which may need to be installed first.  Nowadays that is part of the
+ports tree, therefore it can be installed as a package:
 
 ```console
 # pkg install sysutils/bhyve+
@@ -32,8 +33,8 @@ by using `portsnap(8)`:
 
 ## Installation
 
-Once this repository is cloned and `bhyve+` is present on the system,
-the port can be easily installed in the standard way.
+Once this repository is cloned and the necessary preparations are
+made, the port can be easily installed in the standard way.
 
 ```console
 # cd net/wifibox
