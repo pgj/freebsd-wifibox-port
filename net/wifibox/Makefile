@@ -1,5 +1,5 @@
 PORTNAME=	wifibox
-PORTVERSION=	0.7.0
+PORTVERSION=	1.0.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -9,7 +9,6 @@ LICENSE=	BSD2CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
-EXTRACT_ONLY=	${_DISTFILES:N*.img.xz}
 
 RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
 
@@ -28,23 +27,19 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	${PORTVERSION}
-GH_TAGNAME+=	${IMAGE_VERSION}:image
+GH_TAGNAME=	f806bf1866b2f1d837cedef5be4985e0d9faf335
+GH_TAGNAME+=	${GUEST_VERSION}:image
 
-IMAGE_VERSION=	snapshot-20220208
-IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
-IMAGE_MAN=	wifibox-alpine.5
-
-MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/${IMAGE_VERSION}/
-DISTFILES+=	${IMAGE_FILE}
+GUEST_VERSION= 	snapshot-20220208
+GUEST_MAN=	wifibox-alpine.5
 
 # Needed to fake the necessary UID/GID for chrony that runs in the guest
 USERS=		squid quagga
 GROUPS=		squid quagga
 
 NO_BUILD=	yes
-MAKE_ENV+=	IMGXZ=${DISTDIR}/${IMAGE_FILE} \
-		IMGMAN=${WRKSRC_image}/man/${IMAGE_MAN} \
+MAKE_ENV+=	GUEST_ROOT=${LOCALBASE}/share/wifibox/guest \
+		GUEST_MAN=${WRKSRC_image}/man/${GUEST_MAN} \
 		VERSION=${PORTVERSION}
 .if defined(_BHYVE_PLUS)
 MAKE_ENV+=	BHYVE=${LOCALBASE}/sbin/bhyve \
