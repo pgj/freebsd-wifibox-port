@@ -99,38 +99,24 @@ _PACKAGES=	alpine-base-3.15.0-r0 \
 		zlib-1.2.11-r3 \
 		zstd-libs-1.5.0-r0
 
+_FW_PACKAGES=	ATH6K:ath6k-20211027-r0 \
+		ATH9K:ath9k_htc-20211027-r0 \
+		ATH10K:ath10k-20211027-r0 \
+		ATH11K:ath11k-20211027-r0 \
+		BRCM:brcm-20211027-r0 \
+		MWLWIFI:mwlwifi-20211027-r0 \
+		OTHER:other-20211027-r0 \
+		RTLWIFI:rtlwifi-20211027-r0 \
+		RTW88:rtw88-20211027-r0 \
+		RTW89:rtw89-20211027-r0
+
 .include <bsd.port.options.mk>
 
-.if ${PORT_OPTIONS:MFW_ATH6K}
-_PACKAGES+=	linux-firmware-ath6k-20211027-r0
+.for config in ${_FW_PACKAGES}
+.if ${PORT_OPTIONS:MFW_${config:C@^(.*):(.*)$@\1@}}
+_PACKAGES+=	linux-firmware-${config:C@^(.*):(.*)$@\2@}
 .endif
-.if ${PORT_OPTIONS:MFW_ATH9K}
-_PACKAGES+=	linux-firmware-ath9k_htc-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_ATH10K}
-_PACKAGES+=	linux-firmware-ath10k-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_ATH11K}
-_PACKAGES+=	linux-firmware-ath11k-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_BRCM}
-_PACKAGES+=	linux-firmware-brcm-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_MWLWIFI}
-_PACKAGES+=	linux-firmware-mwlwifi-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_OTHER}
-_PACKAGES+=	linux-firmware-other-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_RTLWIFI}
-_PACKAGES+=	linux-firmware-rtlwifi-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_RTW88}
-_PACKAGES+=	linux-firmware-rtw88-20211027-r0
-.endif
-.if ${PORT_OPTIONS:MFW_RTW89}
-_PACKAGES+=	linux-firmware-rtw89-20211027-r0
-.endif
+.endfor
 
 DIST_SUBDIR=	wifibox-alpine
 DISTFILES+=	${_MINIROOTFS}:rootfs
