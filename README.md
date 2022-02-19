@@ -37,6 +37,6 @@ Once this repository is cloned and the necessary preparations are
 made, the port can be easily installed in the standard way.
 
 ```console
-# cd net/wifibox
-# make install clean
+# cd net/wifibox-alpine && make install clean
+# cd ../wifibox && make install clean
 ```
