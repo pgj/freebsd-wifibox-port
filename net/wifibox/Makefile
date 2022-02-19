@@ -10,7 +10,8 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
 
-RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
+RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
+		wifibox-alpine>0:net/wifibox-alpine
 
 OPTIONS_DEFINE=			BHYVE_PLUS
 OPTIONS_EXCLUDE_FreeBSD_12=	BHYVE_PLUS
@@ -26,20 +27,12 @@ _BHYVE_PLUS=	yes
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
-GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	f806bf1866b2f1d837cedef5be4985e0d9faf335
-GH_TAGNAME+=	${GUEST_VERSION}:image
-
-GUEST_VERSION= 	snapshot-20220208
-GUEST_MAN=	wifibox-alpine.5
-
-# Needed to fake the necessary UID/GID for chrony that runs in the guest
-USERS=		squid quagga
-GROUPS=		squid quagga
+GH_PROJECT=	freebsd-wifibox
+GH_TAGNAME=	ddaba96790faaaa5ddf8a1d5e6ef1ef06c451c02
 
 NO_BUILD=	yes
 MAKE_ENV+=	GUEST_ROOT=${LOCALBASE}/share/wifibox/guest \
-		GUEST_MAN=${WRKSRC_image}/man/${GUEST_MAN} \
+		GUEST_MAN=${LOCALBASE}/man/man5/wifibox-alpine.5.gz \
 		VERSION=${PORTVERSION}
 .if defined(_BHYVE_PLUS)
 MAKE_ENV+=	BHYVE=${LOCALBASE}/sbin/bhyve \
