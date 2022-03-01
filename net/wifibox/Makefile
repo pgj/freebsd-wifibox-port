@@ -11,6 +11,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 ONLY_FOR_ARCHS=	amd64
 
 RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
+		socat>0:net/socat \
 		wifibox-alpine>0:net/wifibox-alpine
 
 OPTIONS_DEFINE=			BHYVE_PLUS
@@ -28,7 +29,7 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
-GH_TAGNAME=	ddaba96790faaaa5ddf8a1d5e6ef1ef06c451c02
+GH_TAGNAME=	8b1679670104a505651b55fca4872851cf387622
 
 NO_BUILD=	yes
 MAKE_ENV+=	GUEST_ROOT=${LOCALBASE}/share/wifibox/guest \
