@@ -1,6 +1,5 @@
 @sample etc/wifibox/interfaces.conf.sample
 @sample etc/wifibox/udhcpd.conf.sample
-@sample etc/wifibox/wpa_supplicant.conf.sample
 man/man5/wifibox-alpine.5.gz
 share/wifibox/grub.cfg
 share/wifibox/guest/bin/arch
@@ -138,6 +137,7 @@ share/wifibox/guest/etc/conf.d/urandom
 share/wifibox/guest/etc/conf.d/watchdog
 share/wifibox/guest/etc/conf.d/wpa_cli
 share/wifibox/guest/etc/conf.d/wpa_supplicant
+share/wifibox/guest/etc/conf.d/wpa_supplicant.apk-new
 share/wifibox/guest/etc/crontabs/root
 share/wifibox/guest/etc/ethertypes
 share/wifibox/guest/etc/fstab
@@ -204,6 +204,7 @@ share/wifibox/guest/etc/init.d/udhcpd
 share/wifibox/guest/etc/init.d/urandom
 share/wifibox/guest/etc/init.d/watchdog
 share/wifibox/guest/etc/init.d/wpa_cli
+share/wifibox/guest/etc/init.d/wpa_passthru
 share/wifibox/guest/etc/init.d/wpa_supplicant
 share/wifibox/guest/etc/inittab
 share/wifibox/guest/etc/iptables/rules-save
@@ -220,6 +221,7 @@ share/wifibox/guest/etc/mkinitfs/features.d/9p.modules
 share/wifibox/guest/etc/mkinitfs/features.d/ata.modules
 share/wifibox/guest/etc/mkinitfs/features.d/base.files
 share/wifibox/guest/etc/mkinitfs/features.d/base.modules
+share/wifibox/guest/etc/mkinitfs/features.d/base.modules.apk-new
 share/wifibox/guest/etc/mkinitfs/features.d/bootchart.files
 share/wifibox/guest/etc/mkinitfs/features.d/btrfs.files
 share/wifibox/guest/etc/mkinitfs/features.d/btrfs.modules
@@ -272,6 +274,7 @@ share/wifibox/guest/etc/modprobe.d/aliases.conf
 share/wifibox/guest/etc/modprobe.d/blacklist.conf
 share/wifibox/guest/etc/modprobe.d/i386.conf
 share/wifibox/guest/etc/modprobe.d/kms.conf
+share/wifibox/guest/etc/modprobe.d/wifibox.conf
 share/wifibox/guest/etc/modules
 share/wifibox/guest/etc/mtab
 share/wifibox/guest/etc/network/if-up.d/dad
@@ -295,6 +298,7 @@ share/wifibox/guest/etc/runlevels/boot/networking
 share/wifibox/guest/etc/runlevels/boot/sysctl
 share/wifibox/guest/etc/runlevels/boot/syslog
 share/wifibox/guest/etc/runlevels/boot/urandom
+share/wifibox/guest/etc/runlevels/boot/wpa_passthru
 share/wifibox/guest/etc/runlevels/boot/wpa_supplicant
 share/wifibox/guest/etc/runlevels/default/acpid
 share/wifibox/guest/etc/runlevels/default/chronyd
@@ -327,7 +331,6 @@ share/wifibox/guest/etc/udhcpd.conf
 share/wifibox/guest/etc/udhcpd.conf.apk-new
 share/wifibox/guest/etc/wifibox-guest
 share/wifibox/guest/etc/wpa_supplicant/wpa_cli.sh
-share/wifibox/guest/etc/wpa_supplicant/wpa_supplicant.conf
 share/wifibox/guest/lib/apk/db/installed
 share/wifibox/guest/lib/apk/db/lock
 share/wifibox/guest/lib/apk/db/scripts.tar
@@ -4539,6 +4542,7 @@ share/wifibox/guest/sbin/vconfig
 share/wifibox/guest/sbin/watchdog
 share/wifibox/guest/sbin/wpa_cli
 share/wifibox/guest/sbin/wpa_passphrase
+share/wifibox/guest/sbin/wpa_passthru
 share/wifibox/guest/sbin/wpa_supplicant
 share/wifibox/guest/sbin/xtables-legacy-multi
 share/wifibox/guest/sbin/xtables-monitor
@@ -5002,6 +5006,7 @@ share/wifibox/guest/usr/share/udhcpc/default.script
 @dir share/wifibox/guest/media/etc
 @dir share/wifibox/guest/media/floppy
 @dir share/wifibox/guest/media/usb
+@dir share/wifibox/guest/media/wpa
 @dir share/wifibox/guest/mnt
 @dir share/wifibox/guest/opt
 @dir share/wifibox/guest/proc

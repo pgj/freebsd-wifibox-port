@@ -32,10 +32,10 @@ FW_RTW89_DESC=		linux-firmware-rtw89
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	4cda29a5b8f695a039d91d6e9d4c1fe7aa9cd55f:scripts
+GH_TAGNAME=	10753b412aa24bc476db7bc0179fdf05d48d1a51:scripts
 
 ALPINE_VERSION=	3.15
-ALPINE_DATE=	2022.02.05
+ALPINE_DATE=	2022.02.26
 
 _SNAPSHOT=	 ${ALPINE_DATE:S/./-/g}
 _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/snapshots/${_SNAPSHOT}/v${ALPINE_VERSION}
@@ -46,7 +46,7 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 _MINIROOTFS=	alpine-minirootfs-3.15.0-x86_64.tar.gz
 _PACKAGES=	alpine-base-3.15.0-r0 \
 		alpine-baselayout-3.2.0-r18 \
-		alpine-conf-3.13.0-r0 \
+		alpine-conf-3.13.0-r1 \
 		alpine-keys-2.4-r1 \
 		apk-tools-2.12.7-r3 \
 		argon2-libs-20190702-r1 \
@@ -69,7 +69,7 @@ _PACKAGES=	alpine-base-3.15.0-r0 \
 		kmod-29-r2 \
 		kmod-libs-29-r2 \
 		lddtree-1.26-r2 \
-		libblkid-2.37.3-r0 \
+		libblkid-2.37.4-r0 \
 		libc-utils-0.7.2-r3 \
 		libcap-2.61-r0 \
 		libcrypto1.1-1.1.1l-r8 \
@@ -81,7 +81,7 @@ _PACKAGES=	alpine-base-3.15.0-r0 \
 		libssl1.1-1.1.1l-r8 \
 		libtasn1-4.18.0-r0 \
 		libunistring-0.9.10-r1 \
-		libuuid-2.37.3-r0 \
+		libuuid-2.37.4-r0 \
 		linux-firmware-none-20211027-r0 \
 		linux-lts-5.15.16-r0 \
 		mkinitfs-3.6.0-r0 \
