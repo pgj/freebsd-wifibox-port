@@ -87,11 +87,15 @@ _PACKAGES=	alpine-base-3.15.0-r0 \
 		mkinitfs-3.6.0-r0 \
 		musl-1.2.2-r7 \
 		musl-utils-1.2.2-r7 \
+		ncurses-libs-6.3_p20211120-r0 \
+		ncurses-terminfo-base-6.3_p20211120-r0 \
 		nettle-3.7.3-r0 \
 		openrc-0.44.7-r3 \
 		p11-kit-0.24.0-r1 \
 		pcsc-lite-libs-1.9.4-r0 \
+		readline-8.1.1-r0 \
 		scanelf-1.3.3-r0 \
+		socat-1.7.4.2-r0 \
 		ssl_client-1.34.1-r4 \
 		wpa_supplicant-2.9-r17 \
 		wpa_supplicant-openrc-2.9-r17 \
