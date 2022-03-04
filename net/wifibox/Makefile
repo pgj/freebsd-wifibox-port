@@ -1,5 +1,5 @@
 PORTNAME=	wifibox
-PORTVERSION=	0.7.0
+PORTVERSION=	0.8.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -28,10 +28,10 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	${PORTVERSION}
+GH_TAGNAME=	d88d65f59e5a28bd946a053ccef592a11942b650
 GH_TAGNAME+=	${IMAGE_VERSION}:image
 
-IMAGE_VERSION=	snapshot-20220208
+IMAGE_VERSION=	snapshot-20220304
 IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
 IMAGE_MAN=	wifibox-alpine.5
 
