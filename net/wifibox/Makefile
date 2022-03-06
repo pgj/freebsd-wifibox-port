@@ -31,7 +31,7 @@ GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
 GH_TAGNAME=	978c47456aa5e98f4c2055c5fa14b3a4f1026083
 GH_TAGNAME+=	${IMAGE_VERSION}:image
 
-IMAGE_VERSION=	snapshot-20220304
+IMAGE_VERSION=	snapshot-20220306
 IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
 IMAGE_MAN=	wifibox-alpine.5
 
