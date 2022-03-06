@@ -13,10 +13,14 @@ EXTRACT_ONLY=	${_DISTFILES:N*.img.xz}
 
 RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
 
-OPTIONS_DEFINE=			BHYVE_PLUS
+OPTIONS_DEFINE=			BHYVE_PLUS WPA_PASSTHRU
+OPTIONS_DEFAULT=		WPA_PASSTHRU
 OPTIONS_EXCLUDE_FreeBSD_12=	BHYVE_PLUS
 
 BHYVE_PLUS_DESC=		Use bhyve+ (experimental)
+WPA_PASSTHRU_DESC=		Support WPA Supplicant pass-through
+
+WPA_PASSTHRU_RUN_DEPENDS=	socat>0:net/socat
 
 .include <bsd.port.options.mk>
 
@@ -28,7 +32,7 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	978c47456aa5e98f4c2055c5fa14b3a4f1026083
+GH_TAGNAME=	3961e416ca4a4b62c150d5c995b38ac9debe4212
 GH_TAGNAME+=	${IMAGE_VERSION}:image
 
 IMAGE_VERSION=	snapshot-20220306
