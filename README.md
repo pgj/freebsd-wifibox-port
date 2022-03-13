@@ -34,9 +34,9 @@ by using `portsnap(8)`:
 ## Installation
 
 Once this repository is cloned and the necessary preparations are
-made, the port can be easily installed in the standard way.
+made, the ports can be easily installed in the standard way.
 
 ```console
-# cd net/wifibox
-# make install clean
+# make -C net/wifibox-alpine install clean
+# make -C net/wifibox install clean
 ```

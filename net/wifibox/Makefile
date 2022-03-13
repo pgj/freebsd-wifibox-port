@@ -1,5 +1,5 @@
 PORTNAME=	wifibox
-PORTVERSION=	0.8.2
+PORTVERSION=	0.9.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -9,9 +9,9 @@ LICENSE=	BSD2CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
-EXTRACT_ONLY=	${_DISTFILES:N*.img.xz}
 
-RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
+RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
+		wifibox-alpine>0:net/wifibox-alpine
 
 OPTIONS_DEFINE=			BHYVE_PLUS WPA_PASSTHRU
 OPTIONS_DEFAULT=		WPA_PASSTHRU
@@ -31,20 +31,12 @@ _BHYVE_PLUS=	yes
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
-GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	${PORTVERSION}
-GH_TAGNAME+=	${IMAGE_VERSION}:image
-
-IMAGE_VERSION=	snapshot-20220414
-IMAGE_FILE=	freebsd-wifibox-appliance.${IMAGE_VERSION}.img.xz
-IMAGE_MAN=	wifibox-alpine.5
-
-MASTER_SITES+=	https://github.com/pgj/freebsd-wifibox-image/releases/download/${IMAGE_VERSION}/
-DISTFILES+=	${IMAGE_FILE}
+GH_PROJECT=	freebsd-wifibox
+GH_TAGNAME=	25905c14e19a207d9d1a245ad1847b2f22f0345c
 
 NO_BUILD=	yes
-MAKE_ENV+=	IMGXZ=${DISTDIR}/${IMAGE_FILE} \
-		IMGMAN=${WRKSRC_image}/man/${IMAGE_MAN} \
+MAKE_ENV+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
+		GUEST_MAN=${LOCALBASE}/man/man5/wifibox-alpine.5.gz \
 		VERSION=${PORTVERSION}
 .if defined(_BHYVE_PLUS)
 MAKE_ENV+=	BHYVE=${LOCALBASE}/sbin/bhyve \

@@ -1,0 +1,9 @@
+The implementation of the Wifibox embedded wireless router is based on
+the use of a Linux-based guest operating system which can communicate
+with the host's wireless network card on behalf of the host.  In order
+to meet the requirements, this has to be a system with a low resource
+footprint and easy to manage.  Alpine Linux is an actively maintained,
+security-oriented, lightweight Linux distribution that is based on
+musl libc and busybox.
+
+WWW: https://github.com/pgj/freebsd-wifibox-alpine
