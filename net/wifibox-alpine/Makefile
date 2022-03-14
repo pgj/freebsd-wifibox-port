@@ -48,7 +48,7 @@ FW_RTW89_DESC=		linux-firmware-rtw89
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	af86a86fbd364ef8346112906c6a54b28fe9bd70:scripts
+GH_TAGNAME=	2d6263aef525d62c7540924bb0c38e608d47d6fa:scripts
 
 ALPINE_VERSION=	3.15
 ALPINE_DATE=	2022.03.12
@@ -71,8 +71,6 @@ _PACKAGES=	alpine-base-3.15.0-r0 \
 		busybox-initscripts-4.0-r5 \
 		busybox-suid-1.34.1-r4 \
 		ca-certificates-bundle-20211220-r0 \
-		chrony-4.1-r0 \
-		chrony-openrc-4.1-r0 \
 		cryptsetup-libs-2.4.3-r0 \
 		dbus-libs-1.12.20-r4 \
 		device-mapper-libs-2.02.187-r2 \
@@ -148,11 +146,6 @@ _APK_FILES+=	${_DISTDIR}/${package}.apk
 # QA checks are disabled on purpose due to the excessive amount of
 # false positive findings.
 stage-qa:
-
-# Needed to fake the necessary UID/GID for chrony that runs in the
-# guest.
-USERS=		squid quagga
-GROUPS=		squid quagga
 
 WRKSRC=		${WRKSRC_scripts}
 MAKE_ENV+=	VERSION=${PORTVERSION} \

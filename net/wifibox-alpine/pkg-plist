@@ -6,7 +6,6 @@ share/wifibox/grub.cfg
 share/wifibox/initramfs
 share/wifibox/vmlinuz
 /var/run/wifibox/appliance/run
-@(squid,quagga,) /var/run/wifibox/appliance/lib/chrony/chrony.drift
 /var/run/wifibox/appliance/spool/cron/crontabs
 /var/run/wifibox/appliance/spool/mail
 @dir /var/run/wifibox/appliance/cache/apk
@@ -14,7 +13,6 @@ share/wifibox/vmlinuz
 @dir /var/run/wifibox/appliance/cache
 @dir /var/run/wifibox/appliance/empty
 @dir /var/run/wifibox/appliance/lib/apk
-@dir(squid,quagga,) /var/run/wifibox/appliance/lib/chrony
 @dir /var/run/wifibox/appliance/lib/iptables
 @dir /var/run/wifibox/appliance/lib/misc
 @dir /var/run/wifibox/appliance/lib/udhcpd
@@ -22,7 +20,6 @@ share/wifibox/vmlinuz
 @dir /var/run/wifibox/appliance/local
 @dir /var/run/wifibox/appliance/lock/subsys
 @dir /var/run/wifibox/appliance/lock
-@dir(squid,quagga,) /var/run/wifibox/appliance/log/chrony
 @dir /var/run/wifibox/appliance/log
 @dir /var/run/wifibox/appliance/mail
 @dir /var/run/wifibox/appliance/opt
