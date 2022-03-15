@@ -11,9 +11,8 @@ LICENSE_FILE=	${WRKSRC_scripts}/LICENSE
 ONLY_FOR_ARCHS=	amd64
 EXTRACT_ONLY=	${_DISTFILES:M*_GH0.tar.gz}
 
-BUILD_DEPENDS=	squashfs-tools>0:sysutils/squashfs-tools
-
-USES=		fakeroot
+BUILD_DEPENDS=	patchelf>0:sysutils/patchelf \
+		squashfs-tools>0:sysutils/squashfs-tools
 
 OPTIONS_MULTI=		FIRMWARE
 OPTIONS_MULTI_FIRMWARE=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_MWLWIFI \
@@ -48,7 +47,7 @@ FW_RTW89_DESC=		linux-firmware-rtw89
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	2d6263aef525d62c7540924bb0c38e608d47d6fa:scripts
+GH_TAGNAME=	45517973f7b9e520c0bfd020129fa0aa1c1a65cf:scripts
 
 ALPINE_VERSION=	3.15
 ALPINE_DATE=	2022.03.12
@@ -142,10 +141,6 @@ DISTFILES+=	${_MINIROOTFS}:rootfs
 DISTFILES+=	${package}.apk:packages
 _APK_FILES+=	${_DISTDIR}/${package}.apk
 .endfor
-
-# QA checks are disabled on purpose due to the excessive amount of
-# false positive findings.
-stage-qa:
 
 WRKSRC=		${WRKSRC_scripts}
 MAKE_ENV+=	VERSION=${PORTVERSION} \

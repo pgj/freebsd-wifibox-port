@@ -1,4 +1,4 @@
-TIMESTAMP = 1647274300
+TIMESTAMP = 1647380658
 SHA256 (wifibox-alpine/alpine-minirootfs-3.15.0-x86_64.tar.gz) = ec7ec80a96500f13c189a6125f2dbe8600ef593b87fc4670fe959dc02db727a2
 SIZE (wifibox-alpine/alpine-minirootfs-3.15.0-x86_64.tar.gz) = 2731445
 SHA256 (wifibox-alpine/alpine-base-3.15.0-r0.apk) = 7bffa7edd5245eb9d1bd36a4cb7968866faa8442c25470498c46422ad0dd790d
@@ -133,5 +133,5 @@ SHA256 (wifibox-alpine/linux-firmware-rtw88-20211027-r0.apk) = 96c7510ac3a07d768
 SIZE (wifibox-alpine/linux-firmware-rtw88-20211027-r0.apk) = 320556
 SHA256 (wifibox-alpine/linux-firmware-rtw89-20211027-r0.apk) = 3cb47710815e0ed479af65ab6ace18b2722f97e088306e0a38df4a471bdeffb3
 SIZE (wifibox-alpine/linux-firmware-rtw89-20211027-r0.apk) = 674569
-SHA256 (wifibox-alpine/pgj-freebsd-wifibox-alpine-2d6263aef525d62c7540924bb0c38e608d47d6fa_GH0.tar.gz) = bd96ce5415ad40023e8c48bfa2c638b3ed453f301bbfd4dd716183120ebd73cf
-SIZE (wifibox-alpine/pgj-freebsd-wifibox-alpine-2d6263aef525d62c7540924bb0c38e608d47d6fa_GH0.tar.gz) = 8708
+SHA256 (wifibox-alpine/pgj-freebsd-wifibox-alpine-45517973f7b9e520c0bfd020129fa0aa1c1a65cf_GH0.tar.gz) = 01c76cd0cd55202e4d0f3ed7e4ea87459880713f341e7608c8089a7b2bc92afd
+SIZE (wifibox-alpine/pgj-freebsd-wifibox-alpine-45517973f7b9e520c0bfd020129fa0aa1c1a65cf_GH0.tar.gz) = 9947
