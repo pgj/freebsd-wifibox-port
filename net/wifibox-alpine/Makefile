@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	${ALPINE_VERSION}.${ALPINE_DATE}
+PORTVERSION=	${ALPINE_VERSION}
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -49,19 +49,24 @@ GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	45517973f7b9e520c0bfd020129fa0aa1c1a65cf:scripts
 
-ALPINE_VERSION=	3.15
-ALPINE_DATE=	2022.03.12
+ALPINE_VERSION=	3.15.1
+_ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
+.if defined(ALPINE_DATE)
 _SNAPSHOT=	${ALPINE_DATE:S/./-/g}
-_ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/snapshots/${_SNAPSHOT}/v${ALPINE_VERSION}
+_ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/snapshots/${_SNAPSHOT}/v${_ALPINE_VER}
+PORTVERSION+=	.${ALPINE_DATE}
+.else
+_ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
+.endif
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		${_ALPINE_SITE}/main/x86_64/:packages
 
-_MINIROOTFS=	alpine-minirootfs-3.15.0-x86_64.tar.gz
-_PACKAGES=	alpine-base-3.15.0-r0 \
+_MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
+_PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
 		alpine-baselayout-3.2.0-r18 \
-		alpine-conf-3.13.0-r1 \
+		alpine-conf-3.13.1-r0 \
 		alpine-keys-2.4-r1 \
 		apk-tools-2.12.7-r3 \
 		argon2-libs-20190702-r1 \
@@ -85,18 +90,18 @@ _PACKAGES=	alpine-base-3.15.0-r0 \
 		libblkid-2.37.4-r0 \
 		libc-utils-0.7.2-r3 \
 		libcap-2.61-r0 \
-		libcrypto1.1-1.1.1l-r8 \
+		libcrypto1.1-1.1.1n-r0 \
 		libffi-3.4.2-r1 \
 		libmnl-1.0.4-r2 \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
 		libretls-3.3.4-r2 \
-		libssl1.1-1.1.1l-r8 \
+		libssl1.1-1.1.1n-r0 \
 		libtasn1-4.18.0-r0 \
 		libunistring-0.9.10-r1 \
 		libuuid-2.37.4-r0 \
 		linux-firmware-none-20211027-r0 \
-		linux-lts-5.15.26-r0 \
+		linux-lts-5.15.29-r0 \
 		mkinitfs-3.6.0-r0 \
 		musl-1.2.2-r7 \
 		musl-utils-1.2.2-r7 \
