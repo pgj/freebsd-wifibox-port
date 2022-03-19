@@ -50,12 +50,13 @@ GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	45517973f7b9e520c0bfd020129fa0aa1c1a65cf:scripts
 
 ALPINE_VERSION=	3.15.1
+ALPINE_DATE=	2022.03.19
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
 _SNAPSHOT=	${ALPINE_DATE:S/./-/g}
 _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/snapshots/${_SNAPSHOT}/v${_ALPINE_VER}
-PORTVERSION+=	.${ALPINE_DATE}
+PORTVERSION=	${ALPINE_VERSION}.${ALPINE_DATE}
 .else
 _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
