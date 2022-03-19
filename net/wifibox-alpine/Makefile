@@ -47,7 +47,7 @@ FW_RTW89_DESC=		linux-firmware-rtw89
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	45517973f7b9e520c0bfd020129fa0aa1c1a65cf:scripts
+GH_TAGNAME=	0a85e9276ae0486c97080d2ebd2264edec2e0cb9:scripts
 
 ALPINE_VERSION=	3.15.1
 ALPINE_DATE=	2022.03.19

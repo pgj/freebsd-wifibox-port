@@ -5,6 +5,7 @@ share/wifibox/disk.img
 share/wifibox/grub.cfg
 share/wifibox/initramfs
 share/wifibox/vmlinuz
+/var/run/wifibox/appliance/lock
 /var/run/wifibox/appliance/run
 /var/run/wifibox/appliance/spool/cron/crontabs
 /var/run/wifibox/appliance/spool/mail
@@ -18,8 +19,6 @@ share/wifibox/vmlinuz
 @dir /var/run/wifibox/appliance/lib/udhcpd
 @dir /var/run/wifibox/appliance/lib
 @dir /var/run/wifibox/appliance/local
-@dir /var/run/wifibox/appliance/lock/subsys
-@dir /var/run/wifibox/appliance/lock
 @dir /var/run/wifibox/appliance/log
 @dir /var/run/wifibox/appliance/mail
 @dir /var/run/wifibox/appliance/opt
