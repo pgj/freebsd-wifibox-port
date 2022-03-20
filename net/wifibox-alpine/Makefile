@@ -53,7 +53,7 @@ FS_TRIM_MAKE_ENV=	EXCLUDED_FILES=${WRKSRC}/guest/excluded.files
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	3b7edc7ce8bce527719269fd07787e1710a329eb:scripts
+GH_TAGNAME=	4fcdc7373ab32c218d442fb3a03e8f062fca95c1:scripts
 
 ALPINE_VERSION=	3.15.1
 ALPINE_DATE=	2022.03.19
