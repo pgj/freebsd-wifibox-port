@@ -16,7 +16,7 @@ BUILD_DEPENDS=	patchelf>0:sysutils/patchelf \
 
 OPTIONS_MULTI=		FIRMWARE
 OPTIONS_MULTI_FIRMWARE=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_MWLWIFI \
-			FW_OTHER FW_RTLWIFI FW_RTW88 FW_RTW89
+			FW_OTHER FW_RTLWIFI FW_RTW88 FW_RTW89 FW_B43LEGACY FW_B43
 
 OPTIONS_SINGLE=			COMPRESSION
 OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZO COMP_LZ4 COMP_XZ COMP_ZSTD
@@ -37,10 +37,12 @@ FW_ATH10K_DESC=		linux-firmware-ath10k
 FW_ATH11K_DESC=		linux-firmware-ath11k
 FW_BRCM_DESC=		linux-firmware-brcm
 FW_MWLWIFI_DESC=	linux-firmware-mwlwifi
-FW_OTHER_DESC=		linux-firmware-other (iwlwifi)
+FW_OTHER_DESC=		linux-firmware-other (iwlwifi, ath3k, ar[579]xxx)
 FW_RTLWIFI_DESC=	linux-firmware-rtlwifi
 FW_RTW88_DESC=		linux-firmware-rtw88
 FW_RTW89_DESC=		linux-firmware-rtw89
+FW_B43LEGACY_DESC=	b43legacy-firmware
+FW_B43_DESC=		b43-firmware
 
 COMP_GZIP_DESC=		gzip
 COMP_LZO_DESC=		lzo
@@ -53,7 +55,7 @@ FS_TRIM_MAKE_ENV=	EXCLUDED_FILES=${WRKSRC}/guest/excluded.files
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	f3367d8ca74e78428da12c26110fef22a8122994:scripts
+GH_TAGNAME=	08e3c56737530330355bf836baa18e8e9e47321c:scripts
 
 ALPINE_VERSION=	3.15.1
 ALPINE_DATE=	2022.03.19
@@ -68,7 +70,9 @@ _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
-		${_ALPINE_SITE}/main/x86_64/:packages
+		${_ALPINE_SITE}/main/x86_64/:packages \
+		https://sources.openwrt.org/:openwrt \
+		https://lwfinger.com/b43-firmware/:lwfinger
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
@@ -139,6 +143,9 @@ _FW_PACKAGES=	ATH6K:ath6k-20211027-r0 \
 		RTW88:rtw88-20211027-r0 \
 		RTW89:rtw89-20211027-r0
 
+_B43LEGACY_FIRMWARE=	wl_apsta-3.130.20.0
+_B43_FIRMWARE=		broadcom-wl-6.30.163.46
+
 .include <bsd.port.options.mk>
 
 .for config in ${_FW_PACKAGES}
@@ -153,6 +160,35 @@ DISTFILES+=	${_MINIROOTFS}:rootfs
 DISTFILES+=	${package}.apk:packages
 _APK_FILES+=	${_DISTDIR}/${package}.apk
 .endfor
+
+.if ${PORT_OPTIONS:MFW_B43LEGACY}
+DISTFILES+=	${_B43LEGACY_FIRMWARE}.o:openwrt
+.endif
+
+.if ${PORT_OPTIONS:MFW_B43}
+DISTFILES+=	${_B43_FIRMWARE}.tar.bz2:lwfinger
+EXTRACT_ONLY+=	${_B43_FIRMWARE}.tar.bz2
+.endif
+
+.if ${PORT_OPTIONS:MFW_B43*}
+BUILD_DEPENDS+=		b43-fwcutter>0:sysutils/b43-fwcutter
+_FIRMWAREDIR=		${WRKSRC}/guest/lib/firmware
+FW_B43_TARGETDIR=	${_FIRMWAREDIR}/b43
+FW_B43_FIRMWARE=	${WRKDIR}/${_B43_FIRMWARE}.wl_apsta.o
+FW_B43LEGACY_TARGETDIR=	${_FIRMWAREDIR}/b43legacy
+FW_B43LEGACY_FIRMWARE=	${_DISTDIR}/${_B43LEGACY_FIRMWARE}.o
+
+pre-build:
+.for fw in ${PORT_OPTIONS:MFW_B43*}
+.if ${fw}
+	(_TARGETDIR=${${fw}_TARGETDIR}; \
+	${MKDIR} $$_TARGETDIR; \
+	${LOCALBASE}/bin/b43-fwcutter -w $$_TARGETDIR ${${fw}_FIRMWARE}; \
+	${FIND} $$_TARGETDIR -mindepth 2 -type f -exec ${MV} {} $$_TARGETDIR \; ; \
+	${FIND} $$_TARGETDIR -type d -delete)
+.endif
+.endfor
+.endif
 
 WRKSRC=		${WRKSRC_scripts}
 MAKE_ENV+=	VERSION=${PORTVERSION} \
