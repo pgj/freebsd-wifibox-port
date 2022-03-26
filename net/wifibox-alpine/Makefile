@@ -58,6 +58,7 @@ GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	08e3c56737530330355bf836baa18e8e9e47321c:scripts
 
 ALPINE_VERSION=	3.15.2
+ALPINE_DATE=	2022.03.26
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
@@ -105,13 +106,13 @@ _PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
 		libmnl-1.0.4-r2 \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
-		libretls-3.3.4-r2 \
+		libretls-3.3.4-r3 \
 		libssl1.1-1.1.1n-r0 \
 		libtasn1-4.18.0-r0 \
 		libunistring-0.9.10-r1 \
 		libuuid-2.37.4-r0 \
 		linux-firmware-none-20211027-r0 \
-		linux-lts-5.15.29-r0 \
+		linux-lts-5.15.30-r0 \
 		mkinitfs-3.6.0-r0 \
 		musl-1.2.2-r7 \
 		musl-utils-1.2.2-r7 \
