@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	${ALPINE_VERSION}
+PORTVERSION=	${PACKAGE_SET}
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -21,15 +21,11 @@ OPTIONS_MULTI_FIRMWARE=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_MWLWIFI
 OPTIONS_SINGLE=			COMPRESSION
 OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZO COMP_LZ4 COMP_XZ COMP_ZSTD
 
-OPTIONS_DEFINE=		FS_TRIM
-
 OPTIONS_DEFAULT=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_MWLWIFI \
 			FW_OTHER FW_RTLWIFI FW_RTW88 FW_RTW89 \
-			COMP_XZ FS_TRIM
+			COMP_XZ
 
 OPTIONS_SUB=		yes
-
-FS_TRIM_DESC=		Trim files (experimental)
 
 FW_ATH6K_DESC=		linux-firmware-ath6k
 FW_ATH9K_DESC=		linux-firmware-ath9k_htc
@@ -50,12 +46,14 @@ COMP_LZ4_DESC=		lz4
 COMP_XZ_DESC=		xz
 COMP_ZSTD_DESC=		zstd
 
-FS_TRIM_MAKE_ENV=	EXCLUDED_FILES=${WRKSRC}/guest/excluded.files
+PACKAGE_SET=	20220410
+_GITHUB_TAG=	snapshot-${PACKAGE_SET}
+_GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	a34a05c190508bb69a7455ffddd90d99a1899e52:scripts
+GH_TAGNAME=	${_GITHUB_TAG}:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -70,66 +68,27 @@ _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		${_ALPINE_SITE}/main/x86_64/:packages \
+		${_GITHUB_SITE}/${_GITHUB_TAG}/:custom_packages \
 		https://sources.openwrt.org/:openwrt \
 		https://lwfinger.com/b43-firmware/:lwfinger
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
-_PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
-		alpine-baselayout-3.2.0-r18 \
-		alpine-conf-3.13.1-r0 \
-		alpine-keys-2.4-r1 \
-		apk-tools-2.12.7-r3 \
-		argon2-libs-20190702-r1 \
-		busybox-1.34.1-r5 \
-		busybox-extras-1.34.1-r5 \
-		busybox-initscripts-4.0-r5 \
-		busybox-suid-1.34.1-r5 \
-		ca-certificates-bundle-20211220-r0 \
-		cryptsetup-libs-2.4.3-r0 \
-		dbus-libs-1.12.20-r4 \
-		device-mapper-libs-2.02.187-r2 \
-		gmp-6.2.1-r1 \
-		gnutls-3.7.1-r0 \
-		ifupdown-ng-0.11.3-r0 \
-		iptables-1.8.7-r1 \
-		iptables-openrc-1.8.7-r1 \
-		json-c-0.15-r1 \
-		kmod-29-r2 \
-		kmod-libs-29-r2 \
-		lddtree-1.26-r2 \
-		libblkid-2.37.4-r0 \
-		libc-utils-0.7.2-r3 \
-		libcap-2.61-r0 \
+_PACKAGES=	baselayout-3.2.0-r18:wifibox \
+		busybox-1.34.1-r5:wifibox \
+		ifupdown-ng-0.11.3-r0:wifibox \
+		iptables-1.8.7-r1:wifibox \
 		libcrypto1.1-1.1.1n-r0 \
-		libffi-3.4.2-r1 \
 		libmnl-1.0.4-r2 \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
-		libretls-3.3.4-r3 \
 		libssl1.1-1.1.1n-r0 \
-		libtasn1-4.18.0-r0 \
-		libunistring-0.9.10-r1 \
-		libuuid-2.37.4-r0 \
-		linux-firmware-none-20211027-r0 \
-		linux-lts-5.15.32-r0 \
-		mkinitfs-3.6.0-r0 \
+		linux-lts-5.15.33-r0:wifibox \
 		musl-1.2.2-r7 \
-		musl-utils-1.2.2-r7 \
-		ncurses-libs-6.3_p20211120-r0 \
-		ncurses-terminfo-base-6.3_p20211120-r0 \
-		nettle-3.7.3-r0 \
-		openrc-0.44.7-r5 \
-		p11-kit-0.24.0-r1 \
+		openrc-0.44.7-r5:wifibox \
 		pcsc-lite-libs-1.9.4-r0 \
-		readline-8.1.1-r0 \
-		scanelf-1.3.3-r0 \
-		socat-1.7.4.2-r0 \
-		ssl_client-1.34.1-r5 \
-		wpa_supplicant-2.9-r17 \
-		wpa_supplicant-openrc-2.9-r17 \
-		xz-libs-5.2.5-r0 \
-		zlib-1.2.12-r0 \
-		zstd-libs-1.5.0-r0
+		socat-1.7.4.2-r0:wifibox \
+		wpa_passthru-0.1.0-r0:wifibox \
+		wpa_supplicant-2.9-r17:wifibox
 
 _FW_PACKAGES=	ATH6K:ath6k-20211027-r0 \
 		ATH9K:ath9k_htc-20211027-r0 \
@@ -156,8 +115,12 @@ _PACKAGES+=	linux-firmware-${config:C@^(.*):(.*)$@\2@}
 DIST_SUBDIR=	wifibox-alpine
 DISTFILES+=	${_MINIROOTFS}:rootfs
 .for package in ${_PACKAGES}
-DISTFILES+=	${package}.apk:packages
-_APK_FILES+=	${_DISTDIR}/${package}.apk
+.if ${package:M*\:wifibox}
+DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:custom_packages
+.else
+DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:packages
+.endif
+_APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):wifibox$@\1@}.apk
 .endfor
 
 .if ${PORT_OPTIONS:MFW_B43LEGACY}
