@@ -57,8 +57,7 @@ GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	a34a05c190508bb69a7455ffddd90d99a1899e52:scripts
 
-ALPINE_VERSION=	3.15.2
-ALPINE_DATE=	2022.03.26
+ALPINE_VERSION=	3.15.3
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
@@ -112,14 +111,14 @@ _PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
 		libunistring-0.9.10-r1 \
 		libuuid-2.37.4-r0 \
 		linux-firmware-none-20211027-r0 \
-		linux-lts-5.15.30-r0 \
+		linux-lts-5.15.32-r0 \
 		mkinitfs-3.6.0-r0 \
 		musl-1.2.2-r7 \
 		musl-utils-1.2.2-r7 \
 		ncurses-libs-6.3_p20211120-r0 \
 		ncurses-terminfo-base-6.3_p20211120-r0 \
 		nettle-3.7.3-r0 \
-		openrc-0.44.7-r3 \
+		openrc-0.44.7-r5 \
 		p11-kit-0.24.0-r1 \
 		pcsc-lite-libs-1.9.4-r0 \
 		readline-8.1.1-r0 \
@@ -129,7 +128,7 @@ _PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
 		wpa_supplicant-2.9-r17 \
 		wpa_supplicant-openrc-2.9-r17 \
 		xz-libs-5.2.5-r0 \
-		zlib-1.2.11-r3 \
+		zlib-1.2.12-r0 \
 		zstd-libs-1.5.0-r0
 
 _FW_PACKAGES=	ATH6K:ath6k-20211027-r0 \
