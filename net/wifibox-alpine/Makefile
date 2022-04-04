@@ -57,7 +57,7 @@ GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	a34a05c190508bb69a7455ffddd90d99a1899e52:scripts
 
-ALPINE_VERSION=	3.15.3
+ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
@@ -80,10 +80,10 @@ _PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
 		alpine-keys-2.4-r1 \
 		apk-tools-2.12.7-r3 \
 		argon2-libs-20190702-r1 \
-		busybox-1.34.1-r4 \
-		busybox-extras-1.34.1-r4 \
+		busybox-1.34.1-r5 \
+		busybox-extras-1.34.1-r5 \
 		busybox-initscripts-4.0-r5 \
-		busybox-suid-1.34.1-r4 \
+		busybox-suid-1.34.1-r5 \
 		ca-certificates-bundle-20211220-r0 \
 		cryptsetup-libs-2.4.3-r0 \
 		dbus-libs-1.12.20-r4 \
@@ -124,7 +124,7 @@ _PACKAGES=	alpine-base-${ALPINE_VERSION}-r0 \
 		readline-8.1.1-r0 \
 		scanelf-1.3.3-r0 \
 		socat-1.7.4.2-r0 \
-		ssl_client-1.34.1-r4 \
+		ssl_client-1.34.1-r5 \
 		wpa_supplicant-2.9-r17 \
 		wpa_supplicant-openrc-2.9-r17 \
 		xz-libs-5.2.5-r0 \
