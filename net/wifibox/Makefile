@@ -32,7 +32,7 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox freebsd-wifibox-image:image
-GH_TAGNAME=	${PORTVERSION}
+GH_TAGNAME=	15245e8eae1364d9f2ea41e23ef0b1f392dcd8cf
 GH_TAGNAME+=	${IMAGE_VERSION}:image
 
 IMAGE_VERSION=	snapshot-20220328
