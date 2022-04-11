@@ -152,6 +152,10 @@ pre-build:
 .endfor
 .endif
 
+post-install:
+	${PRINTF} "cpus=1\nmemory=45M\n" \
+		> ${STAGEDIR}${PREFIX}/share/wifibox/bhyve.conf
+
 WRKSRC=		${WRKSRC_scripts}
 MAKE_ENV+=	VERSION=${PORTVERSION} \
 		MINIROOTFS=${_DISTDIR}/${_MINIROOTFS} \

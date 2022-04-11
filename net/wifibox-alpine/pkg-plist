@@ -1,6 +1,7 @@
 @sample etc/wifibox/interfaces.conf.sample
 @sample etc/wifibox/udhcpd.conf.sample
 man/man5/wifibox-alpine.5.gz
+share/wifibox/bhyve.conf
 share/wifibox/disk.img
 share/wifibox/grub.cfg
 share/wifibox/vmlinuz
