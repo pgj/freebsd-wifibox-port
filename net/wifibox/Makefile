@@ -10,8 +10,16 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
 
-RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve \
-		wifibox-alpine>0:net/wifibox-alpine
+.include "${.CURDIR}/../wifibox-alpine/flavors.mk"
+
+RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
+
+.for flavor in ${_FLAVORS}
+${flavor}_RUN_DEPENDS=		wifibox-alpine-${flavor}>0:net/wifibox-alpine@${flavor}
+${flavor}_PKGNAMESUFFIX=	-${flavor}
+.endfor
+
+default_RUN_DEPENDS=		wifibox-alpine>0:net/wifibox-alpine
 
 OPTIONS_DEFINE=			BHYVE_PLUS WPA_PASSTHRU
 OPTIONS_DEFAULT=		WPA_PASSTHRU
