@@ -119,6 +119,17 @@ _FW_PACKAGES=	ATH6K:ath6k-20211027-r0 \
 _B43LEGACY_FIRMWARE=	wl_apsta-3.130.20.0
 _B43_FIRMWARE=		broadcom-wl-6.30.163.46
 
+pre-everything::
+.if !defined(FIRMWARE_FILES)
+	@${ECHO_MSG} "===> NOTICE:"
+	@${ECHO_MSG}
+	@${ECHO_MSG} "Use the FIRMWARE_FILES make(1) variable to keep only the firmware"
+	@${ECHO_MSG} "files that are used by the driver to reduce the size of the disk"
+	@${ECHO_MSG} "image."
+	@${ECHO_MSG}
+	@sleep 1
+.endif
+
 .include <bsd.port.options.mk>
 
 .for config in ${_FW_PACKAGES}
