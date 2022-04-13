@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	${PACKAGE_SET}
+PORTVERSION=	20220411
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -35,24 +35,24 @@ COMP_ZSTD_DESC=		zstd
 
 .if ${FLAVOR:U} == default
 OPTIONS_MULTI=		FIRMWARE
-OPTIONS_MULTI_FIRMWARE=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_MWLWIFI \
-			FW_OTHER FW_RTLWIFI FW_RTW88 FW_RTW89 FW_B43LEGACY FW_B43
+OPTIONS_MULTI_FIRMWARE=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_B43 FW_B43LEGACY\
+			FW_BRCM FW_IWLWIFI FW_MWLWIFI FW_RTLWIFI FW_RTW88 FW_RTW89
 
-OPTIONS_DEFAULT+=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_MWLWIFI \
-			FW_OTHER FW_RTLWIFI FW_RTW88 FW_RTW89
+OPTIONS_DEFAULT+=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_IWLWIFI\
+			FW_MWLWIFI FW_RTLWIFI FW_RTW88 FW_RTW89
 
-FW_ATH6K_DESC=		linux-firmware-ath6k
-FW_ATH9K_DESC=		linux-firmware-ath9k_htc
-FW_ATH10K_DESC=		linux-firmware-ath10k
-FW_ATH11K_DESC=		linux-firmware-ath11k
-FW_BRCM_DESC=		linux-firmware-brcm
-FW_MWLWIFI_DESC=	linux-firmware-mwlwifi
-FW_OTHER_DESC=		linux-firmware-other (iwlwifi, ath3k, ar[579]xxx)
-FW_RTLWIFI_DESC=	linux-firmware-rtlwifi
-FW_RTW88_DESC=		linux-firmware-rtw88
-FW_RTW89_DESC=		linux-firmware-rtw89
-FW_B43LEGACY_DESC=	b43legacy-firmware
-FW_B43_DESC=		b43-firmware
+FW_ATH6K_DESC=		ath6k
+FW_ATH9K_DESC=		ath9k_htc
+FW_ATH10K_DESC=		ath10k
+FW_ATH11K_DESC=		ath11k
+FW_BRCM_DESC=		brcm
+FW_IWLWIFI_DESC=	iwlwifi
+FW_MWLWIFI_DESC=	mwlwifi
+FW_RTLWIFI_DESC=	rtlwifi
+FW_RTW88_DESC=		rtw88
+FW_RTW89_DESC=		rtw89
+FW_B43LEGACY_DESC=	b43legacy
+FW_B43_DESC=		b43
 .endif
 
 .for flavor in ${_FLAVORS}
@@ -81,9 +81,14 @@ PORTVERSION=	${ALPINE_VERSION}.${ALPINE_DATE}
 _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
 
+_LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
+_LINUXFW_TAG=	20220411
+_LINUXFW=	linux-firmware-${_LINUXFW_TAG}
+
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		${_ALPINE_SITE}/main/x86_64/:packages \
 		${_GITHUB_SITE}/${_GITHUB_TAG}/:custom_packages \
+		${_LINUXFW_SITE}/linux-firmware.git/snapshot/:linux_firmware \
 		https://sources.openwrt.org/:openwrt \
 		https://lwfinger.com/b43-firmware/:lwfinger
 
@@ -105,17 +110,6 @@ _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		wpa_passthru-0.1.0-r0:wifibox \
 		wpa_supplicant-2.9-r17:wifibox
 
-_FW_PACKAGES=	ATH6K:ath6k-20211027-r0 \
-		ATH9K:ath9k_htc-20211027-r0 \
-		ATH10K:ath10k-20211027-r0 \
-		ATH11K:ath11k-20211027-r0 \
-		BRCM:brcm-20211027-r0 \
-		MWLWIFI:mwlwifi-20211027-r0 \
-		OTHER:other-20211027-r0 \
-		RTLWIFI:rtlwifi-20211027-r0 \
-		RTW88:rtw88-20211027-r0 \
-		RTW89:rtw89-20211027-r0
-
 _B43LEGACY_FIRMWARE=	wl_apsta-3.130.20.0
 _B43_FIRMWARE=		broadcom-wl-6.30.163.46
 
@@ -132,14 +126,15 @@ pre-everything::
 
 .include <bsd.port.options.mk>
 
-.for config in ${_FW_PACKAGES}
-.if ${PORT_OPTIONS:MFW_${config:C@^(.*):(.*)$@\1@}}
-_PACKAGES+=	linux-firmware-${config:C@^(.*):(.*)$@\2@}
-.endif
-.endfor
-
 DIST_SUBDIR=	wifibox-alpine
 DISTFILES+=	${_MINIROOTFS}:rootfs
+
+.if ${PORT_OPTIONS:MFW_*:NFW_B43*}
+_LINUXFWFILE=	${_LINUXFW}.tar.gz
+_LINUXFWDIR=	${WRKDIR}/${_LINUXFW}
+DISTFILES+=	${_LINUXFWFILE}:linux_firmware
+.endif
+
 .for package in ${_PACKAGES}
 .if ${package:M*\:wifibox}
 DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:custom_packages
@@ -148,6 +143,8 @@ DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:packages
 .endif
 _APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):wifibox$@\1@}.apk
 .endfor
+
+_FIRMWAREDIR=	${WRKSRC}/guest/lib/firmware
 
 .if ${PORT_OPTIONS:MFW_B43LEGACY}
 DISTFILES+=	${_B43LEGACY_FIRMWARE}.o:openwrt
@@ -160,11 +157,22 @@ EXTRACT_ONLY+=	${_B43_FIRMWARE}.tar.bz2
 
 .if ${PORT_OPTIONS:MFW_B43*}
 BUILD_DEPENDS+=		b43-fwcutter>0:sysutils/b43-fwcutter
-_FIRMWAREDIR=		${WRKSRC}/guest/lib/firmware
 FW_B43_TARGETDIR=	${_FIRMWAREDIR}/b43
 FW_B43_FIRMWARE=	${WRKDIR}/${_B43_FIRMWARE}.wl_apsta.o
 FW_B43LEGACY_TARGETDIR=	${_FIRMWAREDIR}/b43legacy
 FW_B43LEGACY_FIRMWARE=	${_DISTDIR}/${_B43LEGACY_FIRMWARE}.o
+.endif
+
+FW_ATH6K_FILES=		ath6k
+FW_ATH9K_FILES=		ath9k_htc
+FW_ATH10K_FILES=	ath10k
+FW_ATH11K_FILES=	ath11k
+FW_BRCM_FILES=		brcm
+FW_IWLWIFI_FILES=	iwlwifi-*
+FW_MWLWIFI_FILES=	mwlwifi
+FW_RTLWIFI_FILES=	rtlwifi
+FW_RTW88_FILES=		rtw88
+FW_RTW89_FILES=		rtw89
 
 pre-build:
 .for fw in ${PORT_OPTIONS:MFW_B43*}
@@ -176,7 +184,15 @@ pre-build:
 	${FIND} $$_TARGETDIR -type d -delete)
 .endif
 .endfor
+.if defined(_LINUXFWDIR)
+	${TAR} -xf ${_DISTDIR}/${_LINUXFWFILE} -C ${WRKDIR}
+	${MKDIR} ${_FIRMWAREDIR}
 .endif
+.for fw_opt in ${PORT_OPTIONS:MFW_*:NFW_B43*}
+.if defined(${fw_opt}_FILES)
+	${CP} -R ${_LINUXFWDIR}/${${fw_opt}_FILES} ${_FIRMWAREDIR}
+.endif
+.endfor
 
 post-install:
 	${PRINTF} "cpus=1\nmemory=45M\n" \
