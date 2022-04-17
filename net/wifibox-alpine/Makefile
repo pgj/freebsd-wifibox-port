@@ -86,7 +86,8 @@ _LINUXFW_TAG=	20220411
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
-		${_ALPINE_SITE}/main/x86_64/:packages \
+		${_ALPINE_SITE}/main/x86_64/:main_packages \
+		${_ALPINE_SITE}/community/x86_64/:community_packages \
 		${_GITHUB_SITE}/${_GITHUB_TAG}/:custom_packages \
 		${_LINUXFW_SITE}/linux-firmware.git/snapshot/:linux_firmware \
 		https://sources.openwrt.org/:openwrt \
@@ -97,6 +98,7 @@ _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		busybox-1.34.1-r5:wifibox \
 		ifupdown-ng-0.11.3-r0:wifibox \
 		iptables-1.8.7-r1:wifibox \
+		iw-5.16-r0:community \
 		libcrypto1.1-1.1.1n-r0 \
 		libmnl-1.0.4-r2 \
 		libnftnl-1.2.1-r0 \
@@ -138,10 +140,12 @@ DISTFILES+=	${_LINUXFWFILE}:linux_firmware
 .for package in ${_PACKAGES}
 .if ${package:M*\:wifibox}
 DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:custom_packages
+.elif ${package:M*\:community}
+DISTFILES+=	${package:C@^([^:]*):community$@\1@}.apk:community_packages
 .else
-DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:packages
+DISTFILES+=	${package:C@^([^:]*):wifibox$@\1@}.apk:main_packages
 .endif
-_APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):wifibox$@\1@}.apk
+_APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):.*$@\1@}.apk
 .endfor
 
 _FIRMWAREDIR=	${WRKSRC}/guest/lib/firmware

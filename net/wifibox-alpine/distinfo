@@ -1,4 +1,4 @@
-TIMESTAMP = 1649810622
+TIMESTAMP = 1650227224
 SHA256 (wifibox-alpine/alpine-minirootfs-3.15.4-x86_64.tar.gz) = 6abd0409ccd6b27cb5311e0d475af5a284515eb219626334b29b1c3141d47653
 SIZE (wifibox-alpine/alpine-minirootfs-3.15.4-x86_64.tar.gz) = 2730061
 SHA256 (wifibox-alpine/linux-firmware-20220411.tar.gz) = 533ae621b3eacf6a4696dab52a9dbc5727403a175c413b1682ab3f9cfb37872f
@@ -11,6 +11,8 @@ SHA256 (wifibox-alpine/ifupdown-ng-0.11.3-r0.apk) = 7ed998628731d73f1aca736895a3
 SIZE (wifibox-alpine/ifupdown-ng-0.11.3-r0.apk) = 29480
 SHA256 (wifibox-alpine/iptables-1.8.7-r1.apk) = 3f2b6c01e101ff23be57d6d6a35880f2669020a584563a5b383fbca409fbc66f
 SIZE (wifibox-alpine/iptables-1.8.7-r1.apk) = 467201
+SHA256 (wifibox-alpine/iw-5.16-r0.apk) = 3632bc7cf956f32a449fdbe80faba00bfdde342a6ff8ffa55c6008b818eccc54
+SIZE (wifibox-alpine/iw-5.16-r0.apk) = 99354
 SHA256 (wifibox-alpine/libcrypto1.1-1.1.1n-r0.apk) = bbc4f71851655a61eff270ce01f9a90575344ac645b9b0661ae37af77c952977
 SIZE (wifibox-alpine/libcrypto1.1-1.1.1n-r0.apk) = 1208228
 SHA256 (wifibox-alpine/libmnl-1.0.4-r2.apk) = 6d3215caa5a9f2faac42cf3c2d0999a3ad12f8e95e75839d14ead8e3682d14df
