@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220411
+PORTVERSION=	20220423
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -35,24 +35,30 @@ COMP_ZSTD_DESC=		zstd
 
 .if ${FLAVOR:U} == default
 OPTIONS_MULTI=		FIRMWARE
-OPTIONS_MULTI_FIRMWARE=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_B43 FW_B43LEGACY\
-			FW_BRCM FW_IWLWIFI FW_MWLWIFI FW_RTLWIFI FW_RTW88 FW_RTW89
+OPTIONS_MULTI_FIRMWARE=	FW_ATH10K FW_ATH11K FW_ATMEL FW_B43 FW_B43LEGACY FW_BRCM\
+			FW_IPW2100 FW_IPW2200 FW_IWL3945 FW_IWL4965 FW_IWLWIFI\
+			FW_MEDIATEK FW_MWL8K FW_RT61 FW_RTLWIFI FW_RTW88 FW_TI
 
-OPTIONS_DEFAULT+=	FW_ATH6K FW_ATH9K FW_ATH10K FW_ATH11K FW_BRCM FW_IWLWIFI\
-			FW_MWLWIFI FW_RTLWIFI FW_RTW88 FW_RTW89
+OPTIONS_DEFAULT+=	FW_ATH10K FW_ATH11K FW_BRCM FW_IWLWIFI FW_MEDIATEK\
+			FW_RTLWIFI FW_RTW88
 
-FW_ATH6K_DESC=		ath6k
-FW_ATH9K_DESC=		ath9k_htc
-FW_ATH10K_DESC=		ath10k
-FW_ATH11K_DESC=		ath11k
-FW_BRCM_DESC=		brcm
-FW_IWLWIFI_DESC=	iwlwifi
-FW_MWLWIFI_DESC=	mwlwifi
-FW_RTLWIFI_DESC=	rtlwifi
-FW_RTW88_DESC=		rtw88
-FW_RTW89_DESC=		rtw89
-FW_B43LEGACY_DESC=	b43legacy
-FW_B43_DESC=		b43
+FW_ATH10K_DESC=		Qualcomm Atheros 802.11ac
+FW_ATH11K_DESC=		Qualcomm Atheros 802.11ax
+FW_ATMEL_DESC=		Atmel at76c50x 802.11b
+FW_B43_DESC=		Broadcom B43xx 802.11a/b/g/n
+FW_B43LEGACY_DESC=	Broadcom B43xx 802.11b (legacy)
+FW_BRCM_DESC=		Broadcom 802.11n
+FW_IWL3945_DESC=	Intel(R) PRO/Wireless 3945ABG 802.11a/b/g
+FW_IWL4965_DESC=	Intel(R) Wireless WiFi 4965AGN 802.11a/b/g/n
+FW_IWLWIFI_DESC=	Intel(R) Wireless WiFi 802.11a/b/g/n
+FW_IPW2100_DESC=	Intel(R) PRO/Wireless 2100 802.11a/b
+FW_IPW2200_DESC=	Intel(R) PRO/Wireless 2200 802.11b/g/n
+FW_MEDIATEK_DESC=	MediaTek MT76xxx 802.11n, MT79xx 802.11ax
+FW_MWL8K_DESC=		Marvell 88W8xxx (TopDog) 802.11b/g/n
+FW_RT61_DESC=		Ralink RT2xxx (RT61) 802.11a/b/g
+FW_RTLWIFI_DESC=	Realtek 802.11n
+FW_RTW88_DESC=		Realtek 802.11ac
+FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
 .endif
 
 .for flavor in ${_FLAVORS}
@@ -61,14 +67,12 @@ PORT_OPTIONS+=		FW_${flavor:tu}
 .endif
 .endfor
 
-PACKAGE_SET=	20220410
-_GITHUB_TAG=	snapshot-${PACKAGE_SET}
 _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	${_GITHUB_TAG}:scripts
+GH_TAGNAME=	3916d138c9fc8ed07aec06e5b99be051c9497a45:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -76,7 +80,6 @@ _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 .if defined(ALPINE_DATE)
 _SNAPSHOT=	${ALPINE_DATE:S/./-/g}
 _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/snapshots/${_SNAPSHOT}/v${_ALPINE_VER}
-PORTVERSION=	${ALPINE_VERSION}.${ALPINE_DATE}
 .else
 _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
@@ -88,10 +91,13 @@ _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		${_ALPINE_SITE}/main/x86_64/:main_packages \
 		${_ALPINE_SITE}/community/x86_64/:community_packages \
-		${_GITHUB_SITE}/${_GITHUB_TAG}/:custom_packages \
+		${_GITHUB_SITE}/packages/:custom_packages \
 		${_LINUXFW_SITE}/linux-firmware.git/snapshot/:linux_firmware \
 		https://sources.openwrt.org/:openwrt \
-		https://lwfinger.com/b43-firmware/:lwfinger
+		https://lwfinger.com/b43-firmware/:b43 \
+		https://lwfinger.com/firmware/:rt61 \
+		https://thekelleys.org.uk/atmel/:atmel \
+		https://github.com/openwrt/mt76/archive/:mt76
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.2.0-r18:wifibox \
@@ -104,7 +110,7 @@ _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
 		libssl1.1-1.1.1n-r0 \
-		linux-lts-5.15.33-r0:wifibox \
+		linux-lts-5.15.35-r0:wifibox \
 		musl-1.2.2-r7 \
 		openrc-0.44.7-r5:wifibox \
 		pcsc-lite-libs-1.9.4-r0 \
@@ -112,8 +118,17 @@ _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		wpa_passthru-0.1.0-r0:wifibox \
 		wpa_supplicant-2.9-r17:wifibox
 
+_ATMEL_FIRMWARE=	atmel-firmware-1.3
 _B43LEGACY_FIRMWARE=	wl_apsta-3.130.20.0
 _B43_FIRMWARE=		broadcom-wl-6.30.163.46
+_IPW2100_FIRMWARE=	ipw/ipw2100-1.3 \
+			ipw/ipw2100-1.3-i
+_IPW2200_FIRMWARE=	iwi/ipw2200-bss \
+			iwi/ipw2200-ibss
+_MT76_FIRMWARE=		eecbb49920732b9b364f15c1ef0066342544b22b
+_RT61_FIRMWARE=		rt2561 \
+			rt2561s \
+			rt2661
 
 pre-everything::
 .if !defined(FIRMWARE_FILES)
@@ -131,7 +146,25 @@ pre-everything::
 DIST_SUBDIR=	wifibox-alpine
 DISTFILES+=	${_MINIROOTFS}:rootfs
 
-.if ${PORT_OPTIONS:MFW_*:NFW_B43*}
+LFW_ATH10K_FILES=	ath10k
+LFW_ATH11K_FILES=	ath11k
+LFW_BRCM_FILES=		brcm
+LFW_IWL3945_FILES=	iwlwifi-3945-*.ucode
+LFW_IWL4965_FILES=	iwlwifi-4965-*.ucode
+LFW_IWLWIFI_FILES=	iwlwifi-*
+LFW_MEDIATEK_FILES=	mediatek
+LFW_MWL8K_FILES=	mwl8k
+LFW_RTLWIFI_FILES=	rtlwifi
+LFW_RTW88_FILES=	rtw88
+LFW_TI_FILES=		ti-connectivity
+
+.for fw_opt in ${PORT_OPTIONS:MFW_*}
+.if defined(L${fw_opt}_FILES)
+LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
+.endif
+.endfor
+
+.if !empty(LINUX_FIRMWARE)
 _LINUXFWFILE=	${_LINUXFW}.tar.gz
 _LINUXFWDIR=	${WRKDIR}/${_LINUXFW}
 DISTFILES+=	${_LINUXFWFILE}:linux_firmware
@@ -150,12 +183,16 @@ _APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):.*$@\1@}.apk
 
 _FIRMWAREDIR=	${WRKSRC}/guest/lib/firmware
 
+.if ${PORT_OPTIONS:MFW_ATMEL}
+DISTFILES+=	${_ATMEL_FIRMWARE}.tar.gz:atmel
+.endif
+
 .if ${PORT_OPTIONS:MFW_B43LEGACY}
 DISTFILES+=	${_B43LEGACY_FIRMWARE}.o:openwrt
 .endif
 
 .if ${PORT_OPTIONS:MFW_B43}
-DISTFILES+=	${_B43_FIRMWARE}.tar.bz2:lwfinger
+DISTFILES+=	${_B43_FIRMWARE}.tar.bz2:b43
 EXTRACT_ONLY+=	${_B43_FIRMWARE}.tar.bz2
 .endif
 
@@ -167,18 +204,22 @@ FW_B43LEGACY_TARGETDIR=	${_FIRMWAREDIR}/b43legacy
 FW_B43LEGACY_FIRMWARE=	${_DISTDIR}/${_B43LEGACY_FIRMWARE}.o
 .endif
 
-FW_ATH6K_FILES=		ath6k
-FW_ATH9K_FILES=		ath9k_htc
-FW_ATH10K_FILES=	ath10k
-FW_ATH11K_FILES=	ath11k
-FW_BRCM_FILES=		brcm
-FW_IWLWIFI_FILES=	iwlwifi-*
-FW_MWLWIFI_FILES=	mwlwifi
-FW_RTLWIFI_FILES=	rtlwifi
-FW_RTW88_FILES=		rtw88
-FW_RTW89_FILES=		rtw89
+.if ${PORT_OPTIONS:MFW_IPW2*} && !exists(${SRC_BASE}/sys/Makefile)
+IGNORE= requires kernel source files in SRC_BASE=${SRC_BASE}
+.endif
+
+.if ${PORT_OPTIONS:MFW_MEDIATEK}
+DISTFILES+=	${_MT76_FIRMWARE}.zip:mt76
+.endif
+
+.if ${PORT_OPTIONS:MFW_RT61}
+.for fw in ${_RT61_FIRMWARE}
+DISTFILES+=	${fw}.bin:rt61
+.endfor
+.endif
 
 pre-build:
+	${MKDIR} ${_FIRMWAREDIR}
 .for fw in ${PORT_OPTIONS:MFW_B43*}
 .if ${fw}
 	(_TARGETDIR=${${fw}_TARGETDIR}; \
@@ -188,15 +229,32 @@ pre-build:
 	${FIND} $$_TARGETDIR -type d -delete)
 .endif
 .endfor
-.if defined(_LINUXFWDIR)
-	${TAR} -xf ${_DISTDIR}/${_LINUXFWFILE} -C ${WRKDIR}
-	${MKDIR} ${_FIRMWAREDIR}
+.if ${PORT_OPTIONS:MFW_ATMEL}
+	${TAR} -xf ${_DISTDIR}/${_ATMEL_FIRMWARE}.tar.gz \
+		-C ${_FIRMWAREDIR} --strip-components 2 \
+		*/images/atmel_*.bin
 .endif
-.for fw_opt in ${PORT_OPTIONS:MFW_*:NFW_B43*}
-.if defined(${fw_opt}_FILES)
-	${CP} -R ${_LINUXFWDIR}/${${fw_opt}_FILES} ${_FIRMWAREDIR}
-.endif
+.for fw in ${PORT_OPTIONS:MFW_IPW2*}
+.for fw_file in ${${fw:C@FW@@}_FIRMWARE}
+	uudecode -p ${SRC_BASE}/sys/contrib/dev/${fw_file}.fw.uu \
+		> ${_FIRMWAREDIR}/${fw_file:C@^[^/]*/(.*)@\1@}.fw
 .endfor
+.endfor
+.if ${PORT_OPTIONS:MFW_RT61}
+.for fw in ${_RT61_FIRMWARE}
+	${CP} ${_DISTDIR}/${fw}.bin ${_FIRMWAREDIR}
+.endfor
+.endif
+.for fw_files in ${LINUX_FIRMWARE}
+	${TAR} -xf ${_DISTDIR}/${_LINUXFWFILE} \
+		-C ${_FIRMWAREDIR} --strip-components 1 \
+		*/${fw_files}
+.endfor
+.if ${PORT_OPTIONS:MFW_MEDIATEK}
+	${TAR} -xf ${_DISTDIR}/${_MT76_FIRMWARE}.zip \
+		-C ${_FIRMWAREDIR} --strip-components 2 \
+		*/firmware/mt76??_e?.bin
+.endif
 
 post-install:
 	${PRINTF} "cpus=1\nmemory=45M\n" \
