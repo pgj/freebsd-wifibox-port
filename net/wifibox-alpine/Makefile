@@ -72,7 +72,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	3916d138c9fc8ed07aec06e5b99be051c9497a45:scripts
+GH_TAGNAME=	72f172a8eab45e2cdac686e92e0eaff16adf4560:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -115,7 +115,7 @@ _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		openrc-0.44.7-r5:wifibox \
 		pcsc-lite-libs-1.9.4-r0 \
 		socat-1.7.4.2-r0:wifibox \
-		wpa_passthru-0.1.0-r0:wifibox \
+		wpa_passthru-0.1.1-r0:wifibox \
 		wpa_supplicant-2.9-r17:wifibox
 
 _ATMEL_FIRMWARE=	atmel-firmware-1.3
