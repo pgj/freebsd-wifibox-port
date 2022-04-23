@@ -34,11 +34,11 @@ GH_PROJECT=	freebsd-wifibox
 GH_TAGNAME=	8ad746954a3a78e3896dd5212795178d34b5a315
 
 NO_BUILD=	yes
-MAKE_ENV+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
+MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
 		GUEST_MAN=${LOCALBASE}/man/man5/wifibox-alpine.5.gz \
 		VERSION=${PORTVERSION}
 .if defined(_BHYVE_PLUS)
-MAKE_ENV+=	BHYVE=${LOCALBASE}/sbin/bhyve \
+MAKE_ARGS+=	BHYVE=${LOCALBASE}/sbin/bhyve \
 		BHYVECTL=${LOCALBASE}/sbin/bhyvectl \
 		VMM_KO=${KMODDIR}/vmm.ko
 .endif
