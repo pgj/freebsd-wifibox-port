@@ -37,10 +37,10 @@ COMP_ZSTD_DESC=		zstd
 OPTIONS_MULTI=		FIRMWARE
 OPTIONS_MULTI_FIRMWARE=	FW_ATH10K FW_ATH11K FW_ATMEL FW_B43 FW_B43LEGACY FW_BRCM\
 			FW_IPW2100 FW_IPW2200 FW_IWL3945 FW_IWL4965 FW_IWLWIFI\
-			FW_MEDIATEK FW_MWL8K FW_RT61 FW_RTLWIFI FW_RTW88 FW_TI
+			FW_MEDIATEK FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88 FW_TI
 
 OPTIONS_DEFAULT+=	FW_ATH10K FW_ATH11K FW_BRCM FW_IWLWIFI FW_MEDIATEK\
-			FW_RTLWIFI FW_RTW88
+			FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88
 
 FW_ATH10K_DESC=		Qualcomm Atheros 802.11ac
 FW_ATH11K_DESC=		Qualcomm Atheros 802.11ax
@@ -54,7 +54,7 @@ FW_IWLWIFI_DESC=	Intel(R) Wireless WiFi 802.11a/b/g/n
 FW_IPW2100_DESC=	Intel(R) PRO/Wireless 2100 802.11a/b
 FW_IPW2200_DESC=	Intel(R) PRO/Wireless 2200 802.11b/g/n
 FW_MEDIATEK_DESC=	MediaTek MT76xxx 802.11n, MT79xx 802.11ax
-FW_MWL8K_DESC=		Marvell 88W8xxx (TopDog) 802.11b/g/n
+FW_MARVELL_DESC=	Marvell 88W8xxx (TopDog) 802.11b/g/n
 FW_RT61_DESC=		Ralink RT2xxx (RT61) 802.11a/b/g
 FW_RTLWIFI_DESC=	Realtek 802.11n
 FW_RTW88_DESC=		Realtek 802.11ac
@@ -72,7 +72,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	8d9b3d2cef2410d03215b9471af05dc82530f08e:scripts
+GH_TAGNAME=	f4ff4a32c114051acf1945cece1b3ea714eedc77:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -95,7 +95,6 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		${_LINUXFW_SITE}/linux-firmware.git/snapshot/:linux_firmware \
 		https://sources.openwrt.org/:openwrt \
 		https://lwfinger.com/b43-firmware/:b43 \
-		https://lwfinger.com/firmware/:rt61 \
 		https://thekelleys.org.uk/atmel/:atmel \
 		https://github.com/openwrt/mt76/archive/:mt76
 
@@ -126,9 +125,6 @@ _IPW2100_FIRMWARE=	ipw/ipw2100-1.3 \
 _IPW2200_FIRMWARE=	iwi/ipw2200-bss \
 			iwi/ipw2200-ibss
 _MT76_FIRMWARE=		eecbb49920732b9b364f15c1ef0066342544b22b
-_RT61_FIRMWARE=		rt2561 \
-			rt2561s \
-			rt2661
 
 pre-everything::
 .if !defined(FIRMWARE_FILES)
@@ -153,7 +149,8 @@ LFW_IWL3945_FILES=	iwlwifi-3945-*.ucode
 LFW_IWL4965_FILES=	iwlwifi-4965-*.ucode
 LFW_IWLWIFI_FILES=	iwlwifi-*
 LFW_MEDIATEK_FILES=	mediatek
-LFW_MWL8K_FILES=	mwl8k
+LFW_MARVELL_FILES=	mwl*
+LFW_RT61_FILES=		rt*.bin
 LFW_RTLWIFI_FILES=	rtlwifi
 LFW_RTW88_FILES=	rtw88
 LFW_TI_FILES=		ti-connectivity
@@ -212,12 +209,6 @@ IGNORE= requires kernel source files in SRC_BASE=${SRC_BASE}
 DISTFILES+=	${_MT76_FIRMWARE}.zip:mt76
 .endif
 
-.if ${PORT_OPTIONS:MFW_RT61}
-.for fw in ${_RT61_FIRMWARE}
-DISTFILES+=	${fw}.bin:rt61
-.endfor
-.endif
-
 pre-build:
 	${MKDIR} ${_FIRMWAREDIR}
 .for fw in ${PORT_OPTIONS:MFW_B43*}
@@ -240,11 +231,6 @@ pre-build:
 		> ${_FIRMWAREDIR}/${fw_file:C@^[^/]*/(.*)@\1@}.fw
 .endfor
 .endfor
-.if ${PORT_OPTIONS:MFW_RT61}
-.for fw in ${_RT61_FIRMWARE}
-	${CP} ${_DISTDIR}/${fw}.bin ${_FIRMWAREDIR}
-.endfor
-.endif
 .for fw_files in ${LINUX_FIRMWARE}
 	${TAR} -xf ${_DISTDIR}/${_LINUXFWFILE} \
 		-C ${_FIRMWAREDIR} --strip-components 1 \
