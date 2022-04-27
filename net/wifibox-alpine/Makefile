@@ -64,12 +64,6 @@ FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
 XX_DRIVER_WL_DESC=	Broadcom 802.11 STA wireless driver (exclusive)
 .endif
 
-.for flavor in ${_FLAVORS}
-.if ${FLAVOR:U} == ${flavor}
-PORT_OPTIONS+=		FW_${flavor:tu}
-.endif
-.endfor
-
 _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 
 USE_GITHUB=	nodefault
@@ -143,6 +137,12 @@ pre-everything::
 .endif
 
 .include <bsd.port.options.mk>
+
+.for flavor in ${_FLAVORS}
+.if ${FLAVOR:U} == ${flavor}
+PORT_OPTIONS+=		FW_${flavor:tu}
+.endif
+.endfor
 
 DIST_SUBDIR=	wifibox-alpine
 DISTFILES+=	${_MINIROOTFS}:rootfs
