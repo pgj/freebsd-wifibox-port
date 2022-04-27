@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220423
+PORTVERSION=	20220427
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -34,10 +34,11 @@ COMP_XZ_DESC=		xz
 COMP_ZSTD_DESC=		zstd
 
 .if ${FLAVOR:U} == default
-OPTIONS_MULTI=		FIRMWARE
-OPTIONS_MULTI_FIRMWARE=	FW_ATH10K FW_ATH11K FW_ATMEL FW_B43 FW_B43LEGACY FW_BRCM\
+OPTIONS_GROUP=		FIRMWARE EXTRAS
+OPTIONS_GROUP_FIRMWARE=	FW_ATH10K FW_ATH11K FW_ATMEL FW_B43 FW_B43LEGACY FW_BRCM\
 			FW_IPW2100 FW_IPW2200 FW_IWL3945 FW_IWL4965 FW_IWLWIFI\
 			FW_MEDIATEK FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88 FW_TI
+OPTIONS_GROUP_EXTRAS=	XX_DRIVER_WL
 
 OPTIONS_DEFAULT+=	FW_ATH10K FW_ATH11K FW_BRCM FW_IWLWIFI FW_MEDIATEK\
 			FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88
@@ -59,6 +60,8 @@ FW_RT61_DESC=		Ralink RT2xxx (RT61) 802.11a/b/g
 FW_RTLWIFI_DESC=	Realtek 802.11n
 FW_RTW88_DESC=		Realtek 802.11ac
 FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
+
+XX_DRIVER_WL_DESC=	Broadcom 802.11 STA wireless driver (exclusive)
 .endif
 
 .for flavor in ${_FLAVORS}
@@ -72,7 +75,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	f4ff4a32c114051acf1945cece1b3ea714eedc77:scripts
+GH_TAGNAME=	a2807a0a83eb06949a1212e20c104c6f3b549305:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -109,13 +112,15 @@ _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
 		libssl1.1-1.1.1n-r0 \
-		linux-lts-5.15.35-r0:wifibox \
+		linux-lts-5.15.36-r0:wifibox \
 		musl-1.2.2-r7 \
 		openrc-0.44.7-r5:wifibox \
 		pcsc-lite-libs-1.9.4-r0 \
 		socat-1.7.4.2-r0:wifibox \
 		wpa_passthru-0.1.1-r0:wifibox \
 		wpa_supplicant-2.9-r17:wifibox
+
+_GUEST_MEM=	45M
 
 _ATMEL_FIRMWARE=	atmel-firmware-1.3
 _B43LEGACY_FIRMWARE=	wl_apsta-3.130.20.0
@@ -160,6 +165,11 @@ LFW_TI_FILES=		ti-connectivity
 LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endif
 .endfor
+
+.if ${PORT_OPTIONS:MXX_DRIVER_WL}
+_PACKAGES+=	broadcom-wl-6.30.223.271-r0:wifibox
+_GUEST_MEM=	50M
+.endif
 
 .if !empty(LINUX_FIRMWARE)
 _LINUXFWFILE=	${_LINUXFW}.tar.gz
@@ -243,7 +253,7 @@ pre-build:
 .endif
 
 post-install:
-	${PRINTF} "cpus=1\nmemory=45M\n" \
+	${PRINTF} "cpus=1\nmemory=${_GUEST_MEM}\n" \
 		> ${STAGEDIR}${PREFIX}/share/wifibox/bhyve.conf
 
 WRKSRC=		${WRKSRC_scripts}
