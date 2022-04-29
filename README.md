@@ -31,6 +31,31 @@ by using `portsnap(8)`:
 # portsnap fetch update
 ```
 
+For `net/wifibox-alpine`, it might be easier if the dependencies are
+installed beforehand via packages.
+
+```console
+# pkg install patchelf squashfs-tools
+```
+
+Also, for building this port, make sure that the [Linuxulator] is
+activated, for example, by loading the corresponding kernel module.
+There is no need to install a full Linux base system (this is going to
+be done for the port itself), but if that is already there it will not
+cause a problem either.
+
+```console
+# kldload linux64
+```
+
+For `net/wifibox-core`, the default dependencies are follows, which
+could be also installed via packages.  The `socat` package is only
+required if the WPA Supplicant pass-through is going to be activated.
+
+```console
+# pkg install grub2-bhyve socat
+```
+
 ## Installation
 
 Once this repository is cloned and the necessary preparations are
@@ -75,3 +100,5 @@ smaller guest disk image.
 	install \
 	clean
 ```
+
+[Linuxulator]: https://docs.freebsd.org/en/books/handbook/linuxemu/
