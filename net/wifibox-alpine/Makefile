@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220429
+PORTVERSION=	20220430
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -38,7 +38,7 @@ OPTIONS_GROUP=		FIRMWARE EXTRAS
 OPTIONS_GROUP_FIRMWARE=	FW_ATH10K FW_ATH11K FW_ATMEL FW_B43 FW_B43LEGACY FW_BRCM\
 			FW_IPW2100 FW_IPW2200 FW_IWL3945 FW_IWL4965 FW_IWLWIFI\
 			FW_MEDIATEK FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88 FW_TI
-OPTIONS_GROUP_EXTRAS=	XX_DRIVER_WL
+OPTIONS_GROUP_EXTRAS=	XX_DRIVER_WL XX_DRIVER_RTW89
 
 OPTIONS_DEFAULT+=	FW_ATH10K FW_ATH11K FW_BRCM FW_IWLWIFI FW_MEDIATEK\
 			FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88
@@ -61,7 +61,8 @@ FW_RTLWIFI_DESC=	Realtek 802.11n
 FW_RTW88_DESC=		Realtek 802.11ac
 FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
 
-XX_DRIVER_WL_DESC=	Broadcom 802.11 STA wireless driver (exclusive)
+XX_DRIVER_WL_DESC=	Broadcom 802.11 STA driver (+ firmware, exclusive)
+XX_DRIVER_RTW89_DESC=	Realtek 802.11ax driver (+ firmware)
 .endif
 
 _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
@@ -69,7 +70,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	db3d1c0a3a9240204c1ecbc237023bb517f146fd:scripts
+GH_TAGNAME=	dac84c054786b6eb6f329662748d9a199b05f2df:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -169,6 +170,10 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .if ${PORT_OPTIONS:MXX_DRIVER_WL}
 _PACKAGES+=	broadcom-wl-6.30.223.271-r0:wifibox
 _GUEST_MEM=	50M
+.endif
+
+.if ${PORT_OPTIONS:MXX_DRIVER_RTW89}
+_PACKAGES+=	rtw89-20220421-r0:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
