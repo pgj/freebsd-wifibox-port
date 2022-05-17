@@ -1,4 +1,5 @@
 @sample etc/wifibox/interfaces.conf.sample
+@sample etc/wifibox/iptables.sample
 @sample etc/wifibox/udhcpd.conf.sample
 man/man5/wifibox-alpine.5.gz
 share/wifibox/bhyve.conf

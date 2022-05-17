@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220430
+PORTVERSION=	20220517
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -70,7 +70,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	dac84c054786b6eb6f329662748d9a199b05f2df:scripts
+GH_TAGNAME=	b0619597ef28a2317d0395bcd519b22f666de80b:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -99,8 +99,8 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.2.0-r18:wifibox \
 		busybox-1.34.1-r5:wifibox \
-		ifupdown-ng-0.11.3-r0:wifibox \
-		iptables-1.8.7-r1:wifibox \
+		ifupdown-ng-0.11.3-r1:wifibox \
+		iptables-1.8.7-r2:wifibox \
 		iw-5.16-r0:community \
 		libcrypto1.1-1.1.1n-r0 \
 		libmnl-1.0.4-r2 \
@@ -130,9 +130,8 @@ pre-everything::
 .if !defined(FIRMWARE_FILES)
 	@${ECHO_MSG} "===> NOTICE:"
 	@${ECHO_MSG}
-	@${ECHO_MSG} "Use the FIRMWARE_FILES make(1) variable to keep only the firmware"
-	@${ECHO_MSG} "files that are used by the driver to reduce the size of the disk"
-	@${ECHO_MSG} "image."
+	@${ECHO_MSG} "Use the FIRMWARE_FILES make(1) variable to keep only the firmware files that"
+	@${ECHO_MSG} "are used by the driver to reduce the size of the disk image."
 	@${ECHO_MSG}
 	@sleep 1
 .endif
