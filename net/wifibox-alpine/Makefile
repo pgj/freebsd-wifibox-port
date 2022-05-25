@@ -126,6 +126,12 @@ _IPW2200_FIRMWARE=	iwi/ipw2200-bss \
 			iwi/ipw2200-ibss
 _MT76_FIRMWARE=		eecbb49920732b9b364f15c1ef0066342544b22b
 
+_LINUX64_KMOD!=		(kldstat -qn linux64 && echo "found") || echo ""
+
+.if empty(_LINUX64_KMOD)
+IGNORE=	needs the linux64 kernel module to build
+.endif
+
 pre-everything::
 .if !defined(FIRMWARE_FILES)
 	@${ECHO_MSG} "===> NOTICE:"
