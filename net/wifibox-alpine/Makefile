@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220531
+PORTVERSION=	20220611
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -91,7 +91,7 @@ _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
 
 _LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
-_LINUXFW_TAG=	20220411
+_LINUXFW_TAG=	20220610
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
@@ -115,7 +115,7 @@ _PACKAGES=	baselayout-3.2.0-r19:wifibox \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
 		libssl1.1-1.1.1n-r0 \
-		linux-lts-5.15.36-r0:wifibox \
+		linux-lts-5.15.46-r0:wifibox \
 		musl-1.2.2-r7 \
 		openrc-0.44.7-r5:wifibox \
 		pcsc-lite-libs-1.9.4-r0
@@ -208,12 +208,12 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL}
-_PACKAGES+=	broadcom-wl-6.30.223.271-r0:wifibox
+_PACKAGES+=	broadcom-wl-6.30.223.271-r1:wifibox
 _GUEST_MEM=	50M
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_RTW89}
-_PACKAGES+=	rtw89-20220421-r0:wifibox
+_PACKAGES+=	rtw89-20220421-r1:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
