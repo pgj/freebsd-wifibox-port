@@ -50,7 +50,8 @@ cause a problem either.
 
 For `net/wifibox-core`, the default dependencies are follows, which
 could be also installed via packages.  The `socat` package is only
-required if the WPA Supplicant pass-through is going to be activated.
+required if the Unix Domain Socket pass-through is going to be
+activated.
 
 ```console
 # pkg install grub2-bhyve socat
