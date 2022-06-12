@@ -78,7 +78,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	97c67abab07a57840f95d04fadbd13b3c0f5b328:scripts
+GH_TAGNAME=	09b141d834b3411102b56ef92fcb618dc4f71fde:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -235,6 +235,7 @@ _APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):.*$@\1@}.apk
 
 _GUESTDIR=	${WRKSRC}/guest
 _ETCDIR=	${_GUESTDIR}/etc
+_MODPROBEDDIR=	${_ETCDIR}/modprobe.d
 _FIRMWAREDIR=	${_GUESTDIR}/lib/firmware
 
 .if ${PORT_OPTIONS:MFW_ATMEL}
@@ -272,6 +273,13 @@ pre-build:
 .endif
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
 	${MKDIR} ${_ETCDIR}/hostapd
+.endif
+.if ${PORT_OPTIONS:MFW_MEDIATEK}
+	${MKDIR} ${_MODPROBEDDIR}
+	${ECHO} "alias pci:v000014C3d00000608sv*sd*bc*sc*i* mt7921e" \
+		>> ${_MODPROBEDDIR}/mt7921e.conf
+	${ECHO} "alias pci:v000014C3d00000616sv*sd*bc*sc*i* mt7921e" \
+		>> ${_MODPROBEDDIR}/mt7921e.conf
 .endif
 	${MKDIR} ${_FIRMWAREDIR}
 .for fw in ${PORT_OPTIONS:MFW_B43*}
