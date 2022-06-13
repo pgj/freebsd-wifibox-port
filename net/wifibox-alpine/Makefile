@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220611
+PORTVERSION=	20220613
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -78,7 +78,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	09b141d834b3411102b56ef92fcb618dc4f71fde:scripts
+GH_TAGNAME=	17e25b3dbd4d6718217ec15d05876797f6c1fa10:scripts
 
 ALPINE_VERSION=	3.15.4
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -115,7 +115,7 @@ _PACKAGES=	baselayout-3.2.0-r19:wifibox \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
 		libssl1.1-1.1.1n-r0 \
-		linux-lts-5.15.46-r0:wifibox \
+		linux-lts-5.15.46-r1:wifibox \
 		musl-1.2.2-r7 \
 		openrc-0.44.7-r5:wifibox \
 		pcsc-lite-libs-1.9.4-r0
@@ -208,12 +208,12 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL}
-_PACKAGES+=	broadcom-wl-6.30.223.271-r1:wifibox
+_PACKAGES+=	broadcom-wl-6.30.223.271-r2:wifibox
 _GUEST_MEM=	50M
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_RTW89}
-_PACKAGES+=	rtw89-20220421-r1:wifibox
+_PACKAGES+=	rtw89-20220421-r2:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
@@ -235,7 +235,6 @@ _APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):.*$@\1@}.apk
 
 _GUESTDIR=	${WRKSRC}/guest
 _ETCDIR=	${_GUESTDIR}/etc
-_MODPROBEDDIR=	${_ETCDIR}/modprobe.d
 _FIRMWAREDIR=	${_GUESTDIR}/lib/firmware
 
 .if ${PORT_OPTIONS:MFW_ATMEL}
@@ -273,13 +272,6 @@ pre-build:
 .endif
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
 	${MKDIR} ${_ETCDIR}/hostapd
-.endif
-.if ${PORT_OPTIONS:MFW_MEDIATEK}
-	${MKDIR} ${_MODPROBEDDIR}
-	${ECHO} "alias pci:v000014C3d00000608sv*sd*bc*sc*i* mt7921e" \
-		>> ${_MODPROBEDDIR}/mt7921e.conf
-	${ECHO} "alias pci:v000014C3d00000616sv*sd*bc*sc*i* mt7921e" \
-		>> ${_MODPROBEDDIR}/mt7921e.conf
 .endif
 	${MKDIR} ${_FIRMWAREDIR}
 .for fw in ${PORT_OPTIONS:MFW_B43*}
