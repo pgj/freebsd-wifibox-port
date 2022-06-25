@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220616
+PORTVERSION=	20220625
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -78,9 +78,10 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	2e6c1798e14737745b36726419863180566d53de:scripts
+GH_TAGNAME=	373d8e3dcb62f76a5c2b3608251529c608b98b1d:scripts
 
-ALPINE_VERSION=	3.15.4
+ALPINE_VERSION=	3.16.0
+ALPINE_DATE=	2022.06.25
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
@@ -106,19 +107,18 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.2.0-r19:wifibox \
-		busybox-1.34.1-r5:wifibox \
-		ifupdown-ng-0.11.3-r1:wifibox \
-		iptables-1.8.7-r2:wifibox \
+		busybox-1.35.0-r0:wifibox \
+		ifupdown-ng-0.12.1-r0:wifibox \
+		iptables-1.8.8-r0:wifibox \
 		iw-5.16-r0:community \
-		libcrypto1.1-1.1.1n-r0 \
-		libmnl-1.0.4-r2 \
+		libcrypto1.1-1.1.1o-r0 \
+		libmnl-1.0.5-r0 \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
-		libssl1.1-1.1.1n-r0 \
-		linux-lts-5.15.46-r1:wifibox \
-		musl-1.2.2-r7 \
-		openrc-0.44.7-r5:wifibox \
-		pcsc-lite-libs-1.9.4-r0
+		libssl1.1-1.1.1o-r0 \
+		linux-lts-5.15.49-r0:wifibox \
+		musl-1.2.3-r0 \
+		openrc-0.44.10-r0:wifibox
 
 _GUEST_MEM=	45M
 
@@ -133,7 +133,7 @@ _IPW2100_FIRMWARE=	ipw/ipw2100-1.3 \
 			ipw/ipw2100-1.3-i
 _IPW2200_FIRMWARE=	iwi/ipw2200-bss \
 			iwi/ipw2200-ibss
-_MT76_FIRMWARE=		eecbb49920732b9b364f15c1ef0066342544b22b
+_MT76_FIRMWARE=		b6e865e2cc7080c91ec34a9dd3648d25f7ce04c6
 
 _LINUX64_KMOD!=		(kldstat -qn linux64 && echo "found") || echo ""
 
@@ -154,9 +154,12 @@ pre-everything::
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MUDS_PASSTHRU}
-_PACKAGES+=		socat-1.7.4.2-r0:wifibox \
-			uds_passthru-0.1.0-r0:wifibox
 _BOOT_SERVICES+=	uds_passthru
+.endif
+
+.if ${PORT_OPTIONS:MUDS_PASSTHRU} || make(makesum)
+_PACKAGES+=		socat-1.7.4.3-r0:wifibox \
+			uds_passthru-0.1.0-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT}
@@ -166,7 +169,8 @@ _ETC_SRCS=		etc/wpa_supplicant
 .endif
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum)
-_PACKAGES+=		wpa_supplicant-2.9-r18:wifibox
+_PACKAGES+=		pcsc-lite-libs-1.9.6-r0 \
+			wpa_supplicant-2.10-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
@@ -176,7 +180,7 @@ _ETC_SRCS=		etc/hostapd
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD} || make(makesum)
-_PACKAGES+=		hostapd-2.10-r0:wifibox
+_PACKAGES+=		hostapd-2.10-r1:wifibox
 .endif
 
 .for flavor in ${_FLAVORS}
@@ -208,12 +212,15 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL}
-_PACKAGES+=	broadcom-wl-6.30.223.271-r2:wifibox
 _GUEST_MEM=	50M
 .endif
 
-.if ${PORT_OPTIONS:MXX_DRIVER_RTW89}
-_PACKAGES+=	rtw89-20220421-r2:wifibox
+.if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum)
+_PACKAGES+=	broadcom-wl-6.30.223.271-r3:wifibox
+.endif
+
+.if ${PORT_OPTIONS:MXX_DRIVER_RTW89} || make(makesum)
+_PACKAGES+=	rtw89-20220421-r3:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
