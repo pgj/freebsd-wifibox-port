@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220712
+PORTVERSION=	20220721
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -78,10 +78,9 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	f8fd8cdb1a0e545272917fe1dc1f9544cf74e383:scripts
+GH_TAGNAME=	74a203337343b8e7615f335146592536aa577bd5:scripts
 
-ALPINE_VERSION=	3.16.0
-ALPINE_DATE=	2022.07.09
+ALPINE_VERSION=	3.16.1
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
@@ -107,11 +106,11 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.2.0-r19:wifibox \
-		busybox-1.35.0-r0:wifibox \
+		busybox-1.35.0-r1:wifibox \
 		ifupdown-ng-0.12.1-r0:wifibox \
 		iptables-1.8.8-r0:wifibox \
 		iw-5.16-r0:community \
-		libcrypto1.1-1.1.1o-r0 \
+		libcrypto1.1-1.1.1q-r0 \
 		libmnl-1.0.5-r0 \
 		libnftnl-1.2.1-r0 \
 		libnl3-3.5.0-r0 \
