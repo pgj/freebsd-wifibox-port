@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220721
+PORTVERSION=	20220917
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -78,7 +78,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	74a203337343b8e7615f335146592536aa577bd5:scripts
+GH_TAGNAME=	8bbc0b327c600e8bc69eda3b5688e311d823d749:scripts
 
 ALPINE_VERSION=	3.16.1
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -91,7 +91,7 @@ _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
 
 _LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
-_LINUXFW_TAG=	20220708
+_LINUXFW_TAG=	20220913
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
@@ -105,17 +105,17 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		https://github.com/openwrt/mt76/archive/:mt76
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
-_PACKAGES=	baselayout-3.2.0-r19:wifibox \
-		busybox-1.35.0-r1:wifibox \
+_PACKAGES=	baselayout-3.2.0-r20:wifibox \
+		busybox-1.35.0-r2:wifibox \
 		ifupdown-ng-0.12.1-r0:wifibox \
 		iptables-1.8.8-r0:wifibox \
 		iw-5.16-r0:community \
 		libcrypto1.1-1.1.1q-r0 \
 		libmnl-1.0.5-r0 \
-		libnftnl-1.2.1-r0 \
+		libnftnl-1.2.3-r0 \
 		libnl3-3.5.0-r0 \
 		libssl1.1-1.1.1o-r0 \
-		linux-lts-5.15.53-r0:wifibox \
+		linux-lts-5.15.68-r0:wifibox \
 		musl-1.2.3-r0 \
 		openrc-0.44.10-r0:wifibox
 
@@ -123,7 +123,8 @@ _PACKAGES=	baselayout-3.2.0-r19:wifibox \
 _GUEST_MEM=	64M
 .endif
 
-_BOOT_SERVICES=		networking urandom bootmisc modules hostname hwclock sysctl syslog
+_BOOT_SERVICES=		bootmisc defaults modules hostname hwclock networking sysctl \
+			syslog urandom
 _DEFAULT_SERVICES=	acpid crond iptables udhcpd
 _SYSINIT_SERVICES=	devfs dmesg hwdrivers mdev
 
@@ -217,15 +218,15 @@ _GUEST_MEM=	45M
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW88} || make(makesum)
-_PACKAGES+=	rtl8821ce-20220601-r0:wifibox
+_PACKAGES+=	rtl8821ce-20220911-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum)
-_PACKAGES+=	broadcom-wl-6.30.223.271-r4:wifibox
+_PACKAGES+=	broadcom-wl-6.30.223.271-r5:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_RTW89} || make(makesum)
-_PACKAGES+=	rtw89-20220630-r0:wifibox
+_PACKAGES+=	rtw89-20220819-r0:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
