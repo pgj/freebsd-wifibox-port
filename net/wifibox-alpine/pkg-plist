@@ -6,7 +6,6 @@
 %%APP_HOSTAPD%%@sample(,,640) etc/wifibox/hostapd/hostapd.conf.sample
 etc/wifibox/app_config
 man/man5/wifibox-alpine.5.gz
-share/wifibox/bhyve.conf
 share/wifibox/disk.img
 share/wifibox/grub.cfg
 share/wifibox/vmlinuz

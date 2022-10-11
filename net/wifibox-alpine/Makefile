@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20220917
+PORTVERSION=	20221011
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -78,7 +78,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	8bbc0b327c600e8bc69eda3b5688e311d823d749:scripts
+GH_TAGNAME=	587250dd3743af6e3cfcbb2ce2d9c8652d0058ad:scripts
 
 ALPINE_VERSION=	3.16.1
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
@@ -118,10 +118,6 @@ _PACKAGES=	baselayout-3.2.0-r20:wifibox \
 		linux-lts-5.15.68-r0:wifibox \
 		musl-1.2.3-r0 \
 		openrc-0.44.10-r0:wifibox
-
-.if !defined(_GUEST_MEM)
-_GUEST_MEM=	64M
-.endif
 
 _BOOT_SERVICES=		bootmisc defaults modules hostname hwclock networking sysctl \
 			syslog urandom
@@ -213,10 +209,6 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endif
 .endfor
 
-.if ${FLAVOR:U} == iwlwifi
-_GUEST_MEM=	45M
-.endif
-
 .if ${PORT_OPTIONS:MFW_RTW88} || make(makesum)
 _PACKAGES+=	rtl8821ce-20220911-r0:wifibox
 .endif
@@ -226,7 +218,7 @@ _PACKAGES+=	broadcom-wl-6.30.223.271-r5:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_RTW89} || make(makesum)
-_PACKAGES+=	rtw89-20220819-r0:wifibox
+_PACKAGES+=	rtw89-20221010-r0:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
@@ -325,8 +317,6 @@ post-install:
 .if ${PORT_OPTIONS:MAPP_HOSTAPD} && ${PORT_OPTIONS:MUDS_PASSTHRU}
 	${MKDIR} ${STAGEDIR}/var/run/hostapd
 .endif
-	${PRINTF} "cpus=1\nmemory=${_GUEST_MEM}\n" \
-		> ${STAGEDIR}${PREFIX}/share/wifibox/bhyve.conf
 
 WRKSRC=		${WRKSRC_scripts}
 MAKE_ARGS+=	VERSION=${PORTVERSION} \
