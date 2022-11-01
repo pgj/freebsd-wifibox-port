@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20221030
+PORTVERSION=	20221101
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -11,8 +11,9 @@ LICENSE_FILE=	${WRKSRC_scripts}/LICENSE
 ONLY_FOR_ARCHS=	amd64
 EXTRACT_ONLY=	${_DISTFILES:M*_GH0.tar.gz}
 
-BUILD_DEPENDS=	patchelf>0:sysutils/patchelf \
-		squashfs-tools>0:sysutils/squashfs-tools
+BUILD_DEPENDS=	gtar>0:archivers/gtar \
+		patchelf>0:sysutils/patchelf \
+		squashfs-tools-ng>0:sysutils/squashfs-tools-ng
 
 .include "${.CURDIR}/flavors.mk"
 
@@ -24,14 +25,14 @@ OPTIONS_DEFINE=			UDS_PASSTHRU
 OPTIONS_SUB=			yes
 
 OPTIONS_SINGLE=			COMPRESSION APPLICATION
-OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZO COMP_LZ4 COMP_XZ COMP_ZSTD
+OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZ4 COMP_LZO COMP_XZ COMP_ZSTD
 OPTIONS_SINGLE_APPLICATION=	APP_HOSTAPD APP_WPA_SUPPLICANT
 
 OPTIONS_DEFAULT=		COMP_XZ APP_WPA_SUPPLICANT UDS_PASSTHRU
 
 COMP_GZIP_DESC=		gzip
-COMP_LZO_DESC=		lzo
 COMP_LZ4_DESC=		lz4
+COMP_LZO_DESC=		lzo
 COMP_XZ_DESC=		xz
 COMP_ZSTD_DESC=		zstd
 
@@ -79,7 +80,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	8d89f691c123947ea44d17ef07d280ffa2b807db:scripts
+GH_TAGNAME=	51e40fca7de6721512ec2b9897fdfe108bde22ff:scripts
 
 ALPINE_VERSION=	3.16.1
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
