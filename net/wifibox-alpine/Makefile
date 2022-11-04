@@ -190,12 +190,12 @@ _PACKAGES+=		hostapd-2.10-r1:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_MDNS}
-_DEFAULT_SERVICES+=	mdnsd mdnsresponderposix
+_DEFAULT_SERVICES+=	mdnsresponderposix
 _ETC_SRCS+=		etc/optional/mdns
 .endif
 
 .if ${PORT_OPTIONS:MXX_MDNS} || make(makesum)
-_PACKAGES+=		mDNSResponder-1310.140.1-r0:wifibox
+_PACKAGES+=		mDNSResponder-1310.140.1-r1:wifibox
 .endif
 
 .for flavor in ${_FLAVORS}

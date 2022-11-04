@@ -1,4 +1,4 @@
-TIMESTAMP = 1667548596
+TIMESTAMP = 1667566966
 SHA256 (wifibox-alpine/alpine-minirootfs-3.16.1-x86_64.tar.gz) = e4341c45d0fd233642b34f1a3468065e2af2026b1985938b2b382777c23d4d31
 SIZE (wifibox-alpine/alpine-minirootfs-3.16.1-x86_64.tar.gz) = 2711958
 SHA256 (wifibox-alpine/linux-firmware-20220913.tar.gz) = 9cdc48bd2763f1a2d908a2860670658cf669544a270cb0928d6f9a6201584617
@@ -39,8 +39,8 @@ SHA256 (wifibox-alpine/wpa_supplicant-2.10-r0.apk) = abc08bd813bc4b7831e294f9cc4
 SIZE (wifibox-alpine/wpa_supplicant-2.10-r0.apk) = 816535
 SHA256 (wifibox-alpine/hostapd-2.10-r1.apk) = 8e8ae07dc40c34e9eb750fc5eb813cc3f64eff4b08340043985419d06aceebbe
 SIZE (wifibox-alpine/hostapd-2.10-r1.apk) = 542948
-SHA256 (wifibox-alpine/mDNSResponder-1310.140.1-r0.apk) = 6c0aa5d94b264e3a37c83a3e208f472864b2166640e2496c7bbddf4caca15f4f
-SIZE (wifibox-alpine/mDNSResponder-1310.140.1-r0.apk) = 1029681
+SHA256 (wifibox-alpine/mDNSResponder-1310.140.1-r1.apk) = 202e010a2fea576140b3f15b0453484da6fcbc070e5103d144f3200c91d7bfb6
+SIZE (wifibox-alpine/mDNSResponder-1310.140.1-r1.apk) = 1029700
 SHA256 (wifibox-alpine/rtl8821ce-20220911-r0.apk) = 610ce5bff97edf2398f4fe92d17be548ba374bf20e223766046969db450d3d36
 SIZE (wifibox-alpine/rtl8821ce-20220911-r0.apk) = 586470
 SHA256 (wifibox-alpine/rtw89-20221010-r0.apk) = e84e20cc52d08345a8210e52b2bf70181b1d8af1337fadaf0cc9febac7a5ade0
