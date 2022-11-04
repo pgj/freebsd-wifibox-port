@@ -87,6 +87,8 @@ GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	14a3e2bad5c174b8a4ee5a4890e16145a23f39f1:scripts
 
 ALPINE_VERSION=	3.16.1
+ALPINE_DATE=	2022.10.29
+
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
 .if defined(ALPINE_DATE)
