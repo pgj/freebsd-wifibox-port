@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20221103
+PORTVERSION=	20221129
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -29,7 +29,7 @@ OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZ4 COMP_LZO COMP_XZ COMP_ZSTD
 OPTIONS_SINGLE_APPLICATION=	APP_HOSTAPD APP_WPA_SUPPLICANT
 
 OPTIONS_GROUP=			EXTRAS
-OPTIONS_GROUP_EXTRAS=		XX_MDNS
+OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING
 
 OPTIONS_DEFAULT=		COMP_XZ APP_WPA_SUPPLICANT UDS_PASSTHRU
 
@@ -43,6 +43,7 @@ UDS_PASSTHRU_DESC=		Control socket pass-through
 APP_HOSTAPD_DESC=		Access Point (hostapd)
 APP_WPA_SUPPLICANT_DESC=	WPA Supplicant (wpa_supplicant)
 XX_MDNS_DESC=			Service discovery via mDNS/DNS-SD
+XX_FORWARDING_DESC=		User-space forwarding
 
 UDS_PASSTHRU_RUN_DEPENDS=	socat>0:net/socat
 
@@ -84,7 +85,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	14a3e2bad5c174b8a4ee5a4890e16145a23f39f1:scripts
+GH_TAGNAME=	c0713400778eb412d113ea217982a586d79f35fe:scripts
 
 ALPINE_VERSION=	3.16.1
 ALPINE_DATE=	2022.10.29
@@ -163,9 +164,12 @@ pre-everything::
 _BOOT_SERVICES+=	uds_passthru
 .endif
 
+.if ${PORT_OPTIONS:MUDS_PASSTHRU} || ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum)
+_PACKAGES+=		socat-1.7.4.3-r1:wifibox
+.endif
+
 .if ${PORT_OPTIONS:MUDS_PASSTHRU} || make(makesum)
-_PACKAGES+=		socat-1.7.4.3-r0:wifibox \
-			uds_passthru-0.1.0-r0:wifibox
+_PACKAGES+=		uds_passthru-0.1.1-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT}
@@ -196,6 +200,15 @@ _ETC_SRCS+=		etc/optional/mdns
 
 .if ${PORT_OPTIONS:MXX_MDNS} || make(makesum)
 _PACKAGES+=		mDNSResponder-1310.140.1-r1:wifibox
+.endif
+
+.if ${PORT_OPTIONS:MXX_FORWARDING}
+_BOOT_SERVICES+=	forwarding
+_ETC_SRCS+=		etc/optional/forwarding
+.endif
+
+.if ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum)
+_PACKAGES+=		forwarding-0.1.0-r0:wifibox
 .endif
 
 .for flavor in ${_FLAVORS}
