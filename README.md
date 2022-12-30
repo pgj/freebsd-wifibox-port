@@ -35,7 +35,7 @@ For `net/wifibox-alpine`, it might be easier if the dependencies are
 installed beforehand via packages.
 
 ```console
-# pkg install patchelf squashfs-tools
+# pkg install gtar patchelf squashfs-tools-ng
 ```
 
 Also, for building this port, make sure that the [Linuxulator] is
