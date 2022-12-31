@@ -36,7 +36,6 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
-GH_TAGNAME=	f72fe5f8cf59fa0320a1f818013a2724a4b79472
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
