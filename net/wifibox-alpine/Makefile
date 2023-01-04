@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20221230
+PORTVERSION=	20230104
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -86,7 +86,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	b8bcf86560cfe636983265550dd55e8d13e65696:scripts
+GH_TAGNAME=	ebe512eb11470904f9d2a2a0ca57006ad54615b6:scripts
 
 ALPINE_VERSION=	3.17.0
 ALPINE_DATE=	2022.12.24
