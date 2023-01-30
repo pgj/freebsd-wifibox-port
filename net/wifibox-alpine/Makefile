@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230105
+PORTVERSION=	20230130
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -86,10 +86,10 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	13794afdb01556b6e2b3d4e080bfdd765c424e04:scripts
+GH_TAGNAME=	ce3f5c73aee97cf3898cada1fbf2c468cf2b7730:scripts
 
-ALPINE_VERSION=	3.17.0
-ALPINE_DATE=	2022.12.24
+ALPINE_VERSION=	3.17.1
+ALPINE_DATE=	2023.01.28
 
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
@@ -101,7 +101,7 @@ _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
 
 _LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
-_LINUXFW_TAG=	20221214
+_LINUXFW_TAG=	20230117
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
@@ -122,12 +122,12 @@ _PACKAGES=	baselayout-3.4.0-r0:wifibox \
 		iw-5.19-r0 \
 		libcap2-2.66-r0 \
 		libcap-utils-2.66-r0 \
-		libcrypto3-3.0.7-r0 \
+		libcrypto3-3.0.7-r2 \
 		libmnl-1.0.5-r0 \
 		libnftnl-1.2.4-r0 \
 		libnl3-3.7.0-r0 \
-		libssl3-3.0.7-r0 \
-		linux-lts-5.15.85-r0:wifibox \
+		libssl3-3.0.7-r2 \
+		linux-lts-5.15.90-r0:wifibox \
 		musl-1.2.3-r4 \
 		openrc-0.45.2-r0:wifibox
 
@@ -207,7 +207,7 @@ _ETC_SRCS+=		etc/optional/mdns
 
 .if ${PORT_OPTIONS:MXX_MDNS} || make(makesum)
 _PACKAGES+=		mbedtls-2.28.2-r0 \
-			mDNSResponder-1790.60.25-r0:wifibox
+			mDNSResponder-1790.80.10-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_FORWARDING}
@@ -253,15 +253,15 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 .if ${PORT_OPTIONS:MFW_RTW88} || make(makesum)
-_PACKAGES+=	rtl8821ce-20220911-r1:wifibox
+_PACKAGES+=	rtl8821ce-20230101-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW89} || make(makesum)
-_PACKAGES+=	rtw89-20221210-r0:wifibox
+_PACKAGES+=	rtw89-20230117-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum)
-_PACKAGES+=	broadcom-wl-6.30.223.271-r6:wifibox
+_PACKAGES+=	broadcom-wl-6.30.223.271-r7:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
