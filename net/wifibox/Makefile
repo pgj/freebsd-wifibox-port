@@ -6,8 +6,6 @@ MAINTAINER=	pali.gabor@gmail.com
 COMMENT=	Wireless card driver via virtualized Linux
 WWW=		https://github.com/pgj/freebsd-wifibox
 
-LICENSE=	BSD2CLAUSE
-
 ONLY_FOR_ARCHS=	amd64
 
 RUN_DEPENDS=	wifibox-core>0:net/wifibox-core
