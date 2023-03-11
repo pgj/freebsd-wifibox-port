@@ -168,15 +168,16 @@ pre-everything::
 _BOOT_SERVICES+=	uds_passthru
 .endif
 
-.if (${PORT_OPTIONS:MUDS_PASSTHRU} && empty(PORT_OPTIONS:MXX_FORWARDING)) || make(makesum)
+.if (${PORT_OPTIONS:MUDS_PASSTHRU} && empty(PORT_OPTIONS:MXX_FORWARDING)) \
+	|| make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		socat-1.7.4.4-r0:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum)
+.if ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		socat-with-udp-1.7.4.4-r0:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MUDS_PASSTHRU} || make(makesum)
+.if ${PORT_OPTIONS:MUDS_PASSTHRU} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		uds_passthru-0.1.1-r1:wifibox
 .endif
 
@@ -186,7 +187,7 @@ _BOOT_SERVICES+=	wpa_supplicant
 _ETC_SRCS=		etc/wpa_supplicant
 .endif
 
-.if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum)
+.if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-1.9.9-r0 \
 			wpa_supplicant-2.10-r2:wifibox
 .endif
@@ -197,7 +198,7 @@ _BOOT_SERVICES+=	hostapd
 _ETC_SRCS=		etc/hostapd
 .endif
 
-.if ${PORT_OPTIONS:MAPP_HOSTAPD} || make(makesum)
+.if ${PORT_OPTIONS:MAPP_HOSTAPD} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		hostapd-2.10-r2:wifibox
 .endif
 
@@ -206,7 +207,7 @@ _DEFAULT_SERVICES+=	mdnsresponderposix
 _ETC_SRCS+=		etc/optional/mdns
 .endif
 
-.if ${PORT_OPTIONS:MXX_MDNS} || make(makesum)
+.if ${PORT_OPTIONS:MXX_MDNS} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		mbedtls-2.28.2-r0 \
 			mDNSResponder-1790.80.10-r0:wifibox
 .endif
@@ -216,11 +217,11 @@ _BOOT_SERVICES+=	forwarding
 _ETC_SRCS+=		etc/optional/forwarding
 .endif
 
-.if ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum)
+.if ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		forwarding-0.1.0-r1:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MXX_TCPDUMP} || make(makesum)
+.if ${PORT_OPTIONS:MXX_TCPDUMP} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		libpcap-1.10.1-r1 \
 			tcpdump-4.99.1-r4
 .endif
@@ -258,15 +259,15 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endif
 .endfor
 
-.if ${PORT_OPTIONS:MFW_RTW88} || make(makesum)
+.if ${PORT_OPTIONS:MFW_RTW88} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=	rtl8821ce-20230101-r2:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MFW_RTW89} || make(makesum)
+.if ${PORT_OPTIONS:MFW_RTW89} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=	rtw89-20230117-r2:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum)
+.if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=	broadcom-wl-6.30.223.271-r9:wifibox
 .endif
 
@@ -387,5 +388,16 @@ MAKE_ARGS+=	VERSION=${PORTVERSION} \
 .if defined(FIRMWARE_FILES)
 MAKE_ARGS+=	FIRMWARE_FILES=${FIRMWARE_FILES}
 .endif
+
+.if make(check-alpine-packages)
+_APK_FETCH!=	${MAKE} fetch-urlall-list | ${GREP} apk | ${GREP} -v distcache
+.endif
+
+check-alpine-packages:
+.for apk in ${_APK_FETCH}
+	@${ECHO} -n "${apk:C@^.*/([0-9A-za-z\._-]*)@\1@} (${apk})..."
+	@${FETCH_CMD} -s ${apk} > /dev/null
+	@${ECHO} "OK"
+.endfor
 
 .include <bsd.port.mk>
