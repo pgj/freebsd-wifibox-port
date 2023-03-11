@@ -273,6 +273,9 @@ _PACKAGES+=	broadcom-wl-6.30.223.271-r9:wifibox
 .if !empty(LINUX_FIRMWARE)
 _LINUXFWFILE=	${_LINUXFW}.tar.gz
 _LINUXFWDIR=	${WRKDIR}/${_LINUXFW}
+.endif
+
+.if !empty(LINUX_FIRMWARE) || make(makesum)
 DISTFILES+=	${_LINUXFWFILE}:linux_firmware
 .endif
 
@@ -291,17 +294,20 @@ _GUESTDIR=	${WRKSRC}/guest
 _ETCDIR=	${_GUESTDIR}/etc
 _FIRMWAREDIR=	${_GUESTDIR}/lib/firmware
 
-.if ${PORT_OPTIONS:MFW_ATMEL}
+.if ${PORT_OPTIONS:MFW_ATMEL} || make(makesum)
 DISTFILES+=	${_ATMEL_FIRMWARE}.tar.gz:atmel
 .endif
 
-.if ${PORT_OPTIONS:MFW_B43LEGACY}
+.if ${PORT_OPTIONS:MFW_B43LEGACY} || make(makesum)
 DISTFILES+=	${_B43LEGACY_FIRMWARE}.o:openwrt
 .endif
 
 .if ${PORT_OPTIONS:MFW_B43}
-DISTFILES+=	${_B43_FIRMWARE}.tar.bz2:b43
 EXTRACT_ONLY+=	${_B43_FIRMWARE}.tar.bz2
+.endif
+
+.if ${PORT_OPTIONS:MFW_B43} || make(makesum)
+DISTFILES+=	${_B43_FIRMWARE}.tar.bz2:b43
 .endif
 
 .if ${PORT_OPTIONS:MFW_B43*}
@@ -316,7 +322,7 @@ FW_B43LEGACY_FIRMWARE=	${_DISTDIR}/${_B43LEGACY_FIRMWARE}.o
 IGNORE= requires kernel source files in SRC_BASE=${SRC_BASE}
 .endif
 
-.if ${PORT_OPTIONS:MFW_MEDIATEK}
+.if ${PORT_OPTIONS:MFW_MEDIATEK} || make(makesum)
 DISTFILES+=	${_MT76_FIRMWARE}.zip:mt76
 .endif
 
