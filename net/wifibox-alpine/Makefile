@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230311
+PORTVERSION=	20230325
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -87,10 +87,10 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	0ba9883f821b604ec0acd5f70a70a9108502cd7f:scripts
+GH_TAGNAME=	7f012cfae9ba7aa2affda2de4129f064ae7bb9f9:scripts
 
 ALPINE_VERSION=	3.17.2
-ALPINE_DATE=	2023.03.11
+ALPINE_DATE=	2023.03.25
 
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
@@ -123,11 +123,11 @@ _PACKAGES=	baselayout-3.4.0-r0:wifibox \
 		iw-5.19-r0 \
 		libcap2-2.66-r0 \
 		libcap-utils-2.66-r0 \
-		libcrypto3-3.0.8-r0 \
+		libcrypto3-3.0.8-r1 \
 		libmnl-1.0.5-r0 \
 		libnftnl-1.2.4-r0 \
 		libnl3-3.7.0-r0 \
-		libssl3-3.0.8-r0 \
+		libssl3-3.0.8-r1 \
 		linux-lts-5.15.99-r0:wifibox \
 		musl-1.2.3-r4 \
 		openrc-0.45.2-r0:wifibox
