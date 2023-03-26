@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230325
+PORTVERSION=	20230326
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -87,7 +87,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	7f012cfae9ba7aa2affda2de4129f064ae7bb9f9:scripts
+GH_TAGNAME=	d0d856b049361e83b2c27ac2bb66d5971ead2f06:scripts
 
 ALPINE_VERSION=	3.17.2
 ALPINE_DATE=	2023.03.25
@@ -128,7 +128,7 @@ _PACKAGES=	baselayout-3.4.0-r0:wifibox \
 		libnftnl-1.2.4-r0 \
 		libnl3-3.7.0-r0 \
 		libssl3-3.0.8-r1 \
-		linux-lts-5.15.99-r0:wifibox \
+		linux-lts-5.15.104-r0:wifibox \
 		musl-1.2.3-r4 \
 		openrc-0.45.2-r0:wifibox
 
@@ -189,7 +189,7 @@ _ETC_SRCS=		etc/wpa_supplicant
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-1.9.9-r0 \
-			wpa_supplicant-2.10-r2:wifibox
+			wpa_supplicant-2.10-r3:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
@@ -260,15 +260,15 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 .if ${PORT_OPTIONS:MFW_RTW88} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtl8821ce-20230101-r2:wifibox
+_PACKAGES+=	rtl8821ce-20230101-r3:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW89} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtw89-20230117-r2:wifibox
+_PACKAGES+=	rtw89-20230325-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	broadcom-wl-6.30.223.271-r9:wifibox
+_PACKAGES+=	broadcom-wl-6.30.223.271-r10:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
