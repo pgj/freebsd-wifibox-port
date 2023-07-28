@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230326
+PORTVERSION=	20230728
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -87,7 +87,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	d0d856b049361e83b2c27ac2bb66d5971ead2f06:scripts
+GH_TAGNAME=	084335e136581edc28137b152cc559778224570e:scripts
 
 ALPINE_VERSION=	3.17.2
 ALPINE_DATE=	2023.03.25
@@ -117,7 +117,7 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.4.0-r0:wifibox \
-		busybox-1.35.0-r3:wifibox \
+		busybox-1.35.0-r4:wifibox \
 		ifupdown-ng-0.12.1-r0:wifibox \
 		iptables-1.8.8-r0:wifibox \
 		iw-5.19-r0 \
@@ -189,7 +189,7 @@ _ETC_SRCS=		etc/wpa_supplicant
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-1.9.9-r0 \
-			wpa_supplicant-2.10-r3:wifibox
+			wpa_supplicant-2.10-r4:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
@@ -268,7 +268,7 @@ _PACKAGES+=	rtw89-20230325-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	broadcom-wl-6.30.223.271-r10:wifibox
+_PACKAGES+=	broadcom-wl-6.30.223.271-r11:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
