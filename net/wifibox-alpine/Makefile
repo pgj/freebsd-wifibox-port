@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230803
+PORTVERSION=	20230805
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -87,10 +87,10 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	7fb231bee04ad6b06095a581774ec53690a51711:scripts
+GH_TAGNAME=	ae90baf077ce8ed5356eb150beb7c62eb00d1ff8:scripts
 
 ALPINE_VERSION=	3.18.2
-ALPINE_DATE=	2023.07.29
+ALPINE_DATE=	2023.08.05
 
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
@@ -102,7 +102,7 @@ _ALPINE_SITE=	https://mirror.fit.cvut.cz/alpine/v${_ALPINE_VER}
 .endif
 
 _LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
-_LINUXFW_TAG=	20230625
+_LINUXFW_TAG=	20230804
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
@@ -123,12 +123,12 @@ _PACKAGES=	baselayout-3.4.3-r0:wifibox \
 		iw-5.19-r1 \
 		libcap2-2.69-r0 \
 		libcap-utils-2.69-r0 \
-		libcrypto3-3.1.1-r3 \
+		libcrypto3-3.1.2-r0 \
 		libmnl-1.0.5-r1 \
 		libnftnl-1.2.5-r1 \
 		libnl3-3.7.0-r1 \
-		libssl3-3.1.1-r3 \
-		linux-lts-6.1.42-r0:wifibox \
+		libssl3-3.1.2-r0 \
+		linux-lts-6.1.43-r0:wifibox \
 		musl-1.2.4-r1 \
 		openrc-0.48-r0:wifibox
 
@@ -208,7 +208,7 @@ _ETC_SRCS+=		etc/optional/mdns
 .endif
 
 .if ${PORT_OPTIONS:MXX_MDNS} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=		mbedtls-2.28.3-r1 \
+_PACKAGES+=		mbedtls-2.28.4-r0 \
 			mDNSResponder-1790.80.10-r1:wifibox
 .endif
 
