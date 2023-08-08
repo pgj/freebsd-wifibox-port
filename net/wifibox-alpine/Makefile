@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230805
+PORTVERSION=	20230808
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -89,8 +89,8 @@ GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	ae90baf077ce8ed5356eb150beb7c62eb00d1ff8:scripts
 
-ALPINE_VERSION=	3.18.2
-ALPINE_DATE=	2023.08.05
+ALPINE_VERSION=	3.18.3
+#ALPINE_DATE=	2023.08.05
 
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
