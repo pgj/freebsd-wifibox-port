@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230810
+PORTVERSION=	20230820
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -94,7 +94,7 @@ GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	ae90baf077ce8ed5356eb150beb7c62eb00d1ff8:scripts
 
 ALPINE_VERSION=	3.18.3
-#ALPINE_DATE=	2023.08.05
+ALPINE_DATE=	2023.08.19
 
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 
@@ -168,11 +168,11 @@ pre-everything::
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MKERN_LTS} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	linux-lts-6.1.43-r0:wifibox
+_PACKAGES+=	linux-lts-6.1.46-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MKERN_EDGE} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	linux-edge-6.4.9-r0:wifibox
+_PACKAGES+=	linux-edge-6.4.11-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MUDS_PASSTHRU}
@@ -272,12 +272,12 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 
 .if ${PORT_OPTIONS:MFW_RTW88} && ${PORT_OPTIONS:MKERN_LTS} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtl8821ce-20230504-r0:wifibox
+_PACKAGES+=	rtw88-20230723-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW88} && ${PORT_OPTIONS:MKERN_EDGE} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtl8821ce-edge-20230504-r0:wifibox
+_PACKAGES+=	rtw88-edge-20230723-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW89} && ${PORT_OPTIONS:MKERN_LTS} \
