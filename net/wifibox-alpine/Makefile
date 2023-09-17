@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230916
+PORTVERSION=	20230917
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -25,14 +25,15 @@ ${flavor}_PKGNAMESUFFIX=	-${flavor}
 OPTIONS_DEFINE=			UDS_PASSTHRU
 OPTIONS_SUB=			yes
 
-OPTIONS_SINGLE=			COMPRESSION APPLICATION
+OPTIONS_SINGLE=			COMPRESSION APPLICATION KERNEL
 OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZ4 COMP_LZO COMP_XZ COMP_ZSTD
 OPTIONS_SINGLE_APPLICATION=	APP_HOSTAPD APP_WPA_SUPPLICANT
+OPTIONS_SINGLE_KERNEL=		KERN_LTS KERN_EDGE
 
 OPTIONS_GROUP=			EXTRAS
 OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING XX_TCPDUMP
 
-OPTIONS_DEFAULT=		COMP_XZ APP_WPA_SUPPLICANT UDS_PASSTHRU
+OPTIONS_DEFAULT=		COMP_XZ APP_WPA_SUPPLICANT UDS_PASSTHRU KERN_LTS
 
 COMP_GZIP_DESC=		gzip
 COMP_LZ4_DESC=		lz4
@@ -46,6 +47,9 @@ APP_WPA_SUPPLICANT_DESC=	WPA Supplicant (wpa_supplicant)
 XX_MDNS_DESC=			mDNS Responder Daemon
 XX_FORWARDING_DESC=		User-space forwarding
 XX_TCPDUMP_DESC=		Packet analysis with tcpdump
+
+KERN_LTS_DESC=			Linux LTS (6.1.x)
+KERN_EDGE_DESC=			Linux edge (6.5.x)
 
 UDS_PASSTHRU_RUN_DEPENDS=	socat>0:net/socat
 
@@ -87,7 +91,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	89279d87c5d3e0ea330be1f927e3f3bc59dbc2a7:scripts
+GH_TAGNAME=	66bb8eefc9693b3a0893c8a42aa191916405cb61:scripts
 
 ALPINE_VERSION=	3.18.3
 ALPINE_DATE=	2023.09.16
@@ -129,7 +133,6 @@ _PACKAGES=	baselayout-3.4.3-r1:wifibox \
 		libnftnl-1.2.5-r1 \
 		libnl3-3.7.0-r1 \
 		libssl3-3.1.2-r0 \
-		linux-lts-6.1.53-r0:wifibox \
 		musl-1.2.4-r1 \
 		openrc-0.48-r0:wifibox
 
@@ -227,6 +230,14 @@ _PACKAGES+=		libpcap-1.10.4-r1 \
 			tcpdump-4.99.4-r1
 .endif
 
+.if ${PORT_OPTIONS:MKERN_LTS} || make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=		linux-lts-6.1.53-r0:wifibox
+.endif
+
+.if ${PORT_OPTIONS:MKERN_EDGE} || make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=		linux-edge-6.5.3-r0:wifibox
+.endif
+
 .if ${PORT_OPTIONS:MXX_MDNS} || ${PORT_OPTIONS:MXX_FORWARDING}
 PKGMESSAGE=		pkg-message.iptables
 .endif
@@ -260,17 +271,36 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endif
 .endfor
 
-.if ${PORT_OPTIONS:MFW_RTW88} || make(makesum) || make(fetch-url-list-int)
+.if ${PORT_OPTIONS:MFW_RTW88} && ${PORT_OPTIONS:MKERN_LTS} \
+	|| make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=	rtl8821ce-20230915-r0:wifibox \
 		rtw88-20230913-r0:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MFW_RTW89} || make(makesum) || make(fetch-url-list-int)
+.if ${PORT_OPTIONS:MFW_RTW88} && ${PORT_OPTIONS:MKERN_EDGE} \
+	|| make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=	rtl8821ce-edge-20230915-r0:wifibox \
+		rtw88-edge-20230913-r0:wifibox
+.endif
+
+.if ${PORT_OPTIONS:MFW_RTW89} && ${PORT_OPTIONS:MKERN_LTS} \
+	|| make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=	rtw89-20230913-r0:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MXX_DRIVER_WL} || make(makesum) || make(fetch-url-list-int)
+.if ${PORT_OPTIONS:MFW_RTW89} && ${PORT_OPTIONS:MKERN_EDGE} \
+	|| make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=	rtw89-edge-20230913-r0:wifibox
+.endif
+
+.if ${PORT_OPTIONS:MXX_DRIVER_WL} && ${PORT_OPTIONS:MKERN_LTS} \
+	|| make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=	broadcom-wl-6.30.223.271-r12:wifibox
+.endif
+
+.if ${PORT_OPTIONS:MXX_DRIVER_WL} && ${PORT_OPTIONS:MKERN_EDGE} \
+	|| make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=	broadcom-wl-edge-6.30.223.271-r12:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
