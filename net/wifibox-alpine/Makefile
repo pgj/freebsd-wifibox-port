@@ -121,7 +121,7 @@ MASTER_SITES+=	${_ALPINE_SITE}/releases/x86_64/:rootfs \
 		https://github.com/openwrt/mt76/archive/:mt76
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
-_PACKAGES=	baselayout-3.4.3-r1:wifibox \
+_PACKAGES=	baselayout-3.4.3-r0:wifibox \
 		busybox-1.36.1-r0:wifibox \
 		ifupdown-ng-0.12.1-r1:wifibox \
 		iptables-1.8.9-r0:wifibox \
