@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-core
-PORTVERSION=	0.12.0
+PORTVERSION=	0.12.1
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -41,6 +41,7 @@ _BHYVE_PLUS=	yes
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
+GH_TAGNAME=	ec4fc32fb9a0567c351c610ec81b1306cce483db
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \

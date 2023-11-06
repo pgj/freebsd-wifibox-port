@@ -1,3 +1,3 @@
-TIMESTAMP = 1695716184
-SHA256 (pgj-freebsd-wifibox-0.12.0_GH0.tar.gz) = 4f418c7b0f93f497677a2168ee34d719e7a175c63ee45dce7b3b5d8efdc4457e
-SIZE (pgj-freebsd-wifibox-0.12.0_GH0.tar.gz) = 16838
+TIMESTAMP = 1699260353
+SHA256 (pgj-freebsd-wifibox-0.12.1-ec4fc32fb9a0567c351c610ec81b1306cce483db_GH0.tar.gz) = 46e148e7cf87e3001cf1362ccf9c9ec2357f316c839ec898dbf249e7a89ccbdf
+SIZE (pgj-freebsd-wifibox-0.12.1-ec4fc32fb9a0567c351c610ec81b1306cce483db_GH0.tar.gz) = 17068
