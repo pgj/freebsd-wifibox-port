@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20231031
+PORTVERSION=	20231107
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -89,7 +89,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	ce4e265ff05b709bd8b488e6019a91fffc6d118c:scripts
+GH_TAGNAME=	050bcbc21d9da3d1f463bb3ee316bda67810ac2f:scripts
 
 ALPINE_VERSION=	3.18.3
 ALPINE_DATE=	2023.09.16
@@ -248,7 +248,7 @@ _PACKAGES+=		libpcap-1.10.4-r1 \
 
 .if ${PORT_OPTIONS:MXX_BLUETOOTH} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		bluez-5.66-r0:wifibox \
-			bluetoothctl-proxy-0.1-r0:wifibox \
+			bluetoothctl-proxy-0.1.0-r0:wifibox \
 			dbus-1.14.8-r0:wifibox \
 			eudev-libs-3.2.11-r8 \
 			glib-2.76.4-r0:wifibox \
@@ -296,7 +296,7 @@ LFW_ATH11K_FILES=	ath11k
 LFW_BRCM_FILES=		brcm
 LFW_IWL3945_FILES=	iwlwifi-3945-*.ucode
 LFW_IWL4965_FILES=	iwlwifi-4965-*.ucode
-LFW_IWLWIFI_FILES=	iwlwifi-* intel/*
+LFW_IWLWIFI_FILES=	iwlwifi-*
 LFW_MEDIATEK_FILES=	mediatek
 LFW_MARVELL_FILES=	mwl*
 LFW_RT61_FILES=		rt*.bin
@@ -304,6 +304,10 @@ LFW_RTLWIFI_FILES=	rtlwifi
 LFW_RTW88_FILES=	rtw88
 LFW_RTW89_FILES=	rtw89
 LFW_TI_FILES=		ti-connectivity
+
+.if ${PORT_OPTIONS:MXX_BLUETOOTH}
+LFW_IWLWIFI_FILES+=	intel/*
+.endif
 
 .for fw_opt in ${PORT_OPTIONS:MFW_*}
 .if defined(L${fw_opt}_FILES)
@@ -346,6 +350,7 @@ _APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):.*$@\1@}.apk
 
 _GUESTDIR=	${WRKSRC}/guest
 _ETCDIR=	${_GUESTDIR}/etc
+_MODULESLOAD=	${_ETCDIR}/modules-load.d
 _FIRMWAREDIR=	${_GUESTDIR}/lib/firmware
 
 .if ${PORT_OPTIONS:MFW_ATMEL} || make(makesum)
@@ -417,6 +422,10 @@ pre-build:
 	${TAR} -xf ${_DISTDIR}/${_MT76_FIRMWARE}.zip \
 		-C ${_FIRMWAREDIR} --strip-components 2 \
 		*/firmware/mt76??_e?.bin
+.endif
+.if ${PORT_OPTIONS:MXX_BLUETOOTH}
+	${MKDIR} ${_MODULESLOAD}
+	${ECHO} btusb > ${_MODULESLOAD}/bluetooth
 .endif
 
 post-install:

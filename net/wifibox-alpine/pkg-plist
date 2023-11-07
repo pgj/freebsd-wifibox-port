@@ -11,6 +11,7 @@
 %%XX_MDNS%%@sample(,,640) etc/wifibox/appliance/mdnsd-services.conf.sample
 %%XX_FORWARDING%%@sample(,,640) etc/wifibox/appliance/forwarding.conf.sample
 %%XX_BLUETOOTH%%@sample(,,640) etc/wifibox/appliance/bluetooth/main.conf.sample
+%%XX_BLUETOOTH%%@sample(,,640) etc/wifibox/appliance/bluetoothctl-proxy.conf.sample
 etc/wifibox/app_config
 man/man5/wifibox-alpine.5.gz
 share/wifibox/disk.img
