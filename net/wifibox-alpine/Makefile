@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20231107
+PORTVERSION=	20231109
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -89,7 +89,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	050bcbc21d9da3d1f463bb3ee316bda67810ac2f:scripts
+GH_TAGNAME=	813f4c533a90905946792c37dac5e60d161a4e68:scripts
 
 ALPINE_VERSION=	3.18.3
 ALPINE_DATE=	2023.09.16
@@ -238,7 +238,7 @@ _ETC_SRCS+=		etc/optional/forwarding
 .endif
 
 .if ${PORT_OPTIONS:MXX_FORWARDING} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=		forwarding-0.1.0-r2:wifibox
+_PACKAGES+=		forwarding-0.1.0-r3:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_TCPDUMP} || make(makesum) || make(fetch-url-list-int)
