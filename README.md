@@ -1,15 +1,15 @@
 # FreeBSD Wifibox Port
 
 This repository hosts the development of the FreeBSD port for the
-[wifibox project](https://github.com/pgj/freebsd-wifibox) to provide
-proper packaging.  Changes here are upstreamed to the FreeBSD ports
-tree time to time.
+[Wifibox project] to provide proper packaging.  Changes here are
+downstreamed to the FreeBSD ports tree time to time.
 
 *This is the development version of the port, use it only if the
 [`net/wifibox`](https://cgit.freebsd.org/ports/tree/net/wifibox) port
 from the [FreeBSD Ports
 Collection](https://docs.freebsd.org/en/books/handbook/ports/#ports-using)
-does not work for some reason.*
+does not work for some reason.  Please report issues at the [Wifibox
+project] directly.*
 
 ## Preperations
 
@@ -103,3 +103,4 @@ smaller guest disk image.
 ```
 
 [Linuxulator]: https://docs.freebsd.org/en/books/handbook/linuxemu/
+[Wifibox project]: https://github.com/pgj/freebsd-wifibox
