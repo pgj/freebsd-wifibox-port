@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20230926
+PORTVERSION=	20240106
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -92,7 +92,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	2646128d92561b62fe4ea863aee9cad4b5fa8eda:scripts
+GH_TAGNAME=	acb81bcdd3089959632d010df6e08e38b79e12ac:scripts
 
 ALPINE_VERSION=	3.18.3
 ALPINE_DATE=	2023.09.16
@@ -414,6 +414,11 @@ pre-build:
 		-C ${_FIRMWAREDIR} --strip-components 1 \
 		*/${fw_files}
 .endfor
+.if ${PORT_OPTIONS:MFW_BRCM}
+	$(FIND) ${_FIRMWAREDIR}/${LFW_BRCM_FILES} -name 'brcmfmac*-pcie.bin' -type f \
+		| ${SED} -E 's!(.*)-pcie.bin!ln -s $$(basename \1-pcie.bin) \1-pcie.bin.FreeBSD-BHYVE.bin!' \
+		| ${SH}
+.endif
 .if ${PORT_OPTIONS:MFW_MEDIATEK}
 	${TAR} -xf ${_DISTDIR}/${_MT76_FIRMWARE}.zip \
 		-C ${_FIRMWAREDIR} --strip-components 2 \
