@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240106
+PORTVERSION=	20240116
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -110,7 +110,7 @@ _ALPINE_SITE2=	${_ALPINE_BASE}/alpine/v${_ALPINE_VER}
 .endif
 
 _LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
-_LINUXFW_TAG=	20230919
+_LINUXFW_TAG=	20240115
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_ALPINE_SITE1}/releases/x86_64/:rootfs \
