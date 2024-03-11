@@ -35,7 +35,7 @@ GH_TAGNAME=	13d66d80de8a394898a7bee2352d9e97d2c5a08f
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
-		GUEST_MAN=${LOCALBASE}/man/man5/wifibox-alpine.5.gz \
+		GUEST_MAN=${LOCALBASE}/share/man/man5/wifibox-alpine.5.gz \
 		VERSION=${PORTVERSION} \
 		RECOVERY_METHOD=${PORT_OPTIONS:MRECOVER_*:S/RECOVER_//:tl}
 
