@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240316
+PORTVERSION=	20240324
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -41,7 +41,7 @@ COMP_LZO_DESC=		lzo
 COMP_XZ_DESC=		xz
 COMP_ZSTD_DESC=		zstd
 
-UDS_PASSTHRU_DESC=		Control socket pass-through
+UDS_PASSTHRU_DESC=		Control socket pass-through (wpa_supplicant/hostapd)
 IPV6_DESC=			IPv6 support
 APP_HOSTAPD_DESC=		Access Point (hostapd)
 APP_WPA_SUPPLICANT_DESC=	WPA Supplicant (wpa_supplicant)
@@ -92,13 +92,13 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	d7e702dd5529860e3d97a84e387bad95573f5894:scripts
+GH_TAGNAME=	d79fe2c6a8277c3cf8c774d8ccba9820500591e2:scripts
 
 ALPINE_VERSION=	3.19.1
-ALPINE_DATE=	2024.03.16
+ALPINE_DATE=	2024.03.23
 
-LINUX_LTS_VERSION=	6.6.22-r0
-LINUX_EDGE_VERSION=	6.8.1-r0
+LINUX_LTS_VERSION=	6.6.22-r1
+LINUX_EDGE_VERSION=	6.8.1-r1
 
 _ALPINE_VER=	${ALPINE_VERSION:C@([0-9]+)\.([0-9]+).*@\1.\2@}
 _ALPINE_SITE1=	https://dl-cdn.alpinelinux.org/alpine/v${_ALPINE_VER}
@@ -127,7 +127,7 @@ MASTER_SITES+=	${_ALPINE_SITE1}/releases/x86_64/:rootfs \
 		https://github.com/openwrt/mt76/archive/:mt76
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
-_PACKAGES=	baselayout-3.4.3-r2:wifibox \
+_PACKAGES=	baselayout-3.4.3-r3:wifibox \
 		busybox-1.36.1-r2:wifibox \
 		ifupdown-ng-0.12.1-r2:wifibox \
 		iptables-1.8.10-r0:wifibox \
@@ -156,7 +156,7 @@ _IPW2100_FIRMWARE=	ipw/ipw2100-1.3 \
 			ipw/ipw2100-1.3-i
 _IPW2200_FIRMWARE=	iwi/ipw2200-bss \
 			iwi/ipw2200-ibss
-_MT76_FIRMWARE=		ce7ccc5401685f144531259fbd46a7e520a6bce5
+_MT76_FIRMWARE=		2135e201e7a9339e018d4e2d4a33c73266e674d7
 
 _LINUX64_KMOD!=		(kldstat -qn linux64 && echo "found") || echo ""
 
@@ -217,7 +217,7 @@ _ETC_SRCS+=		etc/optional/ipv6/wpa_supplicant
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-2.0.0-r2 \
-			wpa_supplicant-2.10-r6:wifibox
+			wpa_supplicant-2.10-r7:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
@@ -299,7 +299,7 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 RTL8821CE_VERSION=	20240120
-RTW88_VERSION=		20231024
+RTW88_VERSION=		20240316
 RTW89_VERSION=		20240310
 BROADCOM_WL_VERSION=	6.30.223.271
 
