@@ -31,7 +31,7 @@ RECOVER_NONE_DESC=		No recovery for suspend/resume
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
-GH_TAGNAME=	13d66d80de8a394898a7bee2352d9e97d2c5a08f
+GH_TAGNAME=	c59a3860817fdd504c7c4b1c47210969c3bfd4aa
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
