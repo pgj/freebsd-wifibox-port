@@ -13,36 +13,18 @@ project] directly.*
 
 ## Preperations
 
-Depending on the major version of FreeBSD and the configuration
-options, the port may depend on
-[sysutils/bhyve+](https://github.com/pgj/freebsd-bhyve-plus-port/),
-which may need to be installed first.  Nowadays that is part of the
-ports tree, therefore it can be installed as a package:
-
-```console
-# pkg install sysutils/bhyve+
-```
-
-In case of older fresh installs, the ports tree may need to be updated
-to its latest version to get the `sysutils/bhyve+` port, for example
-by using `portsnap(8)`:
-
-```console
-# portsnap fetch update
-```
-
-For `net/wifibox-alpine`, it might be easier if the dependencies are
-installed beforehand via packages.
+Before trying to build the `net/wifibox-alpine` port, it might be
+easier if the dependencies are installed beforehand via packages.
 
 ```console
 # pkg install gtar patchelf squashfs-tools-ng
 ```
 
-Also, for building this port, make sure that the [Linuxulator] is
-activated, for example, by loading the corresponding kernel module.
-There is no need to install a full Linux base system (this is going to
-be done for the port itself), but if that is already there it will not
-cause a problem either.
+Also, make sure that the [Linuxulator] is activated, for example, by
+loading the corresponding kernel module.  There is no need to install
+a full Linux base system (this is going to be done for the port
+itself), but if that is already there it will not cause a problem
+either.
 
 ```console
 # kldload linux64
