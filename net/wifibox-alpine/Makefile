@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240327
+PORTVERSION=	20240328
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	2351dfd06e388f2ca57d2d994a50a0c3f9b22525:scripts
+GH_TAGNAME=	fe9b384e45c57b0cfafe5e5b3931ba163f4230fd:scripts
 
 ALPINE_VERSION=	3.19.1
 ALPINE_DATE=	2024.03.23
@@ -204,7 +204,7 @@ _PACKAGES+=		radvd-2.19-r1:wifibox
 
 .if ${PORT_OPTIONS:MIPV6} && ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=		dhcpcd-10.0.5-r0:wifibox
+_PACKAGES+=		dhcpcd-10.0.6-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT}
