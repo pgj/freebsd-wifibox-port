@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240328
+PORTVERSION=	20240414
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -59,7 +59,7 @@ OPTIONS_GROUP+=		FIRMWARE
 OPTIONS_GROUP_FIRMWARE=	FW_ATH10K FW_ATH11K FW_ATH12K FW_ATMEL FW_B43 FW_B43LEGACY\
 			FW_BRCM FW_IPW2100 FW_IPW2200 FW_IWL3945 FW_IWL4965 FW_IWLWIFI\
 			FW_MEDIATEK FW_MARVELL FW_RT61 FW_RTLWIFI FW_RTW88 FW_RTW89\
-			FW_TI
+			FW_RTW89_FIX FW_TI
 OPTIONS_GROUP_EXTRAS+=	XX_DRIVER_WL
 
 OPTIONS_DEFAULT+=	FW_ATH10K FW_ATH11K FW_ATH12K FW_BRCM FW_IWLWIFI FW_MEDIATEK\
@@ -83,6 +83,7 @@ FW_RT61_DESC=		Ralink RT2xxx (RT61) 802.11a/b/g
 FW_RTLWIFI_DESC=	Realtek 802.11n
 FW_RTW88_DESC=		Realtek 802.11ac
 FW_RTW89_DESC=		Realtek 802.11ax
+FW_RTW89_FIX_DESC=	Realtek 802.11ax: apply fix for HP/Lenovo
 FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
 
 XX_DRIVER_WL_DESC=	Broadcom 802.11 STA driver (+ firmware, exclusive)
@@ -93,7 +94,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	fe9b384e45c57b0cfafe5e5b3931ba163f4230fd:scripts
+GH_TAGNAME=	e4aebbaa9919c4493485f20f9de4b582cd17a4ec:scripts
 
 ALPINE_VERSION=	3.19.1
 ALPINE_DATE=	2024.03.23
@@ -382,6 +383,7 @@ _APK_FILES+=	${_DISTDIR}/${package:C@^([^:]*):.*$@\1@}.apk
 _GUESTDIR=	${WRKSRC}/guest
 _ETCDIR=	${_GUESTDIR}/etc
 _FIRMWAREDIR=	${_GUESTDIR}/lib/firmware
+_MODPROBEDDIR=	${_ETCDIR}/modprobe.d
 
 .if ${PORT_OPTIONS:MFW_ATMEL} || make(makesum)
 DISTFILES+=	${_ATMEL_FIRMWARE}.tar.gz:atmel
@@ -457,6 +459,11 @@ pre-build:
 	${TAR} -xf ${_DISTDIR}/${_MT76_FIRMWARE}.zip \
 		-C ${_FIRMWAREDIR} --strip-components 2 \
 		*/firmware/mt76??_e?.bin
+.endif
+.if ${PORT_OPTIONS:MFW_RTW89_FIX}
+	${MKDIR} ${_MODPROBEDDIR}
+	${ECHO} "options rtw89pci disable_aspm_l1=y disable_aspm_l1ss=y" \
+		> ${_MODPROBEDDIR}/70-rtw89.conf
 .endif
 
 post-install:
