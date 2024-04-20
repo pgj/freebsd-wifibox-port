@@ -30,6 +30,18 @@ either.
 # kldload linux64
 ```
 
+Sometimes the build may crash with an `Abort trap` message, which
+results in `Error 134` for `make`.  This happens when trying to run
+Linux binaries atop FreeBSD, such as the APK package manager for
+installing the components.  This usually happens on systems that have
+not had the Linuxulator used before and may not have the
+`/compat/linux` directory created, which is expected to be present.
+This issue can be fixed as follows, for example.
+
+```console
+# mkdir -p /compat/linux
+```
+
 For `net/wifibox-core`, the default dependencies are follows, which
 could be also installed via packages.  The `socat` package is only
 required if the Unix Domain Socket pass-through is going to be

@@ -160,9 +160,19 @@ _IPW2200_FIRMWARE=	iwi/ipw2200-bss \
 _MT76_FIRMWARE=		2135e201e7a9339e018d4e2d4a33c73266e674d7
 
 _LINUX64_KMOD!=		(kldstat -qn linux64 && echo "found") || echo ""
+_LINUX_EMUL_PATH!=	(sysctl -qn compat.linux.emul_path) || echo ""
+_LINUX_EP_EXISTS!=	(test -d "${_LINUX_EMUL_PATH}" && echo "found") || echo ""
 
-.if empty(_LINUX64_KMOD)
+.if empty(IGNORE) && empty(_LINUX64_KMOD)
 IGNORE=	needs the linux64 kernel module to build
+.endif
+
+.if empty(IGNORE) && empty(_LINUX_EMUL_PATH)
+IGNORE=	needs compat.linux.emul_path to be set
+.endif
+
+.if empty(IGNORE) && empty(_LINUX_EP_EXISTS)
+IGNORE= needs compat.linux.emul_path to point to an existing directory
 .endif
 
 pre-everything::
