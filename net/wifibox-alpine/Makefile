@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	fe9b384e45c57b0cfafe5e5b3931ba163f4230fd:scripts
+GH_TAGNAME=	e4aebbaa9919c4493485f20f9de4b582cd17a4ec:scripts
 
 ALPINE_VERSION=	3.19.1
 ALPINE_DATE=	2024.03.23
