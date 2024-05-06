@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240328
+PORTVERSION=	20240506
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	e4aebbaa9919c4493485f20f9de4b582cd17a4ec:scripts
+GH_TAGNAME=	3ce5b1faf48ef4b9d52c38bf518aa612242fba3f:scripts
 
 ALPINE_VERSION=	3.19.1
 ALPINE_DATE=	2024.03.23
@@ -312,7 +312,7 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 
 RTL8821CE_VERSION=	20240120
 RTW88_VERSION=		20240316
-RTW89_VERSION=		20240310
+RTW89_VERSION=		20240106
 BROADCOM_WL_VERSION=	6.30.223.271
 
 _LINUX_LTS_MAJOR=	${LINUX_LTS_VERSION:C/^([0-9]*)\..*/\1/}
