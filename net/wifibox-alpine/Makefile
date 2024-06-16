@@ -442,7 +442,7 @@ pre-build:
 .endfor
 .if ${PORT_OPTIONS:MFW_BRCM}
 	$(FIND) ${_FIRMWAREDIR}/${LFW_BRCM_FILES} -name 'brcmfmac*-pcie.bin' -type f \
-		| ${SED} -E 's!(.*)-pcie.bin!ln -s $$(basename \1-pcie.bin) \1-pcie.bin.FreeBSD-BHYVE.bin!' \
+		| ${SED} -E 's!(.*)-pcie.bin!ln -s $$(basename \1-pcie.bin) \1-pcie.FreeBSD-BHYVE.bin!' \
 		| ${SH}
 .endif
 .if ${PORT_OPTIONS:MFW_MEDIATEK}
