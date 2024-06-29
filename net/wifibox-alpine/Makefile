@@ -113,7 +113,7 @@ MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.4.3-r3:wifibox \
-		busybox-1.36.1-r2:wifibox \
+		busybox-1.36.1-r3:wifibox \
 		ifupdown-ng-0.12.1-r2:wifibox \
 		iptables-1.8.10-r0:wifibox \
 		iw-5.19-r1 \
