@@ -1,4 +1,4 @@
-TIMESTAMP = 1714987776
+TIMESTAMP = 1719663564
 SHA256 (wifibox-alpine/alpine-minirootfs-3.19.1-x86_64.tar.gz) = 185123ceb6e7d08f2449fff5543db206ffb79decd814608d399ad447e08fa29e
 SIZE (wifibox-alpine/alpine-minirootfs-3.19.1-x86_64.tar.gz) = 3285677
 SHA256 (wifibox-alpine/linux-firmware-20240312.tar.gz) = 89cbac35d1bd21ebf64936d764ccd01d4e0b6cde973e3b940f8ad2bac9086ec8
@@ -47,8 +47,8 @@ SHA256 (wifibox-alpine/dhcpcd-10.0.6-r0.apk) = df6c680047bdf546224e81e4edd8eeae2
 SIZE (wifibox-alpine/dhcpcd-10.0.6-r0.apk) = 162875
 SHA256 (wifibox-alpine/pcsc-lite-libs-2.0.0-r2.apk) = ad80284af7e8eeda364990d781cbb524aac3621a34fd8e14e3ad3e7dd0e9d5b7
 SIZE (wifibox-alpine/pcsc-lite-libs-2.0.0-r2.apk) = 17918
-SHA256 (wifibox-alpine/wpa_supplicant-2.10-r7.apk) = 5f245f08a8da63c8b74eef63279c0b30ea70f02ee02036a33e37ec085e9c8435
-SIZE (wifibox-alpine/wpa_supplicant-2.10-r7.apk) = 857123
+SHA256 (wifibox-alpine/wpa_supplicant-2.10-r8.apk) = 30bb85110005f6f081b5f0e77e263f5429455d5fc32cbd9c39798c5e28e7a631
+SIZE (wifibox-alpine/wpa_supplicant-2.10-r8.apk) = 857204
 SHA256 (wifibox-alpine/hostapd-2.10-r4.apk) = f2b6625e2d566efc1a3050316bbf3745622ad566a2f8f7a27fad8a38b0817969
 SIZE (wifibox-alpine/hostapd-2.10-r4.apk) = 515548
 SHA256 (wifibox-alpine/mbedtls-2.28.7-r0.apk) = 81b6f43a402f5bb8827bc497f787334d5d6092d99eeebea1d54bb9b50fa53c23
