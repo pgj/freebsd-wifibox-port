@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240506
+PORTVERSION=	20240721
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	3ce5b1faf48ef4b9d52c38bf518aa612242fba3f:scripts
+GH_TAGNAME=	2d63288ad60dcd441448651523f6f4f67b7d0337:scripts
 
 ALPINE_VERSION=		3.19.1
 LINUX_LTS_VERSION=	6.6.22-r1
@@ -113,7 +113,7 @@ MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.4.3-r3:wifibox \
-		busybox-1.36.1-r2:wifibox \
+		busybox-1.36.1-r3:wifibox \
 		ifupdown-ng-0.12.1-r2:wifibox \
 		iptables-1.8.10-r0:wifibox \
 		iw-5.19-r1 \
@@ -159,6 +159,8 @@ IGNORE=	needs compat.linux.emul_path to be set
 IGNORE= needs compat.linux.emul_path to point to an existing directory
 .endif
 
+.include <bsd.port.options.mk>
+
 pre-everything::
 .if !defined(FIRMWARE_FILES)
 	@${ECHO_MSG} "===> NOTICE:"
@@ -169,7 +171,16 @@ pre-everything::
 	@sleep 1
 .endif
 
-.include <bsd.port.options.mk>
+.if ${PORT_OPTIONS:MFW_BRCM} && !defined(BRCM_FWCONF_FILES)
+	@${ECHO_MSG} "===> NOTICE:"
+	@${ECHO_MSG}
+	@${ECHO_MSG} "The Broadcom driver was selected.  Note that it might require additional"
+	@${ECHO_MSG} "firmware configuration files to function properly, e.g. brcmfmac43602-pcie.txt."
+	@${ECHO_MSG} "Use the BRCM_FWCONF_FILES make(1) variable specify the location of these files"
+	@${ECHO_MSG} "to have them added to the guest image."
+	@${ECHO_MSG}
+	@sleep 1
+.endif
 
 .if ${PORT_OPTIONS:MUDS_PASSTHRU}
 _BOOT_SERVICES+=	uds_passthru
@@ -212,7 +223,7 @@ _ETC_SRCS+=		etc/optional/ipv6/wpa_supplicant
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-2.0.0-r2 \
-			wpa_supplicant-2.10-r7:wifibox
+			wpa_supplicant-2.10-r8:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
@@ -449,6 +460,9 @@ pre-build:
 	${TAR} -xf ${_DISTDIR}/${_MT76_FIRMWARE}.zip \
 		-C ${_FIRMWAREDIR} --strip-components 2 \
 		*/firmware/mt76??_e?.bin
+.endif
+.if ${PORT_OPTIONS:MFW_BRCM} && defined(BRCM_FWCONF_FILES)
+	${CP} ${BRCM_FWCONF_FILES} ${_FIRMWAREDIR}/brcm
 .endif
 
 post-install:
