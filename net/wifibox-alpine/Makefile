@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240821
+PORTVERSION=	20240823
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	f40d64bb41b0602625bbf0b5b4d3cc587d201ad8:scripts
+GH_TAGNAME=	61b666691bf6265874926d4334bcb9db99327ffe:scripts
 
 ALPINE_VERSION=		3.20.2
 LINUX_LTS_VERSION=	6.6.47-r0
@@ -124,11 +124,11 @@ _PACKAGES=	baselayout-3.6.5-r0:wifibox \
 		libnl3-3.9.0-r1 \
 		libssl3-3.3.1-r3 \
 		musl-1.2.5-r0 \
-		openrc-0.54-r0:wifibox
+		openrc-0.54-r1:wifibox
 
 _BOOT_SERVICES=		bootmisc defaults modules hostname hwclock networking sysctl \
 			syslog urandom
-_DEFAULT_SERVICES=	acpid crond iptables udhcpd
+_DEFAULT_SERVICES=	acpid crond iptables udhcpd remove-wireless
 _SYSINIT_SERVICES=	devfs dmesg hwdrivers mdev
 
 _ATMEL_FIRMWARE=	atmel-firmware-1.3
@@ -477,6 +477,7 @@ MAKE_ARGS+=	VERSION=${PORTVERSION} \
 		BOOT_SERVICES="${_BOOT_SERVICES}" \
 		DEFAULT_SERVICES="${_DEFAULT_SERVICES}" \
 		SYSINIT_SERVICES="${_SYSINIT_SERVICES}" \
+		SHUTDOWN_SERVICES="${_SHUTDOWN_SERVICES}" \
 		ETC_SRCS="${_ETC_SRCS}" \
 		EXTRA_VIRTFS_MOUNTS="${_VIRTFS_MOUNTS}" \
 		SQUASHFS_COMP=${PORT_OPTIONS:MCOMP_*:S/COMP_//:tl}
