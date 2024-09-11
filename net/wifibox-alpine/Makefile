@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240821
+PORTVERSION=	20240911
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,14 +93,14 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	f40d64bb41b0602625bbf0b5b4d3cc587d201ad8:scripts
+GH_TAGNAME=	2b0702c10d5f81064525ca7cc679ccdb66a3cc6a:scripts
 
-ALPINE_VERSION=		3.20.2
-LINUX_LTS_VERSION=	6.6.47-r0
-LINUX_EDGE_VERSION=	6.10.6-r0
+ALPINE_VERSION=		3.20.3
+LINUX_LTS_VERSION=	6.6.50-r0
+LINUX_EDGE_VERSION=	6.10.9-r0
 
 _LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
-_LINUXFW_TAG=	20240811
+_LINUXFW_TAG=	20240909
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
@@ -118,17 +118,17 @@ _PACKAGES=	baselayout-3.6.5-r0:wifibox \
 		iptables-1.8.10-r1:wifibox \
 		iw-6.9-r0 \
 		libcap2-2.70-r0 \
-		libcrypto3-3.3.1-r3 \
+		libcrypto3-3.3.2-r0 \
 		libmnl-1.0.5-r2 \
 		libnftnl-1.2.6-r0 \
 		libnl3-3.9.0-r1 \
-		libssl3-3.3.1-r3 \
+		libssl3-3.3.2-r0 \
 		musl-1.2.5-r0 \
-		openrc-0.54-r0:wifibox
+		openrc-0.54-r1:wifibox
 
 _BOOT_SERVICES=		bootmisc defaults modules hostname hwclock networking sysctl \
 			syslog urandom
-_DEFAULT_SERVICES=	acpid crond iptables udhcpd
+_DEFAULT_SERVICES=	acpid crond iptables udhcpd remove-wireless
 _SYSINIT_SERVICES=	devfs dmesg hwdrivers mdev
 
 _ATMEL_FIRMWARE=	atmel-firmware-1.3
@@ -138,7 +138,7 @@ _IPW2100_FIRMWARE=	ipw/ipw2100-1.3 \
 			ipw/ipw2100-1.3-i
 _IPW2200_FIRMWARE=	iwi/ipw2200-bss \
 			iwi/ipw2200-ibss
-_MT76_FIRMWARE=		4e8167b941750a381a1056a61519c86cdcaaf35d
+_MT76_FIRMWARE=		bec8cb851d99aadfd27eb161a66ee396205479a1
 
 _LINUX64_KMOD!=		(kldstat -qn linux64 && echo "found") || echo ""
 _LINUX_EMUL_PATH!=	(sysctl -qn compat.linux.emul_path) || echo ""
@@ -303,8 +303,8 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 RTL8821CE_VERSION=	20240326
-RTW88_VERSION=		20240811
-RTW89_VERSION=		20240819
+RTW88_VERSION=		20240822
+RTW89_VERSION=		20240825
 BROADCOM_WL_VERSION=	6.30.223.271
 
 _LINUX_LTS_MAJOR=	${LINUX_LTS_VERSION:C/^([0-9]*)\..*/\1/}
