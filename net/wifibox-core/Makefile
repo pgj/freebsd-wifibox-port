@@ -21,9 +21,9 @@ OPTIONS_SINGLE_RECOVERY=	RECOVER_RESTART_VMM \
 
 OPTIONS_DEFAULT=		RECOVER_RESTART_VMM
 
-RECOVER_RESTART_VMM_DESC=	Restart the vmm(4) kernel module on resume
+RECOVER_RESTART_VMM_DESC=	Restart the guest and reload vmm(4) kernel module on resume
 RECOVER_SUSPEND_GUEST_DESC=	Stop the guest on suspend, start on resume
-RECOVER_SUSPEND_VMM_DESC=	Unload vmm(4) on suspend, and reload on resume
+RECOVER_SUSPEND_VMM_DESC=	Stop the guest and unload vmm(4) on suspend, start the guest and reload vmm(4) on resume
 RECOVER_NONE_DESC=		No recovery for suspend/resume
 
 .include <bsd.port.options.mk>
