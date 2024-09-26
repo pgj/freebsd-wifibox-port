@@ -31,12 +31,19 @@ RECOVER_NONE_DESC=		No recovery for suspend/resume
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
-GH_TAGNAME=	4abcf0936fdd5a04fcd7fd53811ebb5aab7b70a9
+GH_TAGNAME=	448716069ff1bef68a4645efde2fbccdfe25c07f
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
 		GUEST_MAN=${LOCALBASE}/share/man/man5/wifibox-alpine.5.gz \
 		VERSION=${PORTVERSION} \
 		RECOVERY_METHOD=${PORT_OPTIONS:MRECOVER_*:S/RECOVER_//:tl}
+
+.if ${OSVERSION} > 1400089
+MAKE_ARGS+=	DEVD_FIX=
+PLIST_SUB+=	DEVD_FIX="@comment "
+.else
+PLIST_SUB+=	DEVD_FIX=""
+.endif
 
 .include <bsd.port.mk>
