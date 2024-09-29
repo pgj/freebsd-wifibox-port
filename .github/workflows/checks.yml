@@ -1,0 +1,49 @@
+name: Build Checks
+on: [push]
+
+jobs:
+  checks:
+    strategy:
+      matrix:
+        version: ["13.4", "14.1"]
+    runs-on: ubuntu-latest
+    name: Continuous Integration
+    steps:
+    - uses: actions/checkout@v4
+    - name: "FreeBSD ${{ matrix.version }}"
+      id: port_checks
+      uses: vmactions/freebsd-vm@v1
+      with:
+        release: "${{ matrix.version }}"
+        usesh: true
+        prepare: |
+          pkg install -q -y gitup portconfig
+          pkg install -q -y gtar patchelf squashfs-tools-ng grub2-bhyve socat
+          gitup ports -v0
+
+        run: |
+          set -exu
+          kldload linux64
+          mkdir -p /compat/linux
+
+          make -C net/wifibox-alpine checksum
+          make -C net/wifibox-alpine
+          make -C net/wifibox-alpine check-plist
+          make -C net/wifibox-alpine install
+          make -C net/wifibox-alpine clean
+
+          make -C net/wifibox-core checksum
+          make -C net/wifibox-core
+          make -C net/wifibox-core check-plist
+          make -C net/wifibox-core install
+          make -C net/wifibox-core clean
+
+          make -C net/wifibox checksum
+          make -C net/wifibox
+          make -C net/wifibox check-plist
+          make -C net/wifibox install
+          make -C net/wifibox clean
+
+          make -C net/wifibox deinstall
+          make -C net/wifibox-core deinstall
+          make -C net/wifibox-alpine deinstall
