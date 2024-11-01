@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20240911
+PORTVERSION=	20241101
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -284,7 +284,7 @@ DISTFILES+=	${_MINIROOTFS}:upstream
 LFW_ATH10K_FILES=	ath10k
 LFW_ATH11K_FILES=	ath11k
 LFW_ATH12K_FILES=	ath12k
-LFW_BRCM_FILES=		brcm
+LFW_BRCM_FILES=		brcm cypress
 LFW_IWL3945_FILES=	iwlwifi-3945-*.ucode
 LFW_IWL4965_FILES=	iwlwifi-4965-*.ucode
 LFW_IWLWIFI_FILES=	iwlwifi-*
@@ -449,7 +449,7 @@ pre-build:
 		*/${fw_files}
 .endfor
 .if ${PORT_OPTIONS:MFW_BRCM}
-	$(FIND) ${_FIRMWAREDIR}/${LFW_BRCM_FILES} -name 'brcmfmac*-pcie.bin' -type f \
+	$(FIND) ${_FIRMWAREDIR}/brcm -name 'brcmfmac*-pcie.bin' -type f \
 		| ${SED} -E 's!(.*)-pcie.bin!ln -s $$(basename \1-pcie.bin) \1-pcie.FreeBSD-BHYVE.bin!' \
 		| ${SH}
 .endif
@@ -461,6 +461,23 @@ pre-build:
 .if ${PORT_OPTIONS:MFW_BRCM} && defined(BRCM_FWCONF_FILES)
 	${CP} ${BRCM_FWCONF_FILES} ${_FIRMWAREDIR}/brcm
 .endif
+	${TAR} -xf ${_DISTDIR}/${_LINUXFWFILE} \
+		-C ${WRKDIR} --strip-components 1 \
+		*/WHENCE
+	@${GREP} -E "^Link:" ${WRKDIR}/WHENCE \
+		| ${SED} -e 's/^Link: *//g;s/-> //g' \
+		| while read _link _target; do \
+			_topdir=$$(${DIRNAME} "$$_link" | ${CUT} -d '/' -f 1) ; \
+			if [ -d "${_FIRMWAREDIR}/$$_topdir" ]; then \
+				_directory="${_FIRMWAREDIR}/$$(dirname $$_link)"; \
+				${MKDIR} "$$_directory"; \
+				_linktarget=$$(cd "$$_directory" && ${REALPATH} -q "$$_target" || ${TRUE}); \
+				if [ -n "$$_linktarget" ] && [ -e "$$_linktarget" ]; then \
+					${ECHO} "Creating link: $$_link -> $$_target"; \
+					${LN} -s "$$_target" "${_FIRMWAREDIR}/$$_link"; \
+				fi; \
+			fi; \
+		done
 
 post-install:
 .if empty(PORT_OPTIONS:MUDS_PASSTHRU)
