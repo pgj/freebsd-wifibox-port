@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20241101
+PORTVERSION=	20250208
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -31,7 +31,10 @@ OPTIONS_SINGLE_APPLICATION=	APP_HOSTAPD APP_WPA_SUPPLICANT
 OPTIONS_SINGLE_KERNEL=		KERN_LTS KERN_EDGE
 
 OPTIONS_GROUP=			EXTRAS
-OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING XX_TCPDUMP
+OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING XX_TCPDUMP XX_NDISC6 XX_DHCP6
+
+XX_DHCP6_IMPLIES=		IPV6
+XX_NDISC6_IMPLIES=		IPV6
 
 OPTIONS_DEFAULT=		COMP_XZ APP_WPA_SUPPLICANT UDS_PASSTHRU KERN_LTS IPV6
 
@@ -48,6 +51,8 @@ APP_WPA_SUPPLICANT_DESC=	WPA Supplicant (wpa_supplicant)
 XX_MDNS_DESC=			mDNS Responder Daemon
 XX_FORWARDING_DESC=		User-space forwarding
 XX_TCPDUMP_DESC=		Packet analysis with tcpdump
+XX_DHCP6_DESC=			IPv6 DHCP Server
+XX_NDISC6_DESC=			IPv6 networking tools
 
 KERN_LTS_DESC=			Linux LTS (6.6.x)
 KERN_EDGE_DESC=			Linux edge (6.10.x)
@@ -93,7 +98,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	2b0702c10d5f81064525ca7cc679ccdb66a3cc6a:scripts
+GH_TAGNAME=	9af3c9ead6481a15d958c452fac3b7a1fac17ed2:scripts
 
 ALPINE_VERSION=		3.20.3
 LINUX_LTS_VERSION=	6.6.50-r0
@@ -112,7 +117,7 @@ MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
 		https://github.com/openwrt/mt76/archive/:mt76
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
-_PACKAGES=	baselayout-3.6.5-r0:wifibox \
+_PACKAGES=	baselayout-3.6.5-r1:wifibox \
 		busybox-1.36.1-r4:wifibox \
 		ifupdown-ng-0.12.1-r3:wifibox \
 		iptables-1.8.10-r1:wifibox \
@@ -258,6 +263,16 @@ _PACKAGES+=		forwarding-0.1.0-r4:wifibox
 .if ${PORT_OPTIONS:MXX_TCPDUMP} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		libpcap-1.10.4-r1 \
 			tcpdump-4.99.4-r1
+.endif
+
+.if ${PORT_OPTIONS:MXX_NDISC6} || make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=		ndisc6-1.0.8-r1
+.endif
+
+.if ${PORT_OPTIONS:MXX_DHCP6} || make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=		dnsmasq-2.90-r0:wifibox
+_BOOT_SERVICES+=	dnsmasq
+_ETC_SRCS+=		etc/optional/ipv6/dnsmasq
 .endif
 
 .if ${PORT_OPTIONS:MKERN_LTS} || make(makesum) || make(fetch-url-list-int)

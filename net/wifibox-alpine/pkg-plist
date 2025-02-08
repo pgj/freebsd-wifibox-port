@@ -12,6 +12,7 @@
 %%APP_HOSTAPD%%@sample(,,640) etc/wifibox/hostapd/hostapd.conf.sample
 %%XX_MDNS%%@sample(,,640) etc/wifibox/appliance/mdnsd-services.conf.sample
 %%XX_FORWARDING%%@sample(,,640) etc/wifibox/appliance/forwarding.conf.sample
+%%XX_DHCP6%%@sample(,,640) etc/wifibox/appliance/dnsmasq.conf.sample
 etc/wifibox/app_config
 share/man/man5/wifibox-alpine.5.gz
 share/wifibox/disk.img
