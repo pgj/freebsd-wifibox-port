@@ -1,8 +1,8 @@
-TIMESTAMP = 1742765440
+TIMESTAMP = 1743193744
 SHA256 (wifibox-alpine/alpine-minirootfs-3.21.3-x86_64.tar.gz) = 1a694899e406ce55d32334c47ac0b2efb6c06d7e878102d1840892ad44cd5239
 SIZE (wifibox-alpine/alpine-minirootfs-3.21.3-x86_64.tar.gz) = 3507952
-SHA256 (wifibox-alpine/linux-firmware-20250311.tar.gz) = 2a67a3fc91aea41679b8628909b0e47085e089163374f961a1ff94cd35a49ff7
-SIZE (wifibox-alpine/linux-firmware-20250311.tar.gz) = 674268417
+SHA256 (wifibox-alpine/linux-firmware-20250311.tar.xz) = b1083a36f19aea46f661dcfd4cd462d13933dcb4e7f0dc809525552dd5c3541d
+SIZE (wifibox-alpine/linux-firmware-20250311.tar.xz) = 434375512
 SHA256 (wifibox-alpine/baselayout-3.6.8-r0.apk) = ab79c582ef244442b64248fb4a2e051fa392274c5413420817291e7d14a9a529
 SIZE (wifibox-alpine/baselayout-3.6.8-r0.apk) = 13288
 SHA256 (wifibox-alpine/busybox-1.37.0-r0.apk) = d448f4bf4e0eabff9ccf299e70147433771c485b9b3b776ef798c385451010d0

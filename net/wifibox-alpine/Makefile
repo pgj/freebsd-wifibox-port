@@ -99,13 +99,13 @@ ALPINE_VERSION=		3.21.3
 LINUX_LTS_VERSION=	6.12.19-r0
 LINUX_EDGE_VERSION=	6.13.7-r0
 
-_LINUXFW_SITE=	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/
+_LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
 _LINUXFW_TAG=	20250311
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
 MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
 		${_GITHUB_SITE}/packages/:custom_packages \
-		${_LINUXFW_SITE}/linux-firmware.git/snapshot/:linux_firmware \
+		${_LINUXFW_SITE}:linux_firmware \
 		https://sources.openwrt.org/:openwrt \
 		https://lwfinger.com/b43-firmware/:b43 \
 		https://thekelleys.org.uk/atmel/:atmel \
@@ -364,7 +364,7 @@ _PACKAGES+=	broadcom-wl-edge-${BROADCOM_WL_VERSION}-r${_KERN_EDGE_REL}00:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
-_LINUXFWFILE=	${_LINUXFW}.tar.gz
+_LINUXFWFILE=	${_LINUXFW}.tar.xz
 _LINUXFWDIR=	${WRKDIR}/${_LINUXFW}
 .endif
 
