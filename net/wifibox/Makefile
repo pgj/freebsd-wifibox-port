@@ -3,7 +3,7 @@ PORTVERSION=	1.5.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
-COMMENT=	Wireless card driver via virtualized Linux
+COMMENT=	Embedded (virtualized) wireless router
 WWW=		https://github.com/pgj/freebsd-wifibox
 
 ONLY_FOR_ARCHS=	amd64
