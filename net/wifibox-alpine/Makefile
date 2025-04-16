@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250323
+PORTVERSION=	20250416
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -96,7 +96,7 @@ GH_PROJECT=	freebsd-wifibox-alpine:scripts
 GH_TAGNAME=	3c9aa05dd7933a2b109c52d81ff22199082db4e5:scripts
 
 ALPINE_VERSION=		3.21.3
-LINUX_LTS_VERSION=	6.12.19-r0
+LINUX_LTS_VERSION=	6.12.23-r0
 LINUX_EDGE_VERSION=	6.13.7-r0
 
 _LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
