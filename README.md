@@ -54,7 +54,18 @@ activated.
 ## Installation
 
 Once this repository is cloned and the necessary preparations are
-made, the ports can be easily installed in the standard way.
+made, one might want to check and change the configuration options
+available before installing, reinstalling, or updating the ports.
+
+```console
+# make -C net/wifibox-alpine config
+# make -C net/wifibox-core config
+```
+
+Note that some of the options might make sense only by studying the
+[`freebsd-wifibox`] and [`freebsd-wifibox-alpine`] repositories.
+Other than that, the ports can be easily installed in the standard
+way.
 
 ```console
 # make -C net/wifibox-alpine install clean
@@ -98,3 +109,5 @@ smaller guest disk image.
 
 [Linuxulator]: https://docs.freebsd.org/en/books/handbook/linuxemu/
 [Wifibox project]: https://github.com/pgj/freebsd-wifibox
+[`freebsd-wifibox`]: https://github.com/pgj/freebsd-wifibox
+[`freebsd-wifibox-alpine`]: https://github.com/pgj/freebsd-wifibox-alpine
