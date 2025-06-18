@@ -5,7 +5,7 @@ jobs:
   checks:
     strategy:
       matrix:
-        version: ["13.5", "14.2"]
+        version: ["13.5", "14.3"]
     runs-on: ubuntu-latest
     name: Continuous Integration
     env:
