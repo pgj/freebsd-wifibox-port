@@ -6,12 +6,16 @@ downstreamed to the FreeBSD ports tree time to time.
 
 *This is the development version of the port, use it only if the
 [`net/wifibox`](https://cgit.freebsd.org/ports/tree/net/wifibox) port
-from the [FreeBSD Ports
-Collection](https://docs.freebsd.org/en/books/handbook/ports/#ports-using)
-does not work for some reason.  Please report issues at the [Wifibox
-project] directly.*
+from the [FreeBSD Ports Collection] does not work for some reason.
+Please report issues at the [Wifibox project] directly.*
 
 ## Preperations
+
+The installation process described here assumes that the [FreeBSD
+Ports Collection] is available and ready to use on the local system.
+Please consult the FreeBSD documentation to understand how to install
+and use it.  In the rest of this document, the related details will
+not be discussed.
 
 Before trying to build the `net/wifibox-alpine` port, it might be
 easier if the dependencies are installed beforehand via packages.
@@ -96,5 +100,6 @@ smaller guest disk image.
 	clean
 ```
 
+[FreeBSD Ports Collection]: https://docs.freebsd.org/en/books/handbook/ports/#ports-using
 [Linuxulator]: https://docs.freebsd.org/en/books/handbook/linuxemu/
 [Wifibox project]: https://github.com/pgj/freebsd-wifibox
