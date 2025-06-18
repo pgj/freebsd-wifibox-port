@@ -6,12 +6,16 @@ downstreamed to the FreeBSD ports tree time to time.
 
 *This is the development version of the port, use it only if the
 [`net/wifibox`](https://cgit.freebsd.org/ports/tree/net/wifibox) port
-from the [FreeBSD Ports
-Collection](https://docs.freebsd.org/en/books/handbook/ports/#ports-using)
-does not work for some reason.  Please report issues at the [Wifibox
-project] directly.*
+from the [FreeBSD Ports Collection] does not work for some reason.
+Please report issues at the [Wifibox project] directly.*
 
 ## Preperations
+
+The installation process described here assumes that the [FreeBSD
+Ports Collection] is available and ready to use on the local system.
+Please consult the FreeBSD documentation to understand how to install
+and use it.  In the rest of this document, the related details will
+not be discussed.
 
 Before trying to build the `net/wifibox-alpine` port, it might be
 easier if the dependencies are installed beforehand via packages.
@@ -22,9 +26,9 @@ easier if the dependencies are installed beforehand via packages.
 
 Also, make sure that the [Linuxulator] is activated, for example, by
 loading the corresponding kernel module.  There is no need to install
-a full Linux base system (this is going to be done for the port
-itself), but if that is already there it will not cause a problem
-either.
+a complete Linux base system (the port itself is going to deploy the
+tooling necessary for that), but if that is already there it will not
+cause a problem either.
 
 ```console
 # kldload linux64
@@ -33,10 +37,10 @@ either.
 Sometimes the build may crash with an `Abort trap` message, which
 results in `Error 134` for `make`.  This happens when trying to run
 Linux binaries atop FreeBSD, such as the APK package manager for
-installing the components.  This usually happens on systems that have
-not had the Linuxulator used before and may not have the
-`/compat/linux` directory created, which is expected to be present.
-This issue can be fixed as follows, for example.
+installing the components.  Systems that have not had the Linuxulator
+used before and may not have the `/compat/linux` directory created,
+which is expected to be present.  This issue can be fixed as follows,
+for example.
 
 ```console
 # mkdir -p /compat/linux
@@ -96,5 +100,6 @@ smaller guest disk image.
 	clean
 ```
 
+[FreeBSD Ports Collection]: https://docs.freebsd.org/en/books/handbook/ports/#ports-using
 [Linuxulator]: https://docs.freebsd.org/en/books/handbook/linuxemu/
 [Wifibox project]: https://github.com/pgj/freebsd-wifibox
