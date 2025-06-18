@@ -16,6 +16,9 @@ jobs:
       with:
         release: "${{ matrix.version }}"
         usesh: true
+        cpu: 1
+        arch: x86_64
+        mem: 1024
         prepare: |
           pkg install -q -y gitup portconfig
           pkg install -q -y gtar patchelf squashfs-tools-ng grub2-bhyve socat
