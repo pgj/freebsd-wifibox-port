@@ -22,9 +22,9 @@ easier if the dependencies are installed beforehand via packages.
 
 Also, make sure that the [Linuxulator] is activated, for example, by
 loading the corresponding kernel module.  There is no need to install
-a full Linux base system (this is going to be done for the port
-itself), but if that is already there it will not cause a problem
-either.
+a complete Linux base system (the port itself is going to deploy the
+tooling necessary for that), but if that is already there it will not
+cause a problem either.
 
 ```console
 # kldload linux64
@@ -33,10 +33,10 @@ either.
 Sometimes the build may crash with an `Abort trap` message, which
 results in `Error 134` for `make`.  This happens when trying to run
 Linux binaries atop FreeBSD, such as the APK package manager for
-installing the components.  This usually happens on systems that have
-not had the Linuxulator used before and may not have the
-`/compat/linux` directory created, which is expected to be present.
-This issue can be fixed as follows, for example.
+installing the components.  Systems that have not had the Linuxulator
+used before and may not have the `/compat/linux` directory created,
+which is expected to be present.  This issue can be fixed as follows,
+for example.
 
 ```console
 # mkdir -p /compat/linux
