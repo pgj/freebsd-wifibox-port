@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250323
+PORTVERSION=	20250619
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -113,7 +113,7 @@ MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.6.8-r0:wifibox \
-		busybox-1.37.0-r0:wifibox \
+		busybox-1.37.0-r1:wifibox \
 		ifupdown-ng-0.12.1-r4:wifibox \
 		iptables-1.8.11-r0:wifibox \
 		iw-6.9-r0 \
@@ -222,7 +222,7 @@ _ETC_SRCS+=		etc/optional/ipv6/wpa_supplicant
 
 .if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-2.2.3-r1 \
-			wpa_supplicant-2.10-r10:wifibox
+			wpa_supplicant-2.10-r11:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD}
@@ -235,7 +235,7 @@ _ETC_SRCS+=		etc/optional/ipv6/hostapd
 .endif
 
 .if ${PORT_OPTIONS:MAPP_HOSTAPD} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=		hostapd-2.11-r0:wifibox
+_PACKAGES+=		hostapd-2.11-r1:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_MDNS}
