@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250628
+PORTVERSION=	20250629
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	3c9aa05dd7933a2b109c52d81ff22199082db4e5:scripts
+GH_TAGNAME=	694d8ec6eb1190bbf5ed967722966c290da0b021:scripts
 
 ALPINE_VERSION=		3.21.3
 LINUX_LTS_VERSION=	6.12.19-r0
@@ -222,7 +222,7 @@ _ETC_SRCS+=		etc/optional/ipv6/wpa_supplicant
 
 .if ${PORT_OPTIONS:MAPP_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-2.2.3-r1 \
-			wpa_supplicant-2.10-r10:wifibox
+			wpa_supplicant-2.10-r11:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_ACCESS_POINT}
@@ -235,7 +235,7 @@ _ETC_SRCS+=		etc/optional/ipv6/hostapd
 .endif
 
 .if ${PORT_OPTIONS:MAPP_ACCESS_POINT} || make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=		hostapd-2.11-r0:wifibox
+_PACKAGES+=		hostapd-2.11-r1:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_MDNS}
