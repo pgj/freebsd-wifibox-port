@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250323
+PORTVERSION=	20250628
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -27,13 +27,13 @@ OPTIONS_SUB=			yes
 
 OPTIONS_SINGLE=			COMPRESSION APPLICATION KERNEL
 OPTIONS_SINGLE_COMPRESSION=	COMP_GZIP COMP_LZ4 COMP_LZO COMP_XZ COMP_ZSTD
-OPTIONS_SINGLE_APPLICATION=	APP_HOSTAPD APP_WPA_SUPPLICANT
+OPTIONS_SINGLE_APPLICATION=	APP_ACCESS_POINT APP_SUPPLICANT
 OPTIONS_SINGLE_KERNEL=		KERN_LTS KERN_EDGE
 
 OPTIONS_GROUP=			EXTRAS
 OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING XX_TCPDUMP
 
-OPTIONS_DEFAULT=		COMP_XZ APP_WPA_SUPPLICANT UDS_PASSTHRU KERN_LTS IPV6
+OPTIONS_DEFAULT=		COMP_XZ APP_SUPPLICANT UDS_PASSTHRU KERN_LTS IPV6
 
 COMP_GZIP_DESC=		gzip
 COMP_LZ4_DESC=		lz4
@@ -43,8 +43,8 @@ COMP_ZSTD_DESC=		zstd
 
 UDS_PASSTHRU_DESC=		Control socket pass-through (wpa_supplicant/hostapd)
 IPV6_DESC=			IPv6 support
-APP_HOSTAPD_DESC=		Access Point (hostapd)
-APP_WPA_SUPPLICANT_DESC=	WPA Supplicant (wpa_supplicant)
+APP_ACCESS_POINT_DESC=		Access Point (hostapd)
+APP_SUPPLICANT_DESC=		Supplicant (wpa_supplicant)
 XX_MDNS_DESC=			mDNS Responder Daemon
 XX_FORWARDING_DESC=		User-space forwarding
 XX_TCPDUMP_DESC=		Packet analysis with tcpdump
@@ -206,12 +206,12 @@ _PACKAGES+=		uds_passthru-0.1.1-r5:wifibox
 _PACKAGES+=		radvd-2.19-r3:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MIPV6} && ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} \
+.if ${PORT_OPTIONS:MIPV6} && ${PORT_OPTIONS:MAPP_SUPPLICANT} \
 	|| make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		dhcpcd-10.1.0-r0:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT}
+.if ${PORT_OPTIONS:MAPP_SUPPLICANT}
 _VIRTFS_MOUNTS=		app_config:/etc/wpa_supplicant
 _BOOT_SERVICES+=	wpa_supplicant
 _ETC_SRCS=		etc/wpa_supplicant
@@ -220,12 +220,12 @@ _ETC_SRCS+=		etc/optional/ipv6/wpa_supplicant
 .endif
 .endif
 
-.if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
+.if ${PORT_OPTIONS:MAPP_SUPPLICANT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		pcsc-lite-libs-2.2.3-r1 \
 			wpa_supplicant-2.10-r10:wifibox
 .endif
 
-.if ${PORT_OPTIONS:MAPP_HOSTAPD}
+.if ${PORT_OPTIONS:MAPP_ACCESS_POINT}
 _VIRTFS_MOUNTS=		app_config:/etc/hostapd
 _BOOT_SERVICES+=	hostapd
 _ETC_SRCS=		etc/hostapd
@@ -234,7 +234,7 @@ _ETC_SRCS+=		etc/optional/ipv6/hostapd
 .endif
 .endif
 
-.if ${PORT_OPTIONS:MAPP_HOSTAPD} || make(makesum) || make(fetch-url-list-int)
+.if ${PORT_OPTIONS:MAPP_ACCESS_POINT} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		hostapd-2.11-r0:wifibox
 .endif
 
@@ -418,10 +418,10 @@ DISTFILES+=	${_MT76_FIRMWARE}.zip:mt76
 .endif
 
 pre-build:
-.if ${PORT_OPTIONS:MAPP_WPA_SUPPLICANT}
+.if ${PORT_OPTIONS:MAPP_SUPPLICANT}
 	${MKDIR} ${_ETCDIR}/wpa_supplicant
 .endif
-.if ${PORT_OPTIONS:MAPP_HOSTAPD}
+.if ${PORT_OPTIONS:MAPP_ACCESS_POINT}
 	${MKDIR} ${_ETCDIR}/hostapd
 .endif
 	${MKDIR} ${_FIRMWAREDIR}
@@ -485,7 +485,7 @@ post-install:
 .if empty(PORT_OPTIONS:MUDS_PASSTHRU)
 	${RM} ${STAGEDIR}${PREFIX}/etc/wifibox/appliance/uds_passthru.conf.sample
 .endif
-.if ${PORT_OPTIONS:MAPP_HOSTAPD} && ${PORT_OPTIONS:MUDS_PASSTHRU}
+.if ${PORT_OPTIONS:MAPP_ACCESS_POINT} && ${PORT_OPTIONS:MUDS_PASSTHRU}
 	${MKDIR} ${STAGEDIR}/var/run/hostapd
 .endif
 
