@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250629
+PORTVERSION=	20250802
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,7 +93,7 @@ _GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	694d8ec6eb1190bbf5ed967722966c290da0b021:scripts
+GH_TAGNAME=	0c70a8eaca841d696c6485d2bc07dc6e43fe6929:scripts
 
 ALPINE_VERSION=		3.21.3
 LINUX_LTS_VERSION=	6.12.19-r0
@@ -113,7 +113,7 @@ MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
 
 _MINIROOTFS=	alpine-minirootfs-${ALPINE_VERSION}-x86_64.tar.gz
 _PACKAGES=	baselayout-3.6.8-r0:wifibox \
-		busybox-1.37.0-r0:wifibox \
+		busybox-1.37.0-r2:wifibox \
 		ifupdown-ng-0.12.1-r4:wifibox \
 		iptables-1.8.11-r0:wifibox \
 		iw-6.9-r0 \
@@ -208,7 +208,7 @@ _PACKAGES+=		radvd-2.19-r3:wifibox
 
 .if ${PORT_OPTIONS:MIPV6} && ${PORT_OPTIONS:MAPP_SUPPLICANT} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=		dhcpcd-10.1.0-r0:wifibox
+_PACKAGES+=		dhcpcd-10.1.0-r1:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MAPP_SUPPLICANT}
