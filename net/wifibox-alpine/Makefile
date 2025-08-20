@@ -88,7 +88,7 @@ FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
 XX_DRIVER_WL_DESC=	Broadcom 802.11 STA driver (+ firmware, exclusive)
 .endif
 
-_GITHUB_SITE=	https://github.com/pgj/freebsd-wifibox-alpine/releases/download
+_GITHUB_SITE=	https://pgj.github.io/freebsd-wifibox/alpine/main
 
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
