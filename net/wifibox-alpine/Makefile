@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250802
+PORTVERSION=	20250830
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -88,7 +88,7 @@ FW_TI_DESC=		Texas Instruments WL1xxx 802.11b/g/n
 XX_DRIVER_WL_DESC=	Broadcom 802.11 STA driver (+ firmware, exclusive)
 .endif
 
-_GITHUB_SITE=	https://pgj.github.io/freebsd-wifibox/alpine/main
+_GITHUB_SITE=	https://pgj.github.io/freebsd-wifibox/alpine
 
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
@@ -103,8 +103,8 @@ _LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
 _LINUXFW_TAG=	20250311
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
-MASTER_SITES+=	${_GITHUB_SITE}/upstream/:upstream \
-		${_GITHUB_SITE}/packages/:custom_packages \
+MASTER_SITES+=	${_GITHUB_SITE}/main/upstream/:upstream \
+		${_GITHUB_SITE}/main/packages/:custom_packages \
 		${_LINUXFW_SITE}:linux_firmware \
 		https://sources.openwrt.org/:openwrt \
 		https://lwfinger.com/b43-firmware/:b43 \
@@ -306,7 +306,7 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 
 RTL8821CE_VERSION=	20250312
 RTW88_VERSION=		20250315
-RTW89_VERSION=		20250317
+RTW89_VERSION=		20250808
 BROADCOM_WL_VERSION=	6.30.223.271
 
 _LINUX_LTS_MAJOR=	${LINUX_LTS_VERSION:C/^([0-9]*)\..*/\1/}
