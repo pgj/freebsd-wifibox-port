@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250924
+PORTVERSION=	20250927
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -31,7 +31,7 @@ OPTIONS_SINGLE_APPLICATION=	APP_ACCESS_POINT APP_SUPPLICANT
 OPTIONS_SINGLE_KERNEL=		KERN_LTS KERN_EDGE
 
 OPTIONS_GROUP=			EXTRAS
-OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING XX_TCPDUMP
+OPTIONS_GROUP_EXTRAS=		XX_MDNS XX_FORWARDING XX_TCPDUMP XX_MDNS_REPEATER
 
 OPTIONS_DEFAULT=		COMP_XZ APP_SUPPLICANT UDS_PASSTHRU KERN_LTS IPV6
 
@@ -48,6 +48,7 @@ APP_SUPPLICANT_DESC=		Supplicant (wpa_supplicant)
 XX_MDNS_DESC=			mDNS Responder Daemon
 XX_FORWARDING_DESC=		User-space forwarding
 XX_TCPDUMP_DESC=		Packet analysis with tcpdump
+XX_MDNS_REPEATER_DESC=		mDNS repeater (experimental)
 
 KERN_LTS_DESC=			Linux LTS (6.12.x)
 KERN_EDGE_DESC=			Linux edge (6.16.x)
@@ -103,7 +104,7 @@ _LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
 _LINUXFW_TAG=	20250917
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
-_WBA_BRANCH=	main
+_WBA_BRANCH=	unstable
 MASTER_SITES+=	${_GITHUB_SITE}/${_WBA_BRANCH}/upstream/:upstream \
 		${_GITHUB_SITE}/${_WBA_BRANCH}/packages/:custom_packages \
 		${_LINUXFW_SITE}:linux_firmware \
@@ -261,6 +262,14 @@ _PACKAGES+=		forwarding-0.1.0-r6:wifibox
 .if ${PORT_OPTIONS:MXX_TCPDUMP} || make(makesum) || make(fetch-url-list-int)
 _PACKAGES+=		libpcap-1.10.5-r1 \
 			tcpdump-4.99.5-r1
+.endif
+
+.if ${PORT_OPTIONS:MXX_MDNS_REPEATER}
+_BOOT_SERVICES+=	mdns-repeater
+.endif
+
+.if ${PORT_OPTIONS:MXX_MDNS_REPEATER} || make(makesum) || make(fetch-url-list-int)
+_PACKAGES+=		mdns-repeater-20231216-r0:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MKERN_LTS} || make(makesum) || make(fetch-url-list-int)

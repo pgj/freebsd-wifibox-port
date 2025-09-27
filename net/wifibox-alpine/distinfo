@@ -1,4 +1,4 @@
-TIMESTAMP = 1758691184
+TIMESTAMP = 1758964635
 SHA256 (wifibox-alpine/alpine-minirootfs-3.22.1-x86_64.tar.gz) = 0e5cc5702ad72a4e151f219976ba946d50161c3acce210ef3b122a529aba1270
 SIZE (wifibox-alpine/alpine-minirootfs-3.22.1-x86_64.tar.gz) = 3651341
 SHA256 (wifibox-alpine/linux-firmware-20250917.tar.xz) = 120575b756915a11e736f599316a756b6a29a76d6135ad86208868b21c58fb75
@@ -59,6 +59,8 @@ SHA256 (wifibox-alpine/libpcap-1.10.5-r1.apk) = dff90e1108691b6e742c216020773e6d
 SIZE (wifibox-alpine/libpcap-1.10.5-r1.apk) = 108393
 SHA256 (wifibox-alpine/tcpdump-4.99.5-r1.apk) = 12bb5c3ad8a3d4b81f9a14f6afcd17b188f687cd2a3a432f8e3053cca1ab2933
 SIZE (wifibox-alpine/tcpdump-4.99.5-r1.apk) = 370589
+SHA256 (wifibox-alpine/mdns-repeater-20231216-r0.apk) = ac731d463e620ec9ef9a1d1e8818e9ec90b9b3686948147436d62194e1bbb631
+SIZE (wifibox-alpine/mdns-repeater-20231216-r0.apk) = 9047
 SHA256 (wifibox-alpine/linux-lts-6.12.48-r0.apk) = c599f02c953d232bf100cc93073e391d2815e4441e733a4ca26332827ab65c3c
 SIZE (wifibox-alpine/linux-lts-6.12.48-r0.apk) = 7915747
 SHA256 (wifibox-alpine/linux-edge-6.16.8-r0.apk) = a6dd3b8fe1f406e61420f18a178b2163c51b66a58cdc0812c572dde972067ec0
