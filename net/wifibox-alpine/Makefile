@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20250924
+PORTVERSION=	20251011
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -103,7 +103,7 @@ _LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
 _LINUXFW_TAG=	20250917
 _LINUXFW=	linux-firmware-${_LINUXFW_TAG}
 
-_WBA_BRANCH=	main
+_WBA_BRANCH=	unstable
 MASTER_SITES+=	${_GITHUB_SITE}/${_WBA_BRANCH}/upstream/:upstream \
 		${_GITHUB_SITE}/${_WBA_BRANCH}/packages/:custom_packages \
 		${_LINUXFW_SITE}:linux_firmware \
@@ -306,9 +306,13 @@ LINUX_FIRMWARE+=	${L${fw_opt}_FILES}
 .endfor
 
 RTL8821CE_VERSION=	20250820
+RTL8821CE_REVISION=	0
 RTW88_VERSION=		20250905
+RTW88_REVISION=		1
 RTW89_VERSION=		20250827
+RTW89_REVISION=		0
 BROADCOM_WL_VERSION=	6.30.223.271
+BROADCOM_WL_REVISION=	0
 
 _LINUX_LTS_MAJOR=	${LINUX_LTS_VERSION:C/^([0-9]*)\..*/\1/}
 _LINUX_LTS_MINOR=	${LINUX_LTS_VERSION:C/^[0-9]*\.([0-9]*)\..*/\1/}
@@ -332,36 +336,41 @@ _KERN_EDGE_REL!=	printf "%02d%02d%03d%02d" \
 			${_LINUX_EDGE_PATCH} \
 			${_LINUX_EDGE_REVISION}
 
+_RTL8821CE_REV!=	printf "%02d" ${RTL8821CE_REVISION}
+_RTW88_REV!=		printf "%02d" ${RTW88_REVISION}
+_RTW89_REV!=		printf "%02d" ${RTW89_REVISION}
+_BROADCOM_WL_REV!=	printf "%02d" ${BROADCOM_WL_REVISION}
+
 .if ${PORT_OPTIONS:MFW_RTW88} && ${PORT_OPTIONS:MKERN_LTS} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtl8821ce-${RTL8821CE_VERSION}-r${_KERN_LTS_REL}00:wifibox \
-		rtw88-${RTW88_VERSION}-r${_KERN_LTS_REL}00:wifibox
+_PACKAGES+=	rtl8821ce-${RTL8821CE_VERSION}-r${_KERN_LTS_REL}${_RTL8821CE_REV}:wifibox \
+		rtw88-${RTW88_VERSION}-r${_KERN_LTS_REL}${_RTW88_REV}:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW88} && ${PORT_OPTIONS:MKERN_EDGE} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtl8821ce-edge-${RTL8821CE_VERSION}-r${_KERN_EDGE_REL}00:wifibox \
-		rtw88-edge-${RTW88_VERSION}-r${_KERN_EDGE_REL}00:wifibox
+_PACKAGES+=	rtl8821ce-edge-${RTL8821CE_VERSION}-r${_KERN_EDGE_REL}${_RTL8821CE_REV}:wifibox \
+		rtw88-edge-${RTW88_VERSION}-r${_KERN_EDGE_REL}${_RTW88_REV}:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW89} && ${PORT_OPTIONS:MKERN_LTS} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtw89-${RTW89_VERSION}-r${_KERN_LTS_REL}00:wifibox
+_PACKAGES+=	rtw89-${RTW89_VERSION}-r${_KERN_LTS_REL}${_RTW89_REV}:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MFW_RTW89} && ${PORT_OPTIONS:MKERN_EDGE} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	rtw89-edge-${RTW89_VERSION}-r${_KERN_EDGE_REL}00:wifibox
+_PACKAGES+=	rtw89-edge-${RTW89_VERSION}-r${_KERN_EDGE_REL}${_RTW89_REV}:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL} && ${PORT_OPTIONS:MKERN_LTS} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	broadcom-wl-${BROADCOM_WL_VERSION}-r${_KERN_LTS_REL}00:wifibox
+_PACKAGES+=	broadcom-wl-${BROADCOM_WL_VERSION}-r${_KERN_LTS_REL}${_BROADCOM_WL_REV}:wifibox
 .endif
 
 .if ${PORT_OPTIONS:MXX_DRIVER_WL} && ${PORT_OPTIONS:MKERN_EDGE} \
 	|| make(makesum) || make(fetch-url-list-int)
-_PACKAGES+=	broadcom-wl-edge-${BROADCOM_WL_VERSION}-r${_KERN_EDGE_REL}00:wifibox
+_PACKAGES+=	broadcom-wl-edge-${BROADCOM_WL_VERSION}-r${_KERN_EDGE_REL}${_BROADCOM_WL_REV}:wifibox
 .endif
 
 .if !empty(LINUX_FIRMWARE)
