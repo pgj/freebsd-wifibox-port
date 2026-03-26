@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-core
-PORTVERSION=	0.15.1
+PORTVERSION=	0.16.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -31,6 +31,7 @@ RECOVER_NONE_DESC=		No recovery for suspend/resume
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
+GH_TAGNAME=	9150ec63db62f5e4767feeb9e3a65ea5ff179fbe
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
