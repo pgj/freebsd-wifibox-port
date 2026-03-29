@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20260323
+PORTVERSION=	20260329
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -93,11 +93,11 @@ _GITHUB_SITE=	https://pgj.github.io/freebsd-wifibox/alpine
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	7a772aac7a620100090be2adaf39804de406eb02:scripts
+GH_TAGNAME=	5f8a89561b4442a7be3ae1e1644c1eb89c515de5:scripts
 
 ALPINE_VERSION=		3.23.3
-LINUX_LTS_VERSION=	6.18.19-r0
-LINUX_EDGE_VERSION=	6.19.9-r0
+LINUX_LTS_VERSION=	6.18.20-r0
+LINUX_EDGE_VERSION=	6.19.10-r0
 
 _LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
 _LINUXFW_TAG=	20260309
