@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-alpine
-PORTVERSION=	20260329
+PORTVERSION=	20260405
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -13,6 +13,7 @@ ONLY_FOR_ARCHS=	amd64
 EXTRACT_ONLY=	${_DISTFILES:M*_GH0.tar.gz}
 
 BUILD_DEPENDS=	gtar>0:archivers/gtar \
+		mtools>0:filesystems/mtools \
 		patchelf>0:sysutils/patchelf \
 		squashfs-tools-ng>0:filesystems/squashfs-tools-ng
 
@@ -93,11 +94,11 @@ _GITHUB_SITE=	https://pgj.github.io/freebsd-wifibox/alpine
 USE_GITHUB=	nodefault
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox-alpine:scripts
-GH_TAGNAME=	5f8a89561b4442a7be3ae1e1644c1eb89c515de5:scripts
+GH_TAGNAME=	aa0f21d0109e1cc899ce5e256381ffa160b14f5d:scripts
 
 ALPINE_VERSION=		3.23.3
-LINUX_LTS_VERSION=	6.18.20-r0
-LINUX_EDGE_VERSION=	6.19.10-r0
+LINUX_LTS_VERSION=	6.18.21-r0
+LINUX_EDGE_VERSION=	6.19.11-r0
 
 _LINUXFW_SITE=	https://cdn.kernel.org/pub/linux/kernel/firmware/
 _LINUXFW_TAG=	20260309
