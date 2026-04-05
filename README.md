@@ -21,7 +21,7 @@ Before trying to build the `net/wifibox-alpine` port, it might be
 easier if the dependencies are installed beforehand via packages.
 
 ```console
-# pkg install gtar patchelf squashfs-tools-ng
+# pkg install gtar patchelf squashfs-tools-ng mtools
 ```
 
 Also, make sure that the [Linuxulator] is activated, for example, by
@@ -52,7 +52,7 @@ required if the Unix Domain Socket pass-through is going to be
 activated.
 
 ```console
-# pkg install grub2-bhyve socat
+# pkg install bhyve-firmware socat
 ```
 
 ## Installation
