@@ -24,7 +24,7 @@ jobs:
         mem: 1024
         prepare: |
           pkg install -q -y gitup portconfig
-          pkg install -q -y gtar patchelf squashfs-tools-ng grub2-bhyve socat
+          pkg install -q -y gtar patchelf squashfs-tools-ng mtools bhyve-firmware socat
           gitup ports -v0
 
           kldload linux64
