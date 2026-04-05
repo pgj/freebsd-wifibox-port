@@ -1,5 +1,5 @@
 PORTNAME=	wifibox-core
-PORTVERSION=	0.16.0
+PORTVERSION=	0.17.0
 CATEGORIES=	net
 
 MAINTAINER=	pali.gabor@gmail.com
@@ -11,7 +11,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
 
-RUN_DEPENDS=	grub2-bhyve>0:sysutils/grub2-bhyve
+RUN_DEPENDS=	bhyve-firmware>0:sysutils/bhyve-firmware
 
 OPTIONS_SINGLE=			RECOVERY
 OPTIONS_SINGLE_RECOVERY=	RECOVER_RESTART_VMM \
@@ -31,6 +31,7 @@ RECOVER_NONE_DESC=		No recovery for suspend/resume
 USE_GITHUB=	yes
 GH_ACCOUNT=	pgj
 GH_PROJECT=	freebsd-wifibox
+GH_TAGNAME=	36809a10129b840cb20e49b91f53754d6cd514eb
 
 NO_BUILD=	yes
 MAKE_ARGS+=	GUEST_ROOT=${LOCALBASE}/share/wifibox \
