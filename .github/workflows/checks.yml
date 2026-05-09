@@ -23,9 +23,10 @@ jobs:
         arch: x86_64
         mem: 1024
         prepare: |
-          pkg install -q -y gitup portconfig
+          pkg install -q -y git-lite portconfig
           pkg install -q -y gtar patchelf squashfs-tools-ng mtools bhyve-firmware socat
-          gitup ports -v0
+          git clone --depth=1 --filter=blob:none --sparse https://git.freebsd.org/ports.git /usr/ports
+          cd /usr/ports && git sparse-checkout set Mk Templates Keywords
 
           kldload linux64
           mkdir -p /compat/linux
