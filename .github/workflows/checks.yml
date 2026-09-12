@@ -11,7 +11,7 @@ jobs:
     env:
       BATCH: true
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: "FreeBSD ${{ matrix.version }}"
       id: port_checks
       uses: vmactions/freebsd-vm@v1
