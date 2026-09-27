@@ -33,13 +33,16 @@ jobs:
 
           mkdir -p /wrkdirs
           chown -R nobody:nogroup /wrkdirs
+          mkdir -p /distfiles
+          chown -R nobody:nogroup /distfiles
           echo "WRKDIRPREFIX=/wrkdirs" >> /etc/make.conf
+          echo "DISTDIR=/distfiles" >> /etc/make.conf
 
         run: |
           set -exu
 
           for port in net/wifibox-alpine net/wifibox-core net/wifibox; do
-            make -C "$port" checksum
+            su -m nobody -c "make -C $port checksum"
             su -m nobody -c "make -C $port"
             su -m nobody -c "make -C $port check-plist"
             make -C "$port" install
